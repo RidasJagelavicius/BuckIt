@@ -7,6 +7,8 @@
 
     <string name="tagline">the ultimate bucket app</string>
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_achievement_wall">Achievement Wall</string>
+    <string name="menu_inspiration_feed">Inspiration Feed</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_settings">Settings</string>
 </resources>

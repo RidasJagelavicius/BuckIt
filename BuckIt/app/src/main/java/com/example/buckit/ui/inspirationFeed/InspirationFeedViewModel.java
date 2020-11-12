@@ -1,16 +1,16 @@
-package com.example.buckit.ui.slideshow;
+package com.example.buckit.ui.inspirationFeed;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class InspirationFeedViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public InspirationFeedViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is the inspiration feed fragment");
     }
 
     public LiveData<String> getText() {
