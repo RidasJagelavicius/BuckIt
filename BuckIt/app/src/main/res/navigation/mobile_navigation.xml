@@ -12,14 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_achievement_wall"
         android:name="com.example.buckit.ui.achievementwall.AchievementWallFragment"
         android:label="@string/menu_achievement_wall"
         tools:layout="@layout/fragment_achievement_wall" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_inspiration_feed"
         android:name="com.example.buckit.ui.inspirationfeed.InspirationFeedFragment"
         android:label="@string/menu_inspiration_feed"
         tools:layout="@layout/fragment_inspiration_feed" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.buckit.ui.search.SearchFragment"
+        android:label="@string/menu_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.buckit.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
