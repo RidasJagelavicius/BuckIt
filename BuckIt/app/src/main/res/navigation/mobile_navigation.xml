@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.buckit.ui.achievementWall.AchievementWallFragment"
+        android:name="com.example.buckit.ui.achievementwall.AchievementWallFragment"
         android:label="@string/menu_achievement_wall"
         tools:layout="@layout/fragment_achievement_wall" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.buckit.ui.inspirationFeed.InspirationFeedFragment"
+        android:name="com.example.buckit.ui.inspirationfeed.InspirationFeedFragment"
         android:label="@string/menu_inspiration_feed"
         tools:layout="@layout/fragment_inspiration_feed" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.buckit.ui.achievementWall;
+package com.example.buckit.ui.achievementwall;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,15 +16,15 @@ import com.example.buckit.R;
 
 public class AchievementWallFragment extends Fragment {
 
-    private AchievementWallViewModel awViewModelViewModel;
+    private AchievementWallViewModel mViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        awViewModelViewModel =
+        mViewModel =
                 ViewModelProviders.of(this).get(AchievementWallViewModel.class);
         View root = inflater.inflate(R.layout.fragment_achievement_wall, container, false);
         final TextView textView = root.findViewById(R.id.text_achievement_wall);
-        awViewModelViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
