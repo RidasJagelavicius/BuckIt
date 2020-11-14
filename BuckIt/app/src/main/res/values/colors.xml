@@ -9,6 +9,7 @@
     <color name="buttonFriendly">#B5F5D6</color>
     <color name="buttonHazard">#F5BAB5</color>
     <color name="textPrimary">#222222</color>
+    <color name="popupBackground">#ECECEC</color>
     <color name="grey">#BBBBBB</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>

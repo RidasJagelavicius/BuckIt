@@ -2,6 +2,7 @@ package com.example.buckit.ui.home;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,18 +29,21 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.buckit.R;
 
-public class HomeFragment extends Fragment /*implements View.OnClickListener*/ {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private LinearLayout bucketContainer;
 
     private HomeViewModel homeViewModel;
+    private Dialog popup;
     private Context thisContext;
+    private ImageButton addBucket;
 
     public void FirstFragment() {
         // Required empty public constructor
     }
 
     @Override
+    // This and the method above enable creating new elements by replacing "this" with "thisContext"
     public void onAttach(Context context) {
         super.onAttach(context);
         thisContext=context;
@@ -49,13 +54,33 @@ public class HomeFragment extends Fragment /*implements View.OnClickListener*/ {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+    // https://www.youtube.com/watch?v=0DH2tZjJtm0
+    public void createBucket() {
+        // Create the dialog that asks user to name their bucket
+        popup.setContentView(R.layout.new_bucket_popup);
+        Button btnCreate = (Button) popup.findViewById(R.id.popupCreateBucket);
+
+        // By default, show the popup
+        popup.show();
+
+        // Make it so that clicking the Create button dismisses the popup
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Grab the bucketContainer
+        // Initialize things
+        popup = new Dialog(thisContext);
+        addBucket = (ImageButton) root.findViewById(R.id.addBucket);
         bucketContainer = root.findViewById(R.id.bucketContainer);
 
         // Since the program begins with no buckets,
@@ -80,18 +105,17 @@ public class HomeFragment extends Fragment /*implements View.OnClickListener*/ {
         bucketContainer.addView(backgroundAddBuckets);
 
         // Make it so that clicking a + will create a new container
-
+        addBucket.setOnClickListener(this);
         return root;
     }
 
-// TODO: Click on + to create new bucket
-//    @Override
-//    public void onClick(View v) {
-//        int myid = v.getId();
-//
-//        // Check if clicked on a +
-//        if (myid == R.id.backgroundAddBuckets || myid == R.id.addBucket) {
-//            createNewBucket();
-//        }
-//    }
+    @Override
+    public void onClick(View v) {
+        int myid = v.getId();
+
+        // Check if clicked on a +
+        if (myid == R.id.backgroundAddBuckets || myid == R.id.addBucket) {
+            createBucket();
+        }
+    }
 }
