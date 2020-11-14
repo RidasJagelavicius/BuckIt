@@ -11,6 +11,7 @@
     <color name="textPrimary">#222222</color>
     <color name="textSecondary">#BCBCBC</color>
     <color name="popupBackground">#ECECEC</color>
+    <color name="ridasDark">#88000000</color>
     <color name="grey">#BBBBBB</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
