@@ -2,4 +2,5 @@
 
 <resources>
     <item name="backgroundAddBuckets" type="id"/>
+    <item name="backgroundAddList" type="id"/>
 </resources>

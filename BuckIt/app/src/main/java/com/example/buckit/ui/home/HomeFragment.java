@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +28,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -91,7 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
         addBucketText.setLayoutParams(theseParams);
         addBucketText.setText("Add your first bucket");
-        addBucketText.setTextColor(Color.parseColor("#000000"));
+        addBucketText.setTextColor(ContextCompat.getColor(thisContext, R.color.textPrimary));
         addBucketText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
 
         ImageButton backgroundAddBuckets = new ImageButton(thisContext);
@@ -126,15 +133,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 // If it is, start a new Activity and pass the array of list ID's to it
                 try {
                     String dictionary = master.getString(bucketID);
-                    JSONObject dict = new JSONObject(dictionary);
-                    String name = dict.getString("name");
-                    String lists = dict.getString("lists");
-
-                    // Start the activity that shows the lists
+//
+//                    // Start the activity that shows the lists
                     Intent intent = new Intent(thisContext, MyListsActivity.class);
-                    intent.putExtra("bucketID", bucketID);
-                    intent.putExtra("name", name); // pass name of bucket
-                    intent.putExtra("lists", lists); // pass the string of lists to new activity
+                    intent.putExtra("dict", dictionary); // pass the dictionary to the list
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,11 +213,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     /*
         {
             <bucketID 1>: {
+                                bucketID : "1",
                                 name : "",
                                 lists: [<list 1 ID>, <list 2 ID>, <list 3 ID>],
                           },
             <bucketID 2>: {
-                                name : "",
+                                bucketID : "2",
                                 lists: [<list 1 ID>, <list 2 ID>, <list 3 ID>],
                           }
         }
