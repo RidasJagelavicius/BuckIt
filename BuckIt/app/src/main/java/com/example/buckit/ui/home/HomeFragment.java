@@ -9,11 +9,13 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,8 +33,8 @@ import com.example.buckit.R;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+    // Private variables
     private LinearLayout bucketContainer;
-
     private HomeViewModel homeViewModel;
     private Dialog popup;
     private Context thisContext;
@@ -54,22 +56,52 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+    // Open a popup for user to type in name of new bucket, then calls insertBucket()
     // https://www.youtube.com/watch?v=0DH2tZjJtm0
     public void createBucket() {
         // Create the dialog that asks user to name their bucket
         popup.setContentView(R.layout.new_bucket_popup);
+        final EditText editText = (EditText) popup.findViewById(R.id.popupBucketName);
         Button btnCreate = (Button) popup.findViewById(R.id.popupCreateBucket);
 
         // By default, show the popup
         popup.show();
 
-        // Make it so that clicking the Create button dismisses the popup
+        // Once name bucket, create a new bucket
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup.dismiss();
+                String innerText = editText.getText().toString();
+
+                // Make sure that the name for the bucket is valid
+                if (innerText.length() > 0) {
+                    // Insert the bucket
+                    insertBucket(innerText);
+
+                    // Close the popup
+                    popup.dismiss();
+                }
             }
         });
+    }
+
+    // Given the name for the bucket, actually inserts the bucket
+    // Also removes the background + icon if it's the first bucket
+    // TODO: Check if bucket with name already exists
+    public void insertBucket(String name) {
+        // A bucket will just be a styled button or something
+        Button bucket = new Button(thisContext);
+        LinearLayout.LayoutParams bucketParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
+        bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
+        bucket.setLayoutParams(bucketParams);
+        bucket.setText(name);
+
+        // Remove the + from the bucket container IF it's still there
+        if (bucketContainer.findViewById(R.id.backgroundAddBuckets) != null)
+            bucketContainer.removeAllViews();
+
+        // Insert bucket into bucket container
+        bucketContainer.addView(bucket);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -106,10 +138,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Make it so that clicking a + will create a new container
         addBucket.setOnClickListener(this);
+        backgroundAddBuckets.setOnClickListener(this);
         return root;
     }
 
     @Override
+    // What happens when you click on something within onCreateView
     public void onClick(View v) {
         int myid = v.getId();
 
