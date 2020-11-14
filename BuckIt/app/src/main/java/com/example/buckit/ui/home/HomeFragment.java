@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.buckit.MyListsActivity;
 import com.example.buckit.R;
 
 import org.json.JSONArray;
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Dialog popup;
     private Context thisContext;
     private ImageButton addBucket;
+    private JSONObject master = null;
 
     public void FirstFragment() {
         // Required empty public constructor
@@ -103,12 +105,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     // Also removes the background + icon if it's the first bucket
     // TODO: Check if bucket with name already exists
     public void insertBucket(String name) {
+        // uppercase name here so later store it as uppercase in JSON
+        name = name.toUpperCase();
+
         // A bucket will just be a styled button or something
         Button bucket = new Button(thisContext);
         LinearLayout.LayoutParams bucketParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
         bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
         bucket.setLayoutParams(bucketParams);
         bucket.setText(name);
+        bucket.setTransformationMethod(null); // removes the ALL-caps
 
         int bucketID = View.generateViewId();
         bucket.setId(bucketID);
@@ -117,11 +123,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (bucketContainer.findViewById(R.id.backgroundAddBuckets) != null)
             bucketContainer.removeAllViews();
 
+        // Give the button a listener so clicking on it opens its lists
+        bucket.setOnClickListener(this);
+
         // Insert bucket into bucket container
         bucketContainer.addView(bucket);
 
         // Create JSON to represent bucket's lists
-        createBucketJSON(bucketID);
+        createBucketJSON(bucketID, name);
     }
 
     // Used to check if master JSON (list of buckets and their inner lists) exists
@@ -168,8 +177,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     // Creates a JSON that looks like this
     /*
         {
-            <bucketID 1>: [<list 1 ID>, <list 2 ID>, <list 3 ID>],
-            <bucketID 2>: [<list 1 ID>, <list 2 ID>, <list 3 ID>]
+            <bucketID 1>: {
+                                name : "",
+                                lists: [<list 1 ID>, <list 2 ID>, <list 3 ID>],
+                          },
+            <bucketID 2>: {
+                                name : "",
+                                lists: [<list 1 ID>, <list 2 ID>, <list 3 ID>],
+                          }
         }
 
         * Appends to directory if already exists
@@ -178,10 +193,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Ref:
             Store and Retrieve: https://stackoverflow.com/questions/40168601/android-how-to-save-json-data-in-a-file-and-retrieve-it
      */
-    public void createBucketJSON(int bucketID) {
+    public void createBucketJSON(int bucketID, String bucketName) {
         // Get the master directory if it exists, otherwise create one
         boolean masterExists = fileExists(thisContext, "bucket_to_list.json");
-        JSONObject master;
         // Read if exists
         if (masterExists) {
             String jsonString = read(thisContext, "bucket_to_list.json");
@@ -211,10 +225,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         // Now that have the master JSON, insert a record from bucketID to an array
-        JSONArray lists = new JSONArray();
+        String toJSON = "{ \"name\" : \"" + bucketName + "\", \"lists\": []}";
         try {
+            JSONObject name_and_lists = new JSONObject(toJSON);
+
             // Insert the empty lists array into the bucket
-            master.put(Integer.toString(bucketID), lists);
+            master.put(Integer.toString(bucketID), name_and_lists);
             boolean fileCreated = create(thisContext, "bucket_to_list.json", master.toString());
             if (!fileCreated) {
                 Log.e("JSON", "Failed to append to master JSON file");
@@ -222,6 +238,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
             Log.v("JSON", "Successfully inserted bucket-to-list mapping");
         } catch (JSONException e) {
+            Log.v("JSON", "Failed to create bucket-to-list mapping");
             e.printStackTrace();
         }
     }
@@ -231,6 +248,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // Delete the master JSON each time the device boots so ID's aren't reused and mappings don't break
+        thisContext.deleteFile("bucket_to_list.json");
 
         // Initialize things
         popup = new Dialog(thisContext);
@@ -272,6 +292,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Check if clicked on a +
         if (myid == R.id.backgroundAddBuckets || myid == R.id.addBucket) {
             createBucket();
+        } else if (master != null){
+            // See if it's a bucket
+            String bucketID = Integer.toString(myid);
+            if (master.has(bucketID)) {
+                // If it is, start a new Activity and pass the array of list ID's to it
+                try {
+                    String dictionary = master.getString(bucketID);
+                    JSONObject dict = new JSONObject(dictionary);
+                    String name = dict.getString("name");
+                    String lists = dict.getString("lists");
+
+                    // Start the activity that shows the lists
+                    Intent intent = new Intent(thisContext, MyListsActivity.class);
+                    intent.putExtra("name", name); // pass name of bucket
+                    intent.putExtra("lists", lists); // pass the string of lists to new activity
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
         }
     }
 }
