@@ -1,16 +1,8 @@
 package com.example.buckit.ui.home;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -22,35 +14,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.buckit.MyListsActivity;
 import com.example.buckit.R;
 import com.example.buckit.SharedCode;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -261,7 +237,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         // Now that have the master JSON, insert a record from bucketID to an array
-        String toJSON = "{ \"bucketID\" : " + bucketID + "\", \"name\" : \"" + bucketName + "\", \"lists\": []}";
+        String toJSON = "{ \"bucketID\" : \"" + bucketID + "\", \"name\" : \"" + bucketName + "\", \"lists\": []}";
         try {
             JSONObject name_and_lists = new JSONObject(toJSON);
 

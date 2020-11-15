@@ -1,8 +1,8 @@
 package com.example.buckit;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.example.buckit.ListActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -28,10 +27,11 @@ import static com.example.buckit.SharedCode.dpToPx;
 public class MyListsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView bucket;
-    private JSONArray lists = null;
     private LinearLayout listContainer;
     private ImageButton newListButton;
     private Dialog popup;
+    private JSONObject master = null;
+    private JSONObject dict;
     private JSONObject listMaster = null;
 
     @Override
@@ -46,12 +46,12 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         try {
             // Have bucket name at top
             String dictionary = getIntent().getStringExtra("dict");
-            JSONObject dict = new JSONObject(dictionary);
+            dict = new JSONObject(dictionary);
             String name = dict.getString("name");
             bucket.setText(name);
 
             // Also grab lists
-            lists = new JSONArray(dict.getString("lists"));
+            // lists = new JSONArray(dict.getString("lists"));
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -223,8 +223,8 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
 
-        // Now that have the master JSON, insert a record from bucketID to an array
-        String toJSON = "{ \"listID\" : " + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : \"\", \"items\": []}";
+        // Now that have the master JSON, insert a record from listID to an array
+        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : \"\", \"items\": []}";
         try {
             JSONObject listStuff = new JSONObject(toJSON);
 
@@ -239,6 +239,38 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         } catch (JSONException e) {
             Log.v("JSON", "Failed to create list mapping");
             e.printStackTrace();
+        }
+
+        // Then insert the list ID into the bucket_to_lists JSON
+        if (master == null) {
+            String jsonString = SharedCode.read(this, "bucket_to_list.json");
+            try {
+                master = new JSONObject(jsonString);
+                Log.v("JSON", "Successfully read bucket-to-list mapping");
+            } catch (Throwable t) {
+                Log.e("JSON", "Failed to parse master JSON file");
+                return;
+            }
+        }
+
+        try {
+            // Replace instance in JSON with updated list
+            String bucketID = dict.getString("bucketID");
+            JSONObject thisbucket = master.getJSONObject(bucketID);
+            JSONArray bucketLists = thisbucket.getJSONArray("lists");
+
+            thisbucket.remove("lists");
+            bucketLists.put(Integer.toString(listID));
+            thisbucket.put("lists", bucketLists);
+
+            master.remove(bucketID);
+            master.put(bucketID, thisbucket);
+
+            // Rewrite the JSON
+            SharedCode.create(this, "bucket_to_list.json", master.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
         }
     }
 }
