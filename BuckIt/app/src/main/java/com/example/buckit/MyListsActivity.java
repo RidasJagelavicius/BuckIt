@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.example.buckit.ListActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -85,15 +86,15 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         if (myid == R.id.addList) {
             createList();
         } else if (listMaster != null) {
-            // See if it's a bucket
+            // See if it's a list
             String listID = Integer.toString(myid);
             if (listMaster.has(listID)) {
-                // If it is, start a new Activity and pass the array of list ID's to it
+                // If it is, start a new Activity
                 try {
                     String dictionary = listMaster.getString(listID);
 
                     // Start the activity that shows the lists
-                    Intent intent = new Intent(this, MyListsActivity.class);
+                    Intent intent = new Intent(this, ListActivity.class);
                     intent.putExtra("dict", dictionary); // pass the dictionary to the list
                     startActivity(intent);
                 } catch (JSONException e) {
