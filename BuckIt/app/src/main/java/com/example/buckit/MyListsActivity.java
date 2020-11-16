@@ -178,7 +178,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                                 name : "",
                                 privacy : "",
                                 collaborators : "",
-                                photos : "",
+                                photos : [],
                                 items : []
                           },
             <listID 2>: {
@@ -224,7 +224,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         // Now that have the master JSON, insert a record from listID to an array
-        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : \"\", \"items\": []}";
+        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : [], \"items\": []}";
         try {
             JSONObject listStuff = new JSONObject(toJSON);
 
