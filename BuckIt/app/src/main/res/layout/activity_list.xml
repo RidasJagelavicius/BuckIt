@@ -129,49 +129,7 @@
                 <TableLayout
                     android:id="@+id/mylistgallery"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <!-- Where the first 3 images will go -->
-                    <!-- Make sure to set all these settings when programmatically adding a row -->
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/popupBackground"
-                        android:gravity="center_vertical"
-                        android:padding="5dp">
-
-                        <!-- Make sure to set all these settings when programmatically adding a photo -->
-                        <ImageView
-                            android:id="@+id/imageView5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="2dp"
-                            android:layout_weight="1"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/add" />
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/imageView6"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginHorizontal="2dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:adjustViewBounds="true"-->
-<!--                            android:scaleType="fitXY"-->
-<!--                            app:srcCompat="@drawable/add" />-->
-
-                        <ImageView
-                            android:id="@+id/imageView7"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="2dp"
-                            android:layout_weight="1"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/add" />
-
-                    </TableRow>
+                    android:layout_height="wrap_content">
                 </TableLayout>
 
                 <Button

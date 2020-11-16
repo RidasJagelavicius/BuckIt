@@ -142,9 +142,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         // Do this by checking the first row
         int lastChildIndex = gallery.getChildCount() - 1;
         Log.v("child", Integer.toString(lastChildIndex));
-        TableRow lastRow = (TableRow) ((ViewGroup) gallery).getChildAt(lastChildIndex);
-        Log.v("lastrowChildCount", Integer.toString(lastRow.getChildCount()));
-        if (lastRow.getChildCount() == 3) {
+        TableRow lastRow = null;
+        if (lastChildIndex >= 0)
+            lastRow = (TableRow) ((ViewGroup) gallery).getChildAt(lastChildIndex);
+        if (lastChildIndex < 0 || lastRow.getChildCount() == 3) {
             // Insert a new row
             Log.v("MyList", "Last row has 3 kids, making new row");
             lastRow = new TableRow(this);
@@ -160,29 +161,12 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         AppCompatImageView photo = new AppCompatImageView(this);
         lastRow.addView(photo);
         TableRow.LayoutParams theseParams = new TableRow.LayoutParams(dpToPx(0), ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
-//        theseParams.leftMargin = dpToPx(2);
-//        theseParams.rightMargin = dpToPx(2);
+        theseParams.leftMargin = dpToPx(2);
+        theseParams.rightMargin = dpToPx(2);
         photo.setLayoutParams(theseParams);
         photo.setAdjustViewBounds(true);
         photo.setScaleType(ImageView.ScaleType.FIT_XY);
-        // Put the image into the photo
-//        Bitmap image;
-//        if (Build.VERSION.SDK_INT >= 29) {
-//            Uri uri = Uri.fromFile(new File(path));
-//
-//            // now that you have the media URI, you can decode it to a bitmap
-//            try (ParcelFileDescriptor pfd = this.getContentResolver().openFileDescriptor(uri, "r")) {
-//                if (pfd != null) {
-//                    image = BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor());
-//                } else return;
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//                return;
-//            }
-//        } else {
-//            image = BitmapFactory.decodeFile();
-//        }
-//        photo.setImageBitmap(image);
+
         File imgFile = new File(path);
         if (!imgFile.exists()) {
             Log.e("imgFile", "Does not exist");
@@ -190,7 +174,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             photo.setImageBitmap(bitmap);
-            photo.setBackgroundResource(R.drawable.add_in_circle);
             Log.v("bitmap", "Set bitmap");
         }
         Log.v("lastrowChildCount", Integer.toString(lastRow.getChildCount()));
