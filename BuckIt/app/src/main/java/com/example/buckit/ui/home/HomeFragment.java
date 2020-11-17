@@ -25,8 +25,11 @@ import com.example.buckit.MyListsActivity;
 import com.example.buckit.R;
 import com.example.buckit.SharedCode;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -53,6 +56,78 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         thisContext=context;
     }
 
+    // Either loads saved buckets or sets up a blank view
+    private void loadOrBlank() {
+        // Get the master directory if it exists, otherwise create one
+        boolean masterExists = SharedCode.fileExists(thisContext, "bucket_to_list.json");
+
+        // Read if exists
+        if (masterExists) {
+            String jsonString = SharedCode.read(thisContext, "bucket_to_list.json");
+            try {
+                master = new JSONObject(jsonString);
+                Log.v("JSON", "Successfully read bucket-to-list mapping");
+            } catch (Throwable t) {
+                Log.e("JSON", "Failed to parse master JSON file");
+                return;
+            }
+        } else {
+            // Create
+            boolean fileCreated = SharedCode.create(thisContext, "bucket_to_list.json", "{}");
+            if (!fileCreated) {
+                Log.e("JSON", "Failed to create master JSON file");
+                return;
+            } else {
+                String jsonString = SharedCode.read(thisContext, "bucket_to_list.json");
+                try {
+                    master = new JSONObject(jsonString);
+                } catch (Throwable t) {
+                    Log.e("JSON", "Failed to parse master JSON file");
+                    t.printStackTrace();
+                    return;
+                }
+            }
+        }
+
+        // If master already existed, populate the buckets
+        if (masterExists) {
+            // Iterate through keys and make buckets of their name
+            Iterator<String> keys = master.keys();
+            do {
+                String bucketID = keys.next();
+                try {
+                    JSONObject bucket = master.getJSONObject(bucketID);
+                    String name = bucket.getString("name");
+                    insertBucket(name, false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            } while(keys.hasNext());
+        } else {
+            // Otherwise add the blank view
+            TextView addBucketText = new TextView(thisContext);
+            LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
+            addBucketText.setLayoutParams(theseParams);
+            addBucketText.setText("Add your first bucket");
+            addBucketText.setTextColor(ContextCompat.getColor(thisContext, R.color.textPrimary));
+            addBucketText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
+
+            ImageButton backgroundAddBuckets = new ImageButton(thisContext);
+            theseParams = new LinearLayout.LayoutParams(dpToPx(200), dpToPx(200));
+            backgroundAddBuckets.setLayoutParams(theseParams);
+            backgroundAddBuckets.setAdjustViewBounds(true);
+            backgroundAddBuckets.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            backgroundAddBuckets.setBackgroundResource(R.drawable.add_in_circle);
+            backgroundAddBuckets.setId(R.id.backgroundAddBuckets);
+            backgroundAddBuckets.setOnClickListener(this);
+
+            bucketContainer.addView(addBucketText);
+            bucketContainer.addView(backgroundAddBuckets);
+        }
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -60,37 +135,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Delete the master JSON each time the device boots so ID's aren't reused and mappings don't break
-        thisContext.deleteFile("bucket_to_list.json");
+        //thisContext.deleteFile("bucket_to_list.json");
 
         // Initialize things
         popup = new Dialog(thisContext);
         addBucket = (ImageButton) root.findViewById(R.id.addBucket);
         bucketContainer = root.findViewById(R.id.bucketContainer);
 
-        // Since the program begins with no buckets,
-        // make the background that + icon and text to add the button
-        TextView addBucketText = new TextView(thisContext);
-        LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
-        addBucketText.setLayoutParams(theseParams);
-        addBucketText.setText("Add your first bucket");
-        addBucketText.setTextColor(ContextCompat.getColor(thisContext, R.color.textPrimary));
-        addBucketText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
-
-        ImageButton backgroundAddBuckets = new ImageButton(thisContext);
-        theseParams = new LinearLayout.LayoutParams(dpToPx(200), dpToPx(200));
-        backgroundAddBuckets.setLayoutParams(theseParams);
-        backgroundAddBuckets.setAdjustViewBounds(true);
-        backgroundAddBuckets.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        backgroundAddBuckets.setBackgroundResource(R.drawable.add_in_circle);
-        backgroundAddBuckets.setId(R.id.backgroundAddBuckets);
-
-        bucketContainer.addView(addBucketText);
-        bucketContainer.addView(backgroundAddBuckets);
+        // If data has already been created, retrieve it, otherwise display "Add a bucket"
+        loadOrBlank();
 
         // Make it so that clicking a + will create a new container
         addBucket.setOnClickListener(this);
-        backgroundAddBuckets.setOnClickListener(this);
         return root;
     }
 
@@ -144,7 +200,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 // Make sure that the name for the bucket is valid
                 if (innerText.length() > 0) {
                     // Insert the bucket
-                    insertBucket(innerText);
+                    insertBucket(innerText, true);
 
                     // Close the popup
                     popup.dismiss();
@@ -155,8 +211,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     // Given the name for the bucket, actually inserts the bucket
     // Also removes the background + icon if it's the first bucket
-    // TODO: Check if bucket with name already exists
-    public void insertBucket(String name) {
+    // TODO: Check if bucket with name already exists?
+    public void insertBucket(String name, boolean addToJson) {
         // uppercase name here so later store it as uppercase in JSON
         name = name.toUpperCase();
 
@@ -182,7 +238,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bucketContainer.addView(bucket);
 
         // Create JSON to represent bucket's lists
-        createBucketJSON(bucketID, name);
+        if (addToJson)
+            createBucketJSON(bucketID, name);
     }
 
     // Creates a JSON that looks like this
@@ -206,36 +263,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Store and Retrieve: https://stackoverflow.com/questions/40168601/android-how-to-save-json-data-in-a-file-and-retrieve-it
      */
     public void createBucketJSON(int bucketID, String bucketName) {
-        // Get the master directory if it exists, otherwise create one
-        boolean masterExists = SharedCode.fileExists(thisContext, "bucket_to_list.json");
-        // Read if exists
-        if (masterExists) {
-            String jsonString = SharedCode.read(thisContext, "bucket_to_list.json");
-            try {
-                master = new JSONObject(jsonString);
-                Log.v("JSON", "Successfully read bucket-to-list mapping");
-            } catch (Throwable t) {
-                Log.e("JSON", "Failed to parse master JSON file");
-                return;
-            }
-        } else {
-            // Create
-            boolean fileCreated = SharedCode.create(thisContext, "bucket_to_list.json", "{}");
-            if (!fileCreated) {
-                Log.e("JSON", "Failed to create master JSON file");
-                return;
-            } else {
-                String jsonString = SharedCode.read(thisContext, "bucket_to_list.json");
-                try {
-                    master = new JSONObject(jsonString);
-                } catch (Throwable t) {
-                    Log.e("JSON", "Failed to parse master JSON file");
-                    t.printStackTrace();
-                    return;
-                }
-            }
-        }
-
         // Now that have the master JSON, insert a record from bucketID to an array
         String toJSON = "{ \"bucketID\" : \"" + bucketID + "\", \"name\" : \"" + bucketName + "\", \"lists\": []}";
         try {
