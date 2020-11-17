@@ -2,6 +2,7 @@ package com.example.buckit;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -46,6 +49,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private String listID;
     private JSONObject listMaster = null;
     private TableLayout gallery;
+    private ImageButton changePrivacy;
+    private Dialog popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         addPhoto = (Button) findViewById(R.id.addPhoto);
         addPhoto.setOnClickListener(this);
         gallery = (TableLayout) findViewById(R.id.mylistgallery);
+        changePrivacy = (ImageButton) findViewById(R.id.changePrivacy);
+        changePrivacy.setOnClickListener(this);
+        popup = new Dialog(this);
 
         // TODO: Populate the other stuff from the JSON
 
@@ -80,6 +88,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         if (myid == R.id.addPhoto) {
             verifyStoragePermissions(this);
             selectImage(this);
+        } else if (myid == R.id.changePrivacy) {
+            // Create the dialog that allows user to click on each
+            popup.setContentView(R.layout.change_privacy_popup);
+
+            // By default, show the popup
+            popup.show();
+
+            // TODO: Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
         }
     }
 
