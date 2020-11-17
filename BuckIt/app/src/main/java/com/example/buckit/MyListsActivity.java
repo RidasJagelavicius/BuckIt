@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import androidx.core.content.ContextCompat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -62,20 +65,72 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         newListButton = (ImageButton) findViewById(R.id.addList);
         newListButton.setOnClickListener(this);
 
-        // Since the program begins with no lists,
-        // tell user to make one
-        TextView addListText = new TextView(this);
-        LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
-        addListText.setLayoutParams(theseParams);
-        addListText.setGravity(Gravity.CENTER);
-        addListText.setText("Create your first list by pressing the \"+\" button below");
-        addListText.setTextColor(ContextCompat.getColor(this, R.color.textPrimary));
-        addListText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
-        addListText.setId(R.id.backgroundAddList);
+        // Load in the saved lists or say "Create your first list"
+        loadOrBlank();
+    }
 
-        // Add it to the container
-        listContainer.addView(addListText);
+    // Load in the saved lists or say "Create your first list"
+    private void loadOrBlank() {
+        // Get the master directory if it exists, otherwise create one
+        boolean masterExists = SharedCode.fileExists(this, "lists.json");
+        // Read if exists
+        if (masterExists) {
+            String jsonString = SharedCode.read(this, "lists.json");
+            try {
+                listMaster = new JSONObject(jsonString);
+                Log.v("JSON", "Successfully read list mapping");
+            } catch (Throwable t) {
+                Log.e("JSON", "Failed to parse master JSON file");
+                return;
+            }
+        } else {
+            // Create
+            boolean fileCreated = SharedCode.create(this, "lists.json", "{}");
+            if (!fileCreated) {
+                Log.e("JSON", "Failed to create master JSON file");
+                return;
+            } else {
+                String jsonString = SharedCode.read(this, "lists.json");
+                try {
+                    listMaster = new JSONObject(jsonString);
+                } catch (Throwable t) {
+                    Log.e("JSON", "Failed to parse master JSON file");
+                    t.printStackTrace();
+                    return;
+                }
+            }
+        }
+
+        // If master already existed, populate the buckets
+        if (masterExists) {
+            // Iterate through keys and make lists of their name
+            Iterator<String> keys = listMaster.keys();
+            do {
+                String listID = keys.next();
+                try {
+                    JSONObject list = listMaster.getJSONObject(listID);
+                    String name = list.getString("name");
+                    insertList(name, false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            } while(keys.hasNext());
+        } else {
+            // Otherwise add the blank view
+            TextView addListText = new TextView(this);
+            LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
+            addListText.setLayoutParams(theseParams);
+            addListText.setGravity(Gravity.CENTER);
+            addListText.setText("Create your first list by pressing the \"+\" button below");
+            addListText.setTextColor(ContextCompat.getColor(this, R.color.textPrimary));
+            addListText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
+            addListText.setId(R.id.backgroundAddList);
+
+            // Add it to the container
+            listContainer.addView(addListText);
+        }
     }
 
     @Override
@@ -126,7 +181,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                 // Make sure that the name for the list is valid
                 if (innerText.length() > 0) {
                     // Insert the list
-                    insertList(innerText);
+                    insertList(innerText, true);
 
                     // Close the popup
                     popup.dismiss();
@@ -138,7 +193,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     // Given the name for the list, actually inserts the list
     // Also removes the background "Create list" if it's the first list
     // TODO: Check if list with name already exists
-    public void insertList(String name) {
+    public void insertList(String name, boolean addToJson) {
         // uppercase name here so later store it as uppercase in JSON
         name = name.toUpperCase();
 
@@ -167,7 +222,8 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         listContainer.addView(list);
 
         // Create JSON to represent bucket's lists
-        createListJSON(listID, name);
+        if (addToJson)
+            createListJSON(listID, name);
     }
 
     // Creates a JSON that looks like this
@@ -193,36 +249,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             Store and Retrieve: https://stackoverflow.com/questions/40168601/android-how-to-save-json-data-in-a-file-and-retrieve-it
      */
     public void createListJSON(int listID, String listName) {
-        // Get the master directory if it exists, otherwise create one
-        boolean masterExists = SharedCode.fileExists(this, "lists.json");
-        // Read if exists
-        if (masterExists) {
-            String jsonString = SharedCode.read(this, "lists.json");
-            try {
-                listMaster = new JSONObject(jsonString);
-                Log.v("JSON", "Successfully read list mapping");
-            } catch (Throwable t) {
-                Log.e("JSON", "Failed to parse master JSON file");
-                return;
-            }
-        } else {
-            // Create
-            boolean fileCreated = SharedCode.create(this, "lists.json", "{}");
-            if (!fileCreated) {
-                Log.e("JSON", "Failed to create master JSON file");
-                return;
-            } else {
-                String jsonString = SharedCode.read(this, "lists.json");
-                try {
-                    listMaster = new JSONObject(jsonString);
-                } catch (Throwable t) {
-                    Log.e("JSON", "Failed to parse master JSON file");
-                    t.printStackTrace();
-                    return;
-                }
-            }
-        }
-
         // Now that have the master JSON, insert a record from listID to an array
         String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : [], \"items\": []}";
         try {
