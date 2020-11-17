@@ -105,17 +105,19 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         if (masterExists) {
             // Iterate through keys and make lists of their name
             Iterator<String> keys = listMaster.keys();
-            do {
-                String listID = keys.next();
-                try {
-                    JSONObject list = listMaster.getJSONObject(listID);
-                    String name = list.getString("name");
-                    insertList(name, false);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
-                }
-            } while(keys.hasNext());
+            if (keys.hasNext()) {
+                do {
+                    String listID = keys.next();
+                    try {
+                        JSONObject list = listMaster.getJSONObject(listID);
+                        String name = list.getString("name");
+                        insertList(name, false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                } while(keys.hasNext());
+            }
         } else {
             // Otherwise add the blank view
             TextView addListText = new TextView(this);

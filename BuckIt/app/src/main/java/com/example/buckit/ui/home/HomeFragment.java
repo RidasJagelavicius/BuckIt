@@ -93,17 +93,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (masterExists) {
             // Iterate through keys and make buckets of their name
             Iterator<String> keys = master.keys();
-            do {
-                String bucketID = keys.next();
-                try {
-                    JSONObject bucket = master.getJSONObject(bucketID);
-                    String name = bucket.getString("name");
-                    insertBucket(name, false);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
-                }
-            } while(keys.hasNext());
+            if (keys.hasNext()) {
+                do {
+                    String bucketID = keys.next();
+                    try {
+                        JSONObject bucket = master.getJSONObject(bucketID);
+                        String name = bucket.getString("name");
+                        insertBucket(name, false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                } while (keys.hasNext());
+            }
         } else {
             // Otherwise add the blank view
             TextView addBucketText = new TextView(thisContext);
