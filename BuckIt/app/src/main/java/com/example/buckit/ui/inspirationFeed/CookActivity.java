@@ -1,4 +1,6 @@
 package com.example.buckit.ui.inspirationFeed;
 
-public class CookActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CookActivity extends AppCompatActivity {
 }

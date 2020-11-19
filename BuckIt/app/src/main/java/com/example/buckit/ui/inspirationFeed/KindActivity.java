@@ -1,4 +1,6 @@
 package com.example.buckit.ui.inspirationFeed;
 
-public class KindActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class KindActivity extends AppCompatActivity {
 }

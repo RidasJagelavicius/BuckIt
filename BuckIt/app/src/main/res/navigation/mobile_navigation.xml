@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_inspiration_feed"
-        android:name="com.example.buckit.ui.inspirationfeed.InspirationFeedFragment"
+        android:name="com.example.buckit.ui.inspirationFeed.InspirationFeedFragment"
         android:label="@string/menu_inspiration_feed"
         tools:layout="@layout/fragment_inspiration_feed" />
 

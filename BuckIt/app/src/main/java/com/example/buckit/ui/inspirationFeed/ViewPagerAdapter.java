@@ -1,9 +1,12 @@
 package com.example.buckit.ui.inspirationFeed;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +19,8 @@ import com.example.buckit.R;
 public class ViewPagerAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private String [] slides = {"Friend 1", "Friend 2", "Friend 3"};
+    private String [] friend_names = {"@mygoodfriend1", "@mygoodfriend2", "@mygoodfriend3"};
+    private String [] list_titles = {"Home Cooking", "Spring Break", "Books to Read"};
 
     public ViewPagerAdapter(Context context) {
         this.context = context;
@@ -24,7 +28,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return slides.length;
+        return friend_names.length;
     }
 
     @Override
@@ -35,8 +39,17 @@ public class ViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position){
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.friends_slider, null);
-        TextView textView = (TextView) view.findViewById(R.id.friends_lists);
-        textView.setText(slides[position]);
+        TextView names = (TextView) view.findViewById(R.id.friends_names);
+        names.setText(friend_names[position]);
+
+        TextView titles = (TextView) view.findViewById(R.id.friends_titles);
+        titles.setText(list_titles[position]);
+
+        titles.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.i("TAG", "This page was clicked: " + list_titles[position]);
+            }
+        });
 
         ViewPager vp = (ViewPager) container;
         vp.addView(view, 0);
