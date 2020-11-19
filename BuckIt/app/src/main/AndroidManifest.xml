@@ -65,6 +65,26 @@
             android:label="India">
         </activity>
 
+        <!--Activity for the simulated Chocolate Chip Cookies cooking list -->
+        <activity android:name=".ui.inspirationFeed.Cook1List"
+            android:label="Chocolate Chip Cookies">
+        </activity>
+
+        <!--Activity for the simulated Fried Rice cooking list -->
+        <activity android:name=".ui.inspirationFeed.Cook2List"
+            android:label="Fried Rice">
+        </activity>
+
+        <!--Activity for the simulated Donations kindness list -->
+        <activity android:name=".ui.inspirationFeed.Kind1List"
+            android:label="Donations">
+        </activity>
+
+        <!--Activity for the simulated Volunteering kindness list -->
+        <activity android:name=".ui.inspirationFeed.Kind2List"
+            android:label="Volunteering">
+        </activity>
+
     </application>
 
 </manifest>
