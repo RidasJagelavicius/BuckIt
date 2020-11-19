@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.buckit">
 
     <application
@@ -35,6 +36,35 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
+
+        <!--Activity to simulate the travel inspiration bucket -->
+        <activity
+            android:name=".ui.inspirationFeed.TravelActivity"
+            android:label="Inspiration for Travel">
+        </activity>
+
+        <!--Activity to simulate the cooking inspiration bucket -->
+        <activity
+            android:name=".ui.inspirationFeed.CookActivity"
+            android:label="Inspiration for Cooking">
+        </activity>
+
+        <!--Activity to simulate the kindness inspiration bucket -->
+        <activity
+            android:name=".ui.inspirationFeed.KindActivity"
+            android:label="Inspiration for Kindness">
+        </activity>
+
+        <!--Activity for the simulated Florida travel list -->
+        <activity android:name=".ui.inspirationFeed.Travel1List"
+            android:label="Florida">
+        </activity>
+
+        <!--Activity for the simulated India travel list -->
+        <activity android:name=".ui.inspirationFeed.Travel2List"
+            android:label="India">
+        </activity>
+
     </application>
 
 </manifest>
