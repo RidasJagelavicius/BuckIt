@@ -1,4 +1,4 @@
-package com.example.buckit.ui.achievementwall;
+package com.example.buckit.ui.achievementWall;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

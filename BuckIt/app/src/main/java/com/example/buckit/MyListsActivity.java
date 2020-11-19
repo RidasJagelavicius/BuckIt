@@ -1,7 +1,6 @@
 package com.example.buckit;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import static com.example.buckit.SharedCode.dpToPx;
@@ -32,10 +31,13 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     private TextView bucket;
     private LinearLayout listContainer;
     private ImageButton newListButton;
+    private ImageButton deleteListButton;
     private Dialog popup;
+    private Dialog deletePopup;
     private JSONObject master = null;
     private JSONObject dict;
     private JSONObject listMaster = null;
+    private ArrayList<Button> buttonList  = new ArrayList<Button>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
 
         bucket = (TextView) findViewById(R.id.bucketName);
         popup = new Dialog(this);
+        deletePopup = new Dialog(this);
 
         // Get name and lists passed from bucket
         try {
@@ -63,7 +66,10 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         // Initialize other components
         listContainer = (LinearLayout) findViewById(R.id.listContainer);
         newListButton = (ImageButton) findViewById(R.id.addList);
+        deleteListButton = (ImageButton) findViewById(R.id.deleteList);
+
         newListButton.setOnClickListener(this);
+        deleteListButton.setOnClickListener(this);
 
         // Load in the saved lists or say "Create your first list"
         loadOrBlank();
@@ -135,15 +141,20 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    // global var for tracking if short click was activated. if not, execute long click
+    // cannot be defined inside onClick bc we are trying to use it in a function (.setOnClick) inside a function
+    boolean shortClickPressed = false;
     @Override
     public void onClick(View v) {
         int myid = v.getId();
 
-        // See if need to create a new list
-        if (myid == R.id.addList) {
+        if (myid == R.id.deleteList){
+            deleteList();
+        } else if (myid == R.id.addList) {
+            // See if need to create a new list
             createList();
-        } else if (listMaster != null) {
-            // See if it's a list
+        }
+        if (listMaster != null) {
             String listID = Integer.toString(myid);
             if (listMaster.has(listID)) {
                 // If it is, start a new Activity
@@ -151,7 +162,8 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                     String dictionary = listMaster.getString(listID);
 
                     // Start the activity that shows the lists
-                    Intent intent = new Intent(this, ListActivity.class);
+                    Intent intent = new Intent(this, GoalActivity.class);
+//                    Intent intent = new Intent(this, ListActivity.class);
                     intent.putExtra("dict", dictionary); // pass the dictionary to the list
                     startActivity(intent);
                 } catch (JSONException e) {
@@ -161,6 +173,27 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
+
+    public void onShortClick(View v) {
+        // See if it's a list
+        int myid = v.getId();
+        String listID = Integer.toString(myid);
+        if (listMaster.has(listID)) {
+            // If it is, start a new Activity
+            try {
+                String dictionary = listMaster.getString(listID);
+
+                // Start the activity that shows the lists
+                Intent intent = new Intent(this, GoalActivity.class);
+                intent.putExtra("dict", dictionary); // pass the dictionary to the list
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+    }
+
 
     // Open a popup for user to type in name of new list, then calls insertList()
     // https://www.youtube.com/watch?v=0DH2tZjJtm0
@@ -192,6 +225,52 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    // Open a popup for user to type in name of list to delete
+    public void deleteList() {
+        assert(deletePopup != null);
+        // Create the dialog that asks user to name their bucket
+        deletePopup.setContentView(R.layout.delete_list_popup);
+        final EditText editText = (EditText) deletePopup.findViewById(R.id.popupListToDelete);
+        Button btnDelete = (Button) deletePopup.findViewById(R.id.popupDeleteList);
+
+        // By default, show the popup
+        deletePopup.show();
+        Log.v("popup","delete popup should be showing");
+
+        // compare user input string with text on the current buckets (buttons)
+        // delete bucket if text matches
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String toDelete = editText.getText().toString().toUpperCase();
+
+                // Make sure that the name for the list is valid
+                if (toDelete.length() > 0) {
+                    for (int i = 0; i < buttonList.size(); i++) {
+                        Button currList = buttonList.get(i);
+                        if (currList.getText().equals(toDelete)) {
+                            // delete list from container
+                            listContainer.removeView(currList);
+
+                            // delete list from JSON
+                            int listID  = currList.getId();
+                            listMaster.remove(Integer.toString(listID));
+
+                            // delete list from internal buttonList arrayList
+                            buttonList.remove(currList);
+                            break;
+
+                        }
+                    }
+
+                    // Close the popup
+                    deletePopup.dismiss();
+                }
+            }
+        });
+        Log.v("popup","delete popup - activated onlick");
+    }
+
     // Given the name for the list, actually inserts the list
     // Also removes the background "Create list" if it's the first list
     // TODO: Check if list with name already exists
@@ -206,6 +285,8 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         list.setLayoutParams(listParams);
         list.setText(name);
         list.setTransformationMethod(null); // removes the ALL-caps
+        list.setLongClickable(true);
+        list.setClickable(true);
 
         int listID = View.generateViewId();
         list.setId(listID);
@@ -226,6 +307,9 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         // Create JSON to represent bucket's lists
         if (addToJson)
             createListJSON(listID, name);
+
+        // Add the newly created list "button" to an array so that we can access it for deletion
+        buttonList.add(list);
     }
 
     // Creates a JSON that looks like this
@@ -252,7 +336,9 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
      */
     public void createListJSON(int listID, String listName) {
         // Now that have the master JSON, insert a record from listID to an array
-        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : [], \"items\": []}";
+        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"goals\": []}";
+//        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : [], \"items\": []}";
+
         try {
             JSONObject listStuff = new JSONObject(toJSON);
 
@@ -287,11 +373,12 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             JSONObject thisbucket = master.getJSONObject(bucketID);
             JSONArray bucketLists = thisbucket.getJSONArray("lists");
 
-            thisbucket.remove("lists");
+//            thisbucket.remove("lists");
+//            bucketLists.remove(listID);
             bucketLists.put(Integer.toString(listID));
             thisbucket.put("lists", bucketLists);
 
-            master.remove(bucketID);
+//            master.remove(bucketID);
             master.put(bucketID, thisbucket);
 
             // Rewrite the JSON

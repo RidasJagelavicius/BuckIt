@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".GoalActivity">
 
     <!-- Outer container -->
     <LinearLayout
@@ -31,7 +31,7 @@
 
             <!-- List container -->
             <LinearLayout
-                android:id="@+id/listContainer"
+                android:id="@+id/goalContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -46,11 +46,21 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_weight="0">
+            <!-- Settings button - edit privacy/collaborators -->
+            <!-- TODO: Clicking on this should add a new bucket -->
+            <ImageButton
+                android:id="@+id/listSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_settings" />
 
             <!-- Delete button -->
             <!-- TODO: Clicking on this should enter a mode where you can delete buckets -->
             <ImageButton
-                android:id="@+id/deleteList"
+                android:id="@+id/deleteGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -61,7 +71,7 @@
             <!-- Add a new bucket -->
             <!-- TODO: Clicking on this should add a new bucket -->
             <ImageButton
-                android:id="@+id/addList"
+                android:id="@+id/addGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,4 +80,5 @@
                 android:src="@drawable/add" />
         </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

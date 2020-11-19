@@ -1,4 +1,4 @@
-package com.example.buckit.ui.inspirationfeed;
+package com.example.buckit.ui.inspirationFeed;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

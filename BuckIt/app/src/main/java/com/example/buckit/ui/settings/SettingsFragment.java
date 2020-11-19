@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.buckit.R;
-import com.example.buckit.ui.inspirationfeed.InspirationFeedViewModel;
+import com.example.buckit.ui.inspirationFeed.InspirationFeedViewModel;
 import com.example.buckit.ui.search.SearchViewModel;
 
 public class SettingsFragment extends Fragment {

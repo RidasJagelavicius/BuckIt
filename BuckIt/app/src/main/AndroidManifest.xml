@@ -2,54 +2,46 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.buckit">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--login flow-->
+        <activity android:name=".SubgoalActivity"></activity>
+        <activity android:name=".GoalActivity" /> <!-- login flow -->
         <activity
             android:name=".SigninActivity"
             android:label="Sign In">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="Register">
-        </activity>
-
-        <!--main-->
+            android:label="Register" /> <!-- main -->
         <activity
             android:name=".MainActivity"
             android:label="My Buckets"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MyListsActivity"
             android:label="My Lists"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ListActivity"
             android:label="My List"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>
