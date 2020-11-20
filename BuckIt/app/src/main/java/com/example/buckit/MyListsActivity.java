@@ -70,6 +70,16 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
 
         newListButton.setOnClickListener(this);
         deleteListButton.setOnClickListener(this);
+        newListButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                createList();
+            }
+        });
+        deleteListButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                deleteList();
+            }
+        });
 
         // Load in the saved lists or say "Create your first list"
         loadOrBlank();
@@ -148,12 +158,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         int myid = v.getId();
 
-        if (myid == R.id.deleteList){
-            deleteList();
-        } else if (myid == R.id.addList) {
-            // See if need to create a new list
-            createList();
-        }
         if (listMaster != null) {
             String listID = Integer.toString(myid);
             if (listMaster.has(listID)) {
@@ -162,8 +166,8 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                     String dictionary = listMaster.getString(listID);
 
                     // Start the activity that shows the lists
-                    Intent intent = new Intent(this, GoalActivity.class);
-//                    Intent intent = new Intent(this, ListActivity.class);
+//                    Intent intent = new Intent(this, GoalActivity.class);
+                    Intent intent = new Intent(this, ListActivity.class);
                     intent.putExtra("dict", dictionary); // pass the dictionary to the list
                     startActivity(intent);
                 } catch (JSONException e) {
@@ -173,27 +177,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
-
-    public void onShortClick(View v) {
-        // See if it's a list
-        int myid = v.getId();
-        String listID = Integer.toString(myid);
-        if (listMaster.has(listID)) {
-            // If it is, start a new Activity
-            try {
-                String dictionary = listMaster.getString(listID);
-
-                // Start the activity that shows the lists
-                Intent intent = new Intent(this, GoalActivity.class);
-                intent.putExtra("dict", dictionary); // pass the dictionary to the list
-                startActivity(intent);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-    }
-
 
     // Open a popup for user to type in name of new list, then calls insertList()
     // https://www.youtube.com/watch?v=0DH2tZjJtm0
@@ -373,13 +356,15 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             JSONObject thisbucket = master.getJSONObject(bucketID);
             JSONArray bucketLists = thisbucket.getJSONArray("lists");
 
-//            thisbucket.remove("lists");
-//            bucketLists.remove(listID);
+
             bucketLists.put(Integer.toString(listID));
             thisbucket.put("lists", bucketLists);
+            thisbucket.remove("lists");
+            bucketLists.remove(listID);
 
-//            master.remove(bucketID);
+
             master.put(bucketID, thisbucket);
+            master.remove(bucketID);
 
             // Rewrite the JSON
             SharedCode.create(this, "bucket_to_list.json", master.toString());

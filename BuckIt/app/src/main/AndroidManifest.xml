@@ -16,8 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubgoalActivity"></activity>
-        <activity android:name=".GoalActivity" /> <!-- login flow -->
+        <!-- login flow -->
         <activity
             android:name=".SigninActivity"
             android:label="Sign In">
@@ -41,6 +40,10 @@
         <activity
             android:name=".ListActivity"
             android:label="My List"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SubgoalActivity"
+            android:label="Subgoals"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
