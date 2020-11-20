@@ -85,6 +85,11 @@
             android:label="Volunteering">
         </activity>
 
+        <!--Activity to go to simulated friend's home cooking page -->
+        <activity android:name=".ui.inspirationFeed.HomeCookingFriend"
+            android:label="Home Cooking">
+        </activity>
+
     </application>
 
 </manifest>

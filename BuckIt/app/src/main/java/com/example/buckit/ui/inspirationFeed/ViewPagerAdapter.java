@@ -47,7 +47,18 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         titles.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Log.i("TAG", "This page was clicked: " + list_titles[position]);
+                if (list_titles[position] == "Home Cooking"){
+                    Intent intent = new Intent(v.getContext(), HomeCookingFriend.class);
+                    v.getContext().startActivity(intent);
+                } /*else if (list_titles[position] == "Spring Break"){
+                    Intent intent = new Intent(v.getContext(), SpringBreakFriend.class);
+                    v.getContext().startActivity(intent);
+
+                } else if (list_titles[position] == "Books to Read Cooking"){
+                    Intent intent = new Intent(v.getContext(), BookFriend.class);
+                    v.getContext().startActivity(intent);
+
+                }*/
             }
         });
 
