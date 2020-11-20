@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import static com.example.buckit.SharedCode.dpToPx;
@@ -41,9 +42,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout bucketContainer;
     private HomeViewModel homeViewModel;
     private Dialog popup;
+    private Dialog deletePopup;
     private Context thisContext;
     private ImageButton addBucket;
+    private ImageButton deleteBucket;
     private JSONObject master = null;
+    private ArrayList<Button> buttonBucket  = new ArrayList<Button>();
+
 
     public void FirstFragment() {
         // Required empty public constructor
@@ -141,7 +146,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Initialize things
         popup = new Dialog(thisContext);
+        deletePopup = new Dialog(thisContext);
         addBucket = (ImageButton) root.findViewById(R.id.addBucket);
+        deleteBucket = (ImageButton) root.findViewById(R.id.deleteBucket);
         bucketContainer = root.findViewById(R.id.bucketContainer);
 
         // If data has already been created, retrieve it, otherwise display "Add a bucket"
@@ -149,6 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Make it so that clicking a + will create a new container
         addBucket.setOnClickListener(this);
+        deleteBucket.setOnClickListener(this);
         return root;
     }
 
@@ -160,7 +168,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Check if clicked on a +
         if (myid == R.id.backgroundAddBuckets || myid == R.id.addBucket) {
             createBucket();
-        } else if (master != null){
+        }
+        else if (myid == R.id.deleteBucket) {
+            deleteBucket();
+        }
+        else if (master != null){
             // See if it's a bucket
             String bucketID = Integer.toString(myid);
             if (master.has(bucketID)) {
@@ -180,7 +192,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    // Open a popup for to type in name of  bucket to delete
+    public void deleteBucket() {
+//        assert(deletePopup != null);
+        // Create the dialog that asks user to name their bucket
+        deletePopup.setContentView(R.layout.delete_bucket_popup);
+        final EditText editText = (EditText) popup.findViewById(R.id.popupBucketToDelete);
+        Button btnDelete = (Button) popup.findViewById(R.id.popupDeleteBucket);
 
+        // By default, show the popup
+        deletePopup.create();
+
+        // Once name bucket, create a new bucket
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String toDelete = editText.getText().toString().toUpperCase();
+
+                // Make sure that the name for the list is valid
+                if (toDelete.length() > 0) {
+                    for (int i = 0; i < buttonBucket.size(); i++) {
+                        Button currBucket = buttonBucket.get(i);
+                        if (currBucket.getText().equals(toDelete)) {
+                            // delete list from container
+                            bucketContainer.removeView(currBucket);
+
+                            // delete list from JSON
+                            int bucketID  = currBucket.getId();
+                            master.remove(Integer.toString(bucketID));
+
+                            // delete list from internal buttonList arrayList
+                            buttonBucket.remove(currBucket);
+                            break;
+
+                        }
+                    }
+
+                    // Close the popup
+                    deletePopup.dismiss();
+                }
+            }
+        });
+        Log.v("popup","delete popup - activated onlick");
+    }
 
     // Open a popup for user to type in name of new bucket, then calls insertBucket()
     // https://www.youtube.com/watch?v=0DH2tZjJtm0
@@ -242,6 +297,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Create JSON to represent bucket's lists
         if (addToJson)
             createBucketJSON(bucketID, name);
+
+        // Add the newly created bucket "button" to an array so that we can access it for deletion
+        buttonBucket.add(bucket);
     }
 
     // Creates a JSON that looks like this

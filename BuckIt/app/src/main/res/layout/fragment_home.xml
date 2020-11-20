@@ -34,7 +34,7 @@
         <!-- Delete button -->
         <!-- TODO: Clicking on this should enter a mode where you can delete buckets -->
         <ImageButton
-            android:id="@+id/deleteBuckets"
+            android:id="@+id/deleteBucket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
