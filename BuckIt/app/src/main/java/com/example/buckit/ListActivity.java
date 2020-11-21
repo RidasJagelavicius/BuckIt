@@ -10,12 +10,17 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -299,10 +304,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int myid = v.getId();
 
-        if (goalDiffIndicIds.contains(myid))
+        if (diffIndicIds.contains(myid))
             changeDifficulty(myid);
 
-        if (goalCrossOutIds.contains(myid)) {
+        if (crossOutIds.contains(myid)) {
             Toast.makeText(this, "cross out clicked", Toast.LENGTH_SHORT).show();
             crossOut(myid);
         }
@@ -354,10 +359,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 //        }
     }
 
-    private ArrayList<Integer> goalCrossOutIds = new ArrayList<>(); // array of GOAL cross out button IDs
-    private ArrayList<Integer> goalDiffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
-    private ArrayList<Button> goalDiffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
+    private ArrayList<Integer> crossOutIds = new ArrayList<>(); // array of GOAL cross out button IDs
+    private ArrayList<Integer> diffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
+    private ArrayList<Button> diffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
     private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
+    private ArrayList<Boolean> crossedOutItems = new ArrayList<>(); // array of booleans tracking if goal/subgoal is crossed out
 
     private void addGoal() { //Button currList
         //
@@ -377,15 +383,15 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         newGoal.setOrientation(LinearLayout.HORIZONTAL);
 
         // create difficulty icon button, goal text, and cross out button
-        final Button diffIndicator = new Button(this);
-        diffIndicator.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
-        diffIndicator.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
+        final Button diffInd = new Button(this);
+        diffInd.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
+        diffInd.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        diffIndicator.setId(View.generateViewId());
-        goalDiffIndicIds.add(diffIndicator.getId());
-        goalDiffIndicators.add(diffIndicator);
-        diffIndicator.setClickable(true);
-        diffIndicator.setOnClickListener(this);
+        diffInd.setId(View.generateViewId());
+        diffIndicIds.add(diffInd.getId());
+        diffIndicators.add(diffInd);
+        diffInd.setClickable(true);
+        diffInd.setOnClickListener(this);
 //        Toast.makeText(this, goalDiffIndicIds.toString(), Toast.LENGTH_SHORT).show();
 
         EditText goal = new EditText(this);
@@ -401,13 +407,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         goal_crossOut.setGravity(Gravity.CENTER);
         goal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
         goal_crossOut.setId(View.generateViewId());
-        goalCrossOutIds.add(goal_crossOut.getId());
         goal_crossOut.setClickable(true);
         goal_crossOut.setOnClickListener(this);
+        crossOutIds.add(goal_crossOut.getId());
+        crossedOutItems.add(false);
 //        Toast.makeText(this, goalCrossOutIds.toString(), Toast.LENGTH_SHORT).show();
 
 
-        newGoal.addView(diffIndicator);
+        newGoal.addView(diffInd);
         newGoal.addView(goal);
         newGoal.addView(goal_crossOut);
 
@@ -437,29 +444,46 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
     private void changeDifficulty(int id) {
         Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
-        int idx = goalDiffIndicIds.indexOf(id);
-        Button bulletPoint = goalDiffIndicators.get(idx);
+        int idx = diffIndicIds.indexOf(id);
+        Button bulletPoint = diffIndicators.get(idx);
 
         Drawable blankBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank);
         Drawable easyBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_easy);
         Drawable medBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_med);
         Drawable hardBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_hard);
 
-        // check if current bullet is blank (grey)
-        if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_blank).getConstantState()))
+        // check if text is crossed out
+        if (crossedOutItems.get(idx)) {
+            EditText goal = goalsList.get(idx);
+            goal.setText(goal.getText().toString());
+        }
+        
+        // check if current bullet is blank (grey) --> change to easy (green)
+        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_blank).getConstantState()))
             bulletPoint.setBackground(easyBullet);
 
-        // check if current bullet is easy (green)
+        // check if current bullet is easy (green) --> change to med (yellow)
         else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_easy).getConstantState()))
             bulletPoint.setBackground(medBullet);
 
-        // check if current bullet is med (yellow)
+        // check if current bullet is med (yellow) --> change to hard (red)
         else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_med).getConstantState()))
             bulletPoint.setBackground(hardBullet);
 
-        // check if current bullet is hard (red)
-        else
+        // check if current bullet is hard (red) --> change to blank (grey)
+        else {
+//        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_hard).getConstantState())) {
+            // always reset difficulty
             bulletPoint.setBackground(blankBullet);
+            // if item is not crossed out, cross out
+            if (!crossedOutItems.get(idx)) {
+                crossedOutItems.set(idx, true);
+                EditText goal = goalsList.get(idx);
+                goal.getText().setSpan(new StrikethroughSpan(), 0, goal.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+
+        }
 
     }
 
