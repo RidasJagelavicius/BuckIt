@@ -90,6 +90,16 @@
             android:label="Home Cooking">
         </activity>
 
+        <!-- Activity to go to simulated friend's spring break list -->
+        <activity android:name=".ui.inspirationFeed.SpringBreakFriend"
+            android:label="Spring Break">
+        </activity>
+
+        <!-- Activity to go to simulated friend's books to read list -->
+        <activity android:name=".ui.inspirationFeed.BookFriend"
+            android:label="Books to Read">
+        </activity>
+
         <!-- Bucket with inspiration feed travel list added to it -->
         <activity android:name=".ui.inspirationFeed.BucketWithInspo"
             android:label="Travel">

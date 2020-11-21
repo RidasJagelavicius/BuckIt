@@ -50,15 +50,15 @@ public class ViewPagerAdapter extends PagerAdapter {
                 if (list_titles[position] == "Home Cooking"){
                     Intent intent = new Intent(v.getContext(), HomeCookingFriend.class);
                     v.getContext().startActivity(intent);
-                } /*else if (list_titles[position] == "Spring Break"){
+                } else if (list_titles[position] == "Spring Break"){
                     Intent intent = new Intent(v.getContext(), SpringBreakFriend.class);
                     v.getContext().startActivity(intent);
 
-                } else if (list_titles[position] == "Books to Read Cooking"){
+                } else if (list_titles[position] == "Books to Read"){
                     Intent intent = new Intent(v.getContext(), BookFriend.class);
                     v.getContext().startActivity(intent);
 
-                }*/
+                }
             }
         });
 
