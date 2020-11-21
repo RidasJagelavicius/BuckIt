@@ -20,7 +20,7 @@
             android:layout_height="150dp"
             android:textSize="25sp"
             android:gravity="center"
-            android:text="Chocolate Chip Cookies"
+            android:text="Mexican Food"
             android:layout_centerHorizontal="true"
             >
         </Button>
@@ -34,7 +34,7 @@
             android:layout_height="150dp"
             android:textSize="25sp"
             android:gravity="center"
-            android:text="Fried Rice"
+            android:text="Korean Food"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/cook1_list"
             >

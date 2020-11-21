@@ -9,8 +9,9 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="75dp"
         android:layout_marginTop="50dp"
-        android:orientation="vertical">
-<!-- android:background="@color/popupBackground"-->
+        android:orientation="vertical"
+        android:background="@color/popupBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,38 +23,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Bucket name"
-                android:textSize="@dimen/textPrimary"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold" />
+                android:text="Bucket to add: "
+                android:textSize="25sp"
+                android:textColor="@color/textPrimary">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            </TextView>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/popupBucketName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_input_box"
-                    android:backgroundTint="@color/textPrimary"
-                    android:layout_marginBottom="10dp"
-                    android:paddingHorizontal="15dp"
-                    android:paddingVertical="10dp"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/popupCreateBucket"
-                android:layout_width="wrap_content"
+                android:id="@+id/add_to_travel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingHorizontal="50dp"
-                android:layout_marginHorizontal="30dp"
-                android:background="@drawable/round_normal_button"
+                android:gravity="center"
+                android:text="Travel"
+                android:textSize="@dimen/textPrimary"
                 android:textColor="@color/textPrimary"
-                android:text="Create" />
+                />
+
+            <Button
+                android:id="@+id/add_to_cooking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Cooking"
+                android:textSize="@dimen/textPrimary"
+                android:textColor="@color/textPrimary"
+                />
+
+
         </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

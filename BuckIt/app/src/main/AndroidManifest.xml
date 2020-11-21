@@ -67,12 +67,12 @@
 
         <!--Activity for the simulated Chocolate Chip Cookies cooking list -->
         <activity android:name=".ui.inspirationFeed.Cook1List"
-            android:label="Chocolate Chip Cookies">
+            android:label="Mexican Food">
         </activity>
 
         <!--Activity for the simulated Fried Rice cooking list -->
         <activity android:name=".ui.inspirationFeed.Cook2List"
-            android:label="Fried Rice">
+            android:label="Korean Food">
         </activity>
 
         <!--Activity for the simulated Donations kindness list -->
@@ -88,6 +88,17 @@
         <!--Activity to go to simulated friend's home cooking page -->
         <activity android:name=".ui.inspirationFeed.HomeCookingFriend"
             android:label="Home Cooking">
+        </activity>
+
+        <!-- Bucket with inspiration feed travel list added to it -->
+        <activity android:name=".ui.inspirationFeed.BucketWithInspo"
+            android:label="Travel">
+        </activity>
+
+        <!-- Florida list within the user's buckets -->
+        <activity android:name=".ui.inspirationFeed.FloridaInBucket"
+            android:label="Florida">
+
         </activity>
 
     </application>

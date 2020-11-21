@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:layout_gravity="center_horizontal"
-                android:text="Chocolate Chip Cookies"
+                android:text="Mexican Food"
                 android:textColor="@color/textPrimary"
                 android:textSize="35sp"
                 android:textStyle="bold"/>
