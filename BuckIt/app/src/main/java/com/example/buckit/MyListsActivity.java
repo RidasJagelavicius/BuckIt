@@ -38,6 +38,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     private JSONObject dict;
     private JSONObject listMaster = null;
     private ArrayList<Button> buttonList  = new ArrayList<Button>();
+    private String bucketID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             String dictionary = getIntent().getStringExtra("dict");
             dict = new JSONObject(dictionary);
             String name = dict.getString("name");
+            bucketID = dict.getString("bucketID");
             bucket.setText(name);
 
             // Also grab lists
@@ -87,11 +89,19 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
 
     // Load in the saved lists or say "Create your first list"
     private void loadOrBlank() {
+        String jsonString = SharedCode.read(this, "bucket_to_list.json");
+        try {
+            master = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
         // Get the master directory if it exists, otherwise create one
         boolean masterExists = SharedCode.fileExists(this, "lists.json");
         // Read if exists
         if (masterExists) {
-            String jsonString = SharedCode.read(this, "lists.json");
+            jsonString = SharedCode.read(this, "lists.json");
             try {
                 listMaster = new JSONObject(jsonString);
                 Log.v("JSON", "Successfully read list mapping");
@@ -106,7 +116,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                 Log.e("JSON", "Failed to create master JSON file");
                 return;
             } else {
-                String jsonString = SharedCode.read(this, "lists.json");
+                jsonString = SharedCode.read(this, "lists.json");
                 try {
                     listMaster = new JSONObject(jsonString);
                 } catch (Throwable t) {
@@ -120,20 +130,19 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         // If master already existed, populate the buckets
         if (masterExists) {
             // Iterate through keys and make lists of their name
-            Iterator<String> keys = listMaster.keys();
-            if (keys.hasNext()) {
-                do {
-                    String listID = keys.next();
-                    try {
-                        JSONObject list = listMaster.getJSONObject(listID);
-                        String name = list.getString("name");
-                        insertList(name, false);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-                } while(keys.hasNext());
-            }
+            try {
+                JSONObject thisbucket = master.getJSONObject(bucketID);
+                JSONArray listIDs = thisbucket.getJSONArray("lists");
+                for (int i = 0; i < listIDs.length(); i++) {
+                    String listID = listIDs.getString(i);
+                    JSONObject list = listMaster.getJSONObject(listID);
+                    String name = list.getString("name");
+                    insertList(name, false, Integer.parseInt(listID));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            };
         } else {
             // Otherwise add the blank view
             TextView addListText = new TextView(this);
@@ -199,7 +208,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                 // Make sure that the name for the list is valid
                 if (innerText.length() > 0) {
                     // Insert the list
-                    insertList(innerText, true);
+                    insertList(innerText, true, 0);
 
                     // Close the popup
                     popup.dismiss();
@@ -257,7 +266,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     // Given the name for the list, actually inserts the list
     // Also removes the background "Create list" if it's the first list
     // TODO: Check if list with name already exists
-    public void insertList(String name, boolean addToJson) {
+    public void insertList(String name, boolean addToJson, int id) {
         // uppercase name here so later store it as uppercase in JSON
         name = name.toUpperCase();
 
@@ -271,7 +280,15 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         list.setLongClickable(true);
         list.setClickable(true);
 
-        int listID = View.generateViewId();
+        int listID;
+        if (!addToJson)
+            listID = id;
+        else {
+            do {
+                listID = View.generateViewId();
+            }
+            while (listMaster.has(Integer.toString(listID)));
+        }
         list.setId(listID);
 
         // Remove the "Create new list" from the list container IF it's still there
@@ -319,8 +336,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
      */
     public void createListJSON(int listID, String listName) {
         // Now that have the master JSON, insert a record from listID to an array
-        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"goals\": []}";
-//        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : [], \"items\": []}";
+        String toJSON = "{ \"listID\" : \"" + listID + "\", \"name\" : \"" + listName + "\", \"privacy\" : \"private\", \"collaborators\" : \"\", \"photos\" : [], \"goals\": []}";
 
         try {
             JSONObject listStuff = new JSONObject(toJSON);
@@ -356,15 +372,13 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             JSONObject thisbucket = master.getJSONObject(bucketID);
             JSONArray bucketLists = thisbucket.getJSONArray("lists");
 
-
-            bucketLists.put(Integer.toString(listID));
-            thisbucket.put("lists", bucketLists);
+            // Don't touch the order of these
             thisbucket.remove("lists");
             bucketLists.remove(listID);
-
-
-            master.put(bucketID, thisbucket);
+            bucketLists.put(Integer.toString(listID));
+            thisbucket.put("lists", bucketLists);
             master.remove(bucketID);
+            master.put(bucketID, thisbucket);
 
             // Rewrite the JSON
             SharedCode.create(this, "bucket_to_list.json", master.toString());

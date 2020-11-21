@@ -42,6 +42,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/vispublic"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -74,6 +75,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/visfriend"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -116,6 +118,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/vislist"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -148,6 +151,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/visprivate"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"

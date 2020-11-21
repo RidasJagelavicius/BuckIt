@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -74,7 +75,17 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         changePrivacy.setOnClickListener(this);
         popup = new Dialog(this);
 
-        // TODO: Populate the other stuff from the JSON
+        // Load JSON
+        if (listMaster == null) {
+            String jsonString = SharedCode.read(this, "lists.json");
+            try {
+                listMaster = new JSONObject(jsonString);
+                Log.v("JSON", "Successfully loaded lists mapping");
+            } catch (Throwable t) {
+                Log.e("JSON", "Failed to parse listMaster JSON file");
+                return;
+            }
+        }
 
 //         Get name and lists passed from bucket
         try {
@@ -107,40 +118,25 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         // Load in the saved goals or say "Create your first goal"
         loadOrBlank();
+
+        // Populate things
+        try {
+            JSONObject thislist = listMaster.getJSONObject(listID);
+            String privacy = thislist.getString("privacy");
+            if (privacy != "") {
+                updatePrivacy(-1, privacy);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     // Load in the saved goals or say "Create your first goal"
     private void loadOrBlank() {
         // Get the master directory if it exists, otherwise create one
-        boolean masterExists = SharedCode.fileExists(this, "goals.json");
-        // Read if exists
-        if (masterExists) {
-            String jsonString = SharedCode.read(this, "goals.json");
-            try {
-                listMaster = new JSONObject(jsonString);
-                Log.v("JSON", "Successfully read goal mapping");
-            } catch (Throwable t) {
-                Log.e("JSON", "Failed to parse master JSON file");
-                return;
-            }
-        } else {
-            // Create
-            boolean fileCreated = SharedCode.create(this, "goals.json", "{}");
-            if (!fileCreated) {
-                Log.e("JSON", "Failed to create master JSON file");
-                return;
-            } else {
-                String jsonString = SharedCode.read(this, "goals.json");
-                try {
-                    listMaster = new JSONObject(jsonString);
-                } catch (Throwable t) {
-                    Log.e("JSON", "Failed to parse master JSON file");
-                    t.printStackTrace();
-                    return;
-                }
-            }
-        }
-
+        // DO NOT MAKE THIS GOALS
+        boolean masterExists = listMaster != null;
         // If master already existed, populate the buckets
         if (masterExists) {
             // Iterate through keys and make goals of their name
@@ -290,6 +286,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         // Add the newly created goal "button" to an array so that we can access it for deletion
         buttonGoal.add(goal);
+
+        // Update privacy icon if saved
+
     }
 
     @Override
@@ -306,7 +305,18 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             // By default, show the popup
             popup.show();
 
-            // TODO: Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
+            // Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
+            ImageView public_ = popup.findViewById(R.id.vispublic);
+            ImageView private_ = popup.findViewById(R.id.visprivate);
+            ImageView friend_ = popup.findViewById(R.id.visfriend);
+            ImageView list_ = popup.findViewById(R.id.vislist);
+            public_.setOnClickListener(this);
+            private_.setOnClickListener(this);
+            friend_.setOnClickListener(this);
+            list_.setOnClickListener(this);
+        } else if (myid == R.id.visfriend || myid == R.id.vislist || myid == R.id.visprivate || myid == R.id.vispublic) {
+            updatePrivacy(myid, null);
+            popup.dismiss();
         }
 
         try {
@@ -350,17 +360,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
     // Insert a picture path into this list's photos array, then update listMaster JSON
     private void addPathToPhotos(String path) {
-        if (listMaster == null) {
-            String jsonString = SharedCode.read(this, "lists.json");
-            try {
-                listMaster = new JSONObject(jsonString);
-                Log.v("JSON", "Successfully loaded lists mapping");
-            } catch (Throwable t) {
-                Log.e("JSON", "Failed to parse listMaster JSON file");
-                return;
-            }
-        }
-
         try {
             JSONObject thislist = listMaster.getJSONObject(listID);
             JSONArray photos = thislist.getJSONArray("photos");
@@ -417,6 +416,44 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             Log.v("bitmap", "Set bitmap");
         }
         Log.v("lastrowChildCount", Integer.toString(lastRow.getChildCount()));
+    }
+
+    // Update JSON and image by id OR by string
+    private void updatePrivacy(int id, String loadPrivacy) {
+        // Need to change JSON and change picture
+        String privacy = null;
+        int image  = -1;
+        if (id == R.id.vispublic || (loadPrivacy != null && loadPrivacy.equals("public"))) {
+            privacy = "public";
+            image = R.drawable.public_eye;
+        } else if (id == R.id.vislist || (loadPrivacy != null && loadPrivacy.equals("list"))) {
+            privacy = "list";
+            image = R.drawable.collaborator;
+        } else if (id == R.id.visfriend || (loadPrivacy != null && loadPrivacy.equals("friend"))) {
+            privacy = "friend";
+            image = R.drawable.friend;
+        } else {
+            privacy = "private";
+            image = R.drawable.private_eye;
+        }
+
+        // Change profile picture
+        changePrivacy.setImageResource(image);
+
+        // Update JSON
+        try {
+            JSONObject thislist = listMaster.getJSONObject(listID);
+
+            // Remake JSON
+            thislist.remove("privacy");
+            thislist.put("privacy", privacy);
+            listMaster.remove(listID);
+            listMaster.put(listID, thislist);
+            SharedCode.create(this, "lists.json", listMaster.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     @Override

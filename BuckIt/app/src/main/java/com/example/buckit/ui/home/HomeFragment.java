@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     try {
                         JSONObject bucket = master.getJSONObject(bucketID);
                         String name = bucket.getString("name");
-                        insertBucket(name, false);
+                        insertBucket(name, false, Integer.parseInt(bucketID));
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return;
@@ -257,7 +257,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 // Make sure that the name for the bucket is valid
                 if (innerText.length() > 0) {
                     // Insert the bucket
-                    insertBucket(innerText, true);
+                    insertBucket(innerText, true, 0);
 
                     // Close the popup
                     popup.dismiss();
@@ -269,7 +269,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     // Given the name for the bucket, actually inserts the bucket
     // Also removes the background + icon if it's the first bucket
     // TODO: Check if bucket with name already exists?
-    public void insertBucket(String name, boolean addToJson) {
+    public void insertBucket(String name, boolean addToJson, int id) {
         // uppercase name here so later store it as uppercase in JSON
         name = name.toUpperCase();
 
@@ -281,7 +281,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bucket.setText(name);
         bucket.setTransformationMethod(null); // removes the ALL-caps
 
-        int bucketID = View.generateViewId();
+        int bucketID;
+        if (!addToJson)
+                bucketID = id;
+        else {
+            do {bucketID = View.generateViewId();}
+            while (master.has(Integer.toString(bucketID)));
+        }
         bucket.setId(bucketID);
 
         // Remove the + from the bucket container IF it's still there
