@@ -381,11 +381,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         diffIndicator.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
         diffIndicator.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
 
-//        diffIndicator.generateViewId();
-        // create custom viewId - built in func generates -1 everytime for some reason
-        int customId = 1000 + goalDiffIndicators.size();
-        diffIndicator.setId(customId);
-        goalDiffIndicIds.add(customId);
+        diffIndicator.setId(View.generateViewId());
+        goalDiffIndicIds.add(diffIndicator.getId());
         goalDiffIndicators.add(diffIndicator);
         diffIndicator.setClickable(true);
         diffIndicator.setOnClickListener(this);
@@ -407,6 +404,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         goalCrossOutIds.add(goal_crossOut.getId());
         goal_crossOut.setClickable(true);
         goal_crossOut.setOnClickListener(this);
+//        Toast.makeText(this, goalCrossOutIds.toString(), Toast.LENGTH_SHORT).show();
+
 
         newGoal.addView(diffIndicator);
         newGoal.addView(goal);
@@ -434,7 +433,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         subgoal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
     }
-    
+
 
     private void changeDifficulty(int id) {
         Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
