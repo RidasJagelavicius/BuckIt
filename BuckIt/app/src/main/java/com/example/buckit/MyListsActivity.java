@@ -1,6 +1,7 @@
 package com.example.buckit;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -36,8 +37,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     private JSONObject dict;
     private JSONObject listMaster = null;
     private ArrayList<Button> buttonList  = new ArrayList<>(); // array of LIST buttons
-    private ArrayList<Integer> goalCrossOutIds = new ArrayList<>(); // array of GOAL cross out button IDs
-    private ArrayList<Integer> goalIds = new ArrayList<>(); // array of GOAL edittext IDs
     private String bucketID;
 
     @Override
@@ -170,92 +169,21 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         if (listMaster != null) {
             String listID = Integer.toString(myid);
             if (listMaster.has(listID)) {
-                // show the add goal "dropdown"
-                for (int i = 0; i < buttonList.size(); i++) {
-                    Button currList = buttonList.get(i);
-                    if (currList.getId() == myid)
-                        addGoal(currList);
-
-                }
                 // If it is, start a new Activity
-//                try {
-//                    String dictionary = listMaster.getString(listID);
-//
-//                    // Start the activity that shows the lists
-//                    Intent intent = new Intent(this, ListActivity.class);
-//                    intent.putExtra("dict", dictionary); // pass the dictionary to the list
-//                    startActivity(intent);
+                try {
+                    String dictionary = listMaster.getString(listID);
 
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    return;
-//                }
+                    // Start the activity that shows the lists
+                    Intent intent = new Intent(this, ListActivity.class);
+                    intent.putExtra("dict", dictionary); // pass the dictionary to the list
+                    startActivity(intent);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
             }
         }
-    }
-
-    private void addGoal(Button currList) {
-        //
-//        Button list = new Button(this);
-//        LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-//        listParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
-//        list.setLayoutParams(listParams);
-//        list.setText(name);
-//        list.setTransformationMethod(null); // removes the ALL-caps
-//        list.setLongClickable(true);
-//        list.setClickable(true);
-
-        // each new element (a newGoal) consists of a difficult indicator (button) & a goal (text)
-        LinearLayout newGoal = new LinearLayout(this);
-//        LinearLayout.LayoutParams newGoal = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-        newGoal.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        newGoal.setOrientation(LinearLayout.HORIZONTAL);
-
-        // create difficulty icon button, goal text, and cross out button
-        Button diffIndicator = new Button(this);
-        diffIndicator.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
-//        diffIndicator.setGravity(Gravity.START);
-//        diffIndicator.setText(" ");
-        diffIndicator.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        EditText goal = new EditText(this);
-        goal.setHint(R.string.new_goal);
-        goal.setMaxLines(2);
-        goal.generateViewId();
-        goalIds.add(goal.getId());
-
-        Button goal_crossOut = new Button(this);
-        goal_crossOut.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
-        goal_crossOut.setText("x");
-        goal_crossOut.setGravity(Gravity.CENTER);
-        goal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
-        goal_crossOut.generateViewId();
-        goalCrossOutIds.add(goal_crossOut.getId());
-
-        newGoal.addView(diffIndicator);
-        newGoal.addView(goal);
-        newGoal.addView(goal_crossOut);
-
-        // Insert goal into bucket container
-        if(newGoal.getParent() != null) {
-            ((ViewGroup)newGoal.getParent()).removeView(newGoal); // fix for some weird error
-        }
-
-        int idx = listContainer.indexOfChild(currList);
-        listContainer.addView(newGoal,idx + 1);
-    }
-
-    private void addSubgoal() {
-        EditText subGoal = new EditText(this);
-        subGoal.setHint(R.string.new_subgoal);
-        subGoal.setMaxLines(2);
-
-        Button subgoal_crossOut = new Button(this);
-        subgoal_crossOut.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
-        subgoal_crossOut.setText("x");
-        subgoal_crossOut.setGravity(Gravity.RIGHT);
-        subgoal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
     }
 
     // Open a popup for user to type in name of new list, then calls insertList()

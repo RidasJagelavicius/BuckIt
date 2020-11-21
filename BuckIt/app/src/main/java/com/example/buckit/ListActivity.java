@@ -106,7 +106,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         newGoalButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                createGoal();
+//                createGoal();
+                addGoal();
             }
         });
 
@@ -192,6 +193,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 // Make sure that the name for the goal is valid
                 if (innerText.length() > 0) {
                     // Insert the goal
+                    addGoal();
                     insertGoal(innerText, true);
 
                     // Close the popup
@@ -319,18 +321,98 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             popup.dismiss();
         }
 
-        try {
-            for (int i = 0; i < buttonGoal.size(); i++) {
-                Button currGoal = buttonGoal.get(i);
-                if (myid == currGoal.getId()) {
-                    Intent intent = new Intent(this, SubgoalActivity.class);
-                    startActivity(intent);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
+//        try {
+//
+////                for (int i = 0; i < buttonList.size(); i++) {
+////                    Button currList = buttonList.get(i);
+////                    if (currList.getId() == myid)
+////                        addGoal(currList);
+////
+////                }
+//            // show the add goal "dropdown"
+//            for (int i = 0; i < buttonGoal.size(); i++) {
+//                Button currGoal = buttonGoal.get(i);
+//                if (myid == currGoal.getId()) {
+////                    addGoal(currGoal);
+////                    Intent intent = new Intent(this, SubgoalActivity.class);
+////                    startActivity(intent);
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return;
+//        }
+    }
+
+    private ArrayList<Integer> goalCrossOutIds = new ArrayList<>(); // array of GOAL cross out button IDs
+    private ArrayList<Integer> goalDiffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
+    private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
+
+    private void addGoal() { //Button currList
+        //
+//        Button list = new Button(this);
+//        LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
+//        listParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
+//        list.setLayoutParams(listParams);
+//        list.setText(name);
+//        list.setTransformationMethod(null); // removes the ALL-caps
+//        list.setLongClickable(true);
+//        list.setClickable(true);
+
+        // each new element (a newGoal) consists of a difficult indicator (button) & a goal (text)
+        LinearLayout newGoal = new LinearLayout(this);
+//        LinearLayout.LayoutParams newGoal = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
+        newGoal.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        newGoal.setOrientation(LinearLayout.HORIZONTAL);
+
+        // create difficulty icon button, goal text, and cross out button
+        Button diffIndicator = new Button(this);
+        diffIndicator.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
+        diffIndicator.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
+        diffIndicator.generateViewId();
+        goalDiffIndicIds.add(diffIndicator.getId());
+
+        EditText goal = new EditText(this);
+        goal.setHint(R.string.new_goal);
+//        goal.setMaxLines(2);
+        goal.setSingleLine(false);
+        goal.setLayoutParams(new ViewGroup.LayoutParams(750,ViewGroup.LayoutParams.WRAP_CONTENT));
+        goal.generateViewId();
+        goalsList.add(goal);
+
+        Button goal_crossOut = new Button(this);
+        goal_crossOut.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+        goal_crossOut.setText("x");
+        goal_crossOut.setGravity(Gravity.CENTER);
+        goal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
+        goal_crossOut.generateViewId();
+        goalCrossOutIds.add(goal_crossOut.getId());
+
+        newGoal.addView(diffIndicator);
+        newGoal.addView(goal);
+        newGoal.addView(goal_crossOut);
+
+        // Insert goal into bucket container
+        if(newGoal.getParent() != null) {
+            ((ViewGroup)newGoal.getParent()).removeView(newGoal); // fix for some weird error
         }
+
+//        int idx = goalContainer.indexOfChild(currList);
+//        goalContainer.addView(newGoal,idx + 1);
+        goalContainer.addView((newGoal));
+    }
+
+    private void addSubgoal() {
+        EditText subGoal = new EditText(this);
+        subGoal.setHint(R.string.new_subgoal);
+        subGoal.setMaxLines(2);
+
+        Button subgoal_crossOut = new Button(this);
+        subgoal_crossOut.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+        subgoal_crossOut.setText("x");
+        subgoal_crossOut.setGravity(Gravity.RIGHT);
+        subgoal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
     }
 
     // Allow user to select an image from gallery or from phone when click on Add Photo
