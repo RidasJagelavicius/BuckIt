@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -297,6 +299,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int myid = v.getId();
 
+        if (goalDiffIndicIds.contains(myid))
+            changeDifficulty(myid);
+
+        if (goalCrossOutIds.contains(myid)) {
+            Toast.makeText(this, "cross out clicked", Toast.LENGTH_SHORT).show();
+            crossOut(myid);
+        }
+
         if (myid == R.id.addPhoto) {
             verifyStoragePermissions(this);
             selectImage(this);
@@ -346,6 +356,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<Integer> goalCrossOutIds = new ArrayList<>(); // array of GOAL cross out button IDs
     private ArrayList<Integer> goalDiffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
+    private ArrayList<Button> goalDiffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
     private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
 
     private void addGoal() { //Button currList
@@ -366,18 +377,25 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         newGoal.setOrientation(LinearLayout.HORIZONTAL);
 
         // create difficulty icon button, goal text, and cross out button
-        Button diffIndicator = new Button(this);
+        final Button diffIndicator = new Button(this);
         diffIndicator.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
         diffIndicator.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
-        diffIndicator.generateViewId();
-        goalDiffIndicIds.add(diffIndicator.getId());
+
+//        diffIndicator.generateViewId();
+        // create custom viewId - built in func generates -1 everytime for some reason
+        int customId = 1000 + goalDiffIndicators.size();
+        diffIndicator.setId(customId);
+        goalDiffIndicIds.add(customId);
+        goalDiffIndicators.add(diffIndicator);
+        diffIndicator.setClickable(true);
+        diffIndicator.setOnClickListener(this);
+//        Toast.makeText(this, goalDiffIndicIds.toString(), Toast.LENGTH_SHORT).show();
 
         EditText goal = new EditText(this);
         goal.setHint(R.string.new_goal);
-//        goal.setMaxLines(2);
         goal.setSingleLine(false);
         goal.setLayoutParams(new ViewGroup.LayoutParams(750,ViewGroup.LayoutParams.WRAP_CONTENT));
-        goal.generateViewId();
+        goal.setId(View.generateViewId());
         goalsList.add(goal);
 
         Button goal_crossOut = new Button(this);
@@ -385,8 +403,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         goal_crossOut.setText("x");
         goal_crossOut.setGravity(Gravity.CENTER);
         goal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
-        goal_crossOut.generateViewId();
+        goal_crossOut.setId(View.generateViewId());
         goalCrossOutIds.add(goal_crossOut.getId());
+        goal_crossOut.setClickable(true);
+        goal_crossOut.setOnClickListener(this);
 
         newGoal.addView(diffIndicator);
         newGoal.addView(goal);
@@ -412,6 +432,39 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         subgoal_crossOut.setText("x");
         subgoal_crossOut.setGravity(Gravity.RIGHT);
         subgoal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+    }
+    
+
+    private void changeDifficulty(int id) {
+        Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
+        int idx = goalDiffIndicIds.indexOf(id);
+        Button bulletPoint = goalDiffIndicators.get(idx);
+
+        Drawable blankBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank);
+        Drawable easyBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_easy);
+        Drawable medBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_med);
+        Drawable hardBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_hard);
+
+        // check if current bullet is blank (grey)
+        if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_blank).getConstantState()))
+            bulletPoint.setBackground(easyBullet);
+
+        // check if current bullet is easy (green)
+        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_easy).getConstantState()))
+            bulletPoint.setBackground(medBullet);
+
+        // check if current bullet is med (yellow)
+        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_med).getConstantState()))
+            bulletPoint.setBackground(hardBullet);
+
+        // check if current bullet is hard (red)
+        else
+            bulletPoint.setBackground(blankBullet);
+
+    }
+
+    private void crossOut(int id) {
 
     }
 

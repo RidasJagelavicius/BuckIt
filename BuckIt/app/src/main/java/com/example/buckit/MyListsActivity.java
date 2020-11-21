@@ -276,7 +276,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         list.setLayoutParams(listParams);
         list.setText(name);
         list.setTransformationMethod(null); // removes the ALL-caps
-        list.setLongClickable(true);
         list.setClickable(true);
 
         int listID;
