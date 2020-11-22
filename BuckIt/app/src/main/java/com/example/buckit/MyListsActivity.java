@@ -1,6 +1,7 @@
 package com.example.buckit;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     private TextView bucket;
     private LinearLayout listContainer;
     private ImageButton newListButton;
-    private ImageButton deleteListButton;
     private Dialog popup;
     private Dialog deletePopup;
     private JSONObject master = null;
@@ -39,6 +39,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     private JSONObject listMaster = null;
     private ArrayList<Button> buttonList  = new ArrayList<>(); // array of LIST buttons
     private String bucketID;
+    private Context currContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +69,11 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         // Initialize other components
         listContainer = (LinearLayout) findViewById(R.id.listContainer);
         newListButton = (ImageButton) findViewById(R.id.addList);
-        deleteListButton = (ImageButton) findViewById(R.id.deleteList);
 
         newListButton.setOnClickListener(this);
-        deleteListButton.setOnClickListener(this);
         newListButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 createList();
-            }
-        });
-        deleteListButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                deleteList();
             }
         });
 
@@ -271,7 +265,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         name = name.toUpperCase(); // uppercase name here so later store it as uppercase in JSON
 
         // A list will just be a styled button or something
-        Button list = new Button(this);
+        final Button list = new Button(this);
         LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
         listParams.setMargins(dpToPx(10), 0, dpToPx(10), dpToPx(5));
         list.setLayoutParams(listParams);
@@ -298,6 +292,40 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
 
         // Give the button a listener so clicking on it opens its lists
         list.setOnClickListener(this);
+        list.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                popup.setContentView(R.layout.delete_popup);
+                popup.show();
+
+                Button cancel = popup.findViewById(R.id.cancel);
+                Button delete = popup.findViewById(R.id.delete);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup.dismiss();
+                    }
+                });
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View t) {
+                        // delete list from container
+                        listContainer.removeView(list);
+
+                        // delete list from JSON
+                        int listID  = list.getId();
+                        listMaster.remove(Integer.toString(listID));
+                        SharedCode.create(currContext, "lists.json", listMaster.toString());
+
+                        // delete list from internal buttonList arrayList
+                        buttonList.remove(list);
+
+                        popup.dismiss();
+                    }
+                });
+                return true;
+            }
+        });
 
         // Insert bucket into bucket container
         if(list.getParent() != null)
