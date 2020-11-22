@@ -179,37 +179,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // Open a popup for user to type in name of new goal, then calls insertGoal()
-    // https://www.youtube.com/watch?v=0DH2tZjJtm0
-    public void createGoal() {
-        assert(popup != null);
-        // Create the dialog that asks user to name their bucket
-        popup.setContentView(R.layout.new_goal_popup);
-        final EditText editText = (EditText) popup.findViewById(R.id.popupGoalName);
-        Button btnCreate = (Button) popup.findViewById(R.id.popupCreateGoal);
-
-        // By default, show the popup
-        popup.show();
-
-        // Once name goal, create a new goal
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String innerText = editText.getText().toString();
-
-                // Make sure that the name for the goal is valid
-                if (innerText.length() > 0) {
-                    // Insert the goal
-                    addGoal();
-                    insertGoal(innerText, true);
-
-                    // Close the popup
-                    popup.dismiss();
-                }
-            }
-        });
-    }
-
     // Open a popup for user to type in name of goal to delete
     public void deleteGoal() {
         assert(deletePopup != null);
@@ -256,50 +225,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         Log.v("popup","delete popup - activated onlick");
     }
 
-    // Given the name for the goal, actually inserts the goal
-    // Also removes the background "Create goal" if it's the first goal
-    // TODO: Check if goal with name already exists
-    public void insertGoal(String name, boolean addToJson) {
-        // uppercase name here so later store it as uppercase in JSON
-        name = name.toUpperCase();
-
-        // A goal will just be a styled button or something
-        Button goal = new Button(this);
-        LinearLayout.LayoutParams goalParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-        goalParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
-        goal.setLayoutParams(goalParams);
-        goal.setText(name);
-        goal.setTransformationMethod(null); // removes the ALL-caps
-        goal.setLongClickable(true);
-        goal.setClickable(true);
-
-        int goalID = View.generateViewId();
-        goal.setId(goalID);
-
-        // Remove the "Create new goal" from the goal container IF it's still there
-        if (goalContainer.findViewById(R.id.backgroundAddList) != null)
-            goalContainer.removeAllViews();
-
-        // Give the button a listener so clicking on it opens its goals
-        goal.setOnClickListener(this);
-
-        // Insert bucket into bucket container
-        if(goal.getParent() != null) {
-            ((ViewGroup)goal.getParent()).removeView(goal); // fix for some weird error
-        }
-        goalContainer.addView(goal);
-
-        // Create JSON to represent bucket's goals
-//        if (addToJson)
-//            createGoalJSON(goalID, name);
-
-        // Add the newly created goal "button" to an array so that we can access it for deletion
-        buttonGoal.add(goal);
-
-        // Update privacy icon if saved
-
-    }
-
     @Override
     public void onClick(View v) {
         int myid = v.getId();
@@ -313,7 +238,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (plusButtonIds.contains(myid)) {
-            Toast.makeText(this, "add subgoal", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "add subgoal", Toast.LENGTH_SHORT).show();
             int idx = plusButtonIds.indexOf(myid);
             addSubgoal(linearLayoutsList.get(idx));
         }
@@ -322,11 +247,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             verifyStoragePermissions(this);
             selectImage(this);
         } else if (myid == R.id.changePrivacy) {
-            // Create the dialog that allows user to click on each
-            popup.setContentView(R.layout.change_privacy_popup);
-
-            // By default, show the popup
-            popup.show();
+            popup.setContentView(R.layout.change_privacy_popup); // Create the dialog that allows user to click on each
+            popup.show(); // By default, show the popup
 
             // Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
             ImageView public_ = popup.findViewById(R.id.vispublic);
@@ -341,34 +263,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             updatePrivacy(myid, null);
             popup.dismiss();
         }
-
-//        try {
-//
-////                for (int i = 0; i < buttonList.size(); i++) {
-////                    Button currList = buttonList.get(i);
-////                    if (currList.getId() == myid)
-////                        addGoal(currList);
-////
-////                }
-//            // show the add goal "dropdown"
-//            for (int i = 0; i < buttonGoal.size(); i++) {
-//                Button currGoal = buttonGoal.get(i);
-//                if (myid == currGoal.getId()) {
-////                    addGoal(currGoal);
-////                    Intent intent = new Intent(this, SubgoalActivity.class);
-////                    startActivity(intent);
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return;
-//        }
     }
 
     private ArrayList<Integer> xButtonIds = new ArrayList<>(); // array of GOAL cross out button IDs
     private ArrayList<Integer> diffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
     private ArrayList<Button> diffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
-    private ArrayList<Button> plusButtons = new ArrayList<>(); // array of plus buttons (buttons which add a new subgoal)
     private ArrayList<Integer> plusButtonIds = new ArrayList<>(); // array of plus buttons IDs
     private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
     private ArrayList<Boolean> crossedOutItems = new ArrayList<>(); // array of booleans tracking if goal/subgoal is crossed out
@@ -395,7 +294,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         diffIndicators.add(diffInd);
         diffInd.setClickable(true);
         diffInd.setOnClickListener(this);
-//        Toast.makeText(this, goalDiffIndicIds.toString(), Toast.LENGTH_SHORT).show();
 
         // goal
         EditText goal = new EditText(this);
@@ -415,7 +313,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         plusButton.setClickable(true);
         plusButton.setOnClickListener(this);
         plusButtonIds.add(plusButton.getId());
-        plusButtons.add(plusButton);
         crossedOutItems.add(false);
 
         // delete goal button
@@ -430,20 +327,17 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         xButton.setOnClickListener(this);
         xButtonIds.add(xButton.getId());
         crossedOutItems.add(false);
-//        Toast.makeText(this, goalCrossOutIds.toString(), Toast.LENGTH_SHORT).show();
 
+        // insert into linear layout
         newGoal.addView(diffInd);
         newGoal.addView(goal);
         newGoal.addView(plusButton);
         newGoal.addView(xButton);
 
-        // Insert goal into bucket container
-        if(newGoal.getParent() != null) {
+        // insert goal into bucket container
+        if(newGoal.getParent() != null)
             ((ViewGroup)newGoal.getParent()).removeView(newGoal); // fix for some weird error
-        }
 
-//        int idx = goalContainer.indexOfChild(currList);
-//        goalContainer.addView(newGoal,idx + 1);
         goalContainer.addView((newGoal));
     }
 
@@ -459,7 +353,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         newSubgoal.setOrientation(LinearLayout.HORIZONTAL);
         linearLayoutsList.add(newSubgoal);
 
-        // create difficulty icon button, goal text, and cross out button
+        // create difficulty button
         final Button diffInd = new Button(this);
         diffInd.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
         diffInd.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -469,8 +363,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         diffIndicators.add(diffInd);
         diffInd.setClickable(true);
         diffInd.setOnClickListener(this);
-//        Toast.makeText(this, goalDiffIndicIds.toString(), Toast.LENGTH_SHORT).show();
 
+        // add subgoal button
         EditText subgoal = new EditText(this);
         subgoal.setHint(R.string.new_subgoal);
         subgoal.setSingleLine(false);
@@ -478,6 +372,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         subgoal.setId(View.generateViewId());
         goalsList.add(subgoal);
 
+        // delete subgoal button
         Button xButton = new Button(this);
         xButton.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
         xButton.setTransformationMethod(null);
@@ -489,22 +384,20 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         xButton.setOnClickListener(this);
         xButtonIds.add(xButton.getId());
         crossedOutItems.add(false);
-//        Toast.makeText(this, goalCrossOutIds.toString(), Toast.LENGTH_SHORT).show();
 
+        // insert into linear layout
         newSubgoal.addView(diffInd);
         newSubgoal.addView(subgoal);
         newSubgoal.addView(xButton);
 
-        // Insert goal into bucket container
-        if(newSubgoal.getParent() != null) {
+        // insert subgoal into bucket container
+        if(newSubgoal.getParent() != null)
             ((ViewGroup)newSubgoal.getParent()).removeView(newSubgoal); // fix for some weird error
-        }
 
         // parentLayout - the layout that contains the GOAL that the subgoal is nested under
         // find idx of parentLayout in our goal container and then add new subgoal right below
         int idx = goalContainer.indexOfChild(parentLayout);
         goalContainer.addView(newSubgoal,idx+1);
-//        Toast.makeText(this, Integer.toString(idx), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -518,30 +411,33 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         Drawable medBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_med);
         Drawable hardBullet = ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_hard);
 
-        // check if text is crossed out
+        // if text is crossed out, remove strikethrough
         if (crossedOutItems.get(idx)) {
             EditText goal = goalsList.get(idx);
             goal.setText(goal.getText().toString());
+            crossedOutItems.set(idx, false);
         }
 
-        // check if current bullet is blank (grey) --> change to easy (green)
-        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_blank).getConstantState()))
+        // if current bullet is blank (grey) --> change to easy (green)
+        else if (Objects.equals(bulletPoint.getBackground().getConstantState(),
+                this.getResources().getDrawable(R.drawable.difficulty_indicator_blank).getConstantState()))
             bulletPoint.setBackground(easyBullet);
 
-        // check if current bullet is easy (green) --> change to med (yellow)
-        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_easy).getConstantState()))
+        // easy (green) --> med (yellow)
+        else if (Objects.equals(bulletPoint.getBackground().getConstantState(),
+                this.getResources().getDrawable(R.drawable.difficulty_indicator_easy).getConstantState()))
             bulletPoint.setBackground(medBullet);
 
-        // check if current bullet is med (yellow) --> change to hard (red)
-        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_med).getConstantState()))
+        // med (yellow) --> hard (red)
+        else if (Objects.equals(bulletPoint.getBackground().getConstantState(),
+                this.getResources().getDrawable(R.drawable.difficulty_indicator_med).getConstantState()))
             bulletPoint.setBackground(hardBullet);
 
-        // check if current bullet is hard (red) --> change to blank (grey)
+        // hard (red) --> blank (grey)
         else {
-//        else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_hard).getConstantState())) {
-            // always reset difficulty
-            bulletPoint.setBackground(blankBullet);
-            // if item is not crossed out, cross out
+            bulletPoint.setBackground(blankBullet); // always reset difficulty
+
+            // cross out item
             if (!crossedOutItems.get(idx)) {
                 EditText goal = goalsList.get(idx);
                 if (goal.length() > 0) {
@@ -549,10 +445,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                     crossedOutItems.set(idx, true);
                 }
             }
-
-
         }
-
     }
 
     private void crossOut(int id) {
