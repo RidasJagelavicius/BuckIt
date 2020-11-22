@@ -68,6 +68,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton deleteGoalButton;
     private Dialog popup;
     private Dialog deletePopup;
+    private Dialog collaboratorsPopup;
+    private LinearLayout addCollab;
     private ArrayList<Button> buttonGoal  = new ArrayList<Button>();
 
     @Override
@@ -82,6 +84,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         changePrivacy = (ImageButton) findViewById(R.id.changePrivacy);
         changePrivacy.setOnClickListener(this);
         popup = new Dialog(this);
+        collaboratorsPopup = new Dialog(this);
+        addCollab = findViewById(R.id.addCollaborator);
 
         // Load JSON
         if (listMaster == null) {
@@ -125,6 +129,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        addCollab.setOnClickListener(this);
+
         // Load in the saved goals or say "Create your first goal"
         loadOrBlank();
 
@@ -138,6 +144,27 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         } catch (JSONException e) {
             e.printStackTrace();
             return;
+        }
+    }
+
+    // Handles clicking on bell, meg, sita, or the search button
+    private void collaboratorHandler() {
+        EditText collaboratorName = collaboratorsPopup.findViewById(R.id.collaboratorName);
+        String input = collaboratorName.getText().toString();
+
+        // Check not empty
+        if (input.length() == 0)
+            return;
+        else {
+            // If has an @, remove it just incase starts with one
+            input = input.replace("@", "");
+
+            // Insert our own @ into the front (this way can enter @bell or bell)
+            input = "@" + input;
+
+            String message = "Invited " + input + " to collaborate";
+            Toast.makeText(ListActivity.this, message, Toast.LENGTH_SHORT).show();
+            collaboratorsPopup.dismiss();
         }
     }
 
@@ -263,6 +290,37 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         } else if (myid == R.id.visfriend || myid == R.id.vislist || myid == R.id.visprivate || myid == R.id.vispublic) {
             updatePrivacy(myid, null);
             popup.dismiss();
+        } else if (myid == R.id.collaboratorSearch) {
+            collaboratorHandler();
+        } else if (myid == R.id.addCollaborator) {
+            collaboratorsPopup.setContentView(R.layout.change_collaborator_popup);
+                collaboratorsPopup.show();
+
+                // Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
+                TextView bell = collaboratorsPopup.findViewById(R.id.bell);
+                TextView meg = collaboratorsPopup.findViewById(R.id.meghana);
+                TextView sita = collaboratorsPopup.findViewById(R.id.sita);
+                ImageButton searchCollab = collaboratorsPopup.findViewById(R.id.collaboratorSearch);
+
+                bell.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(ListActivity.this, "Invited @bell to collaborate", Toast.LENGTH_SHORT).show();
+                        collaboratorsPopup.dismiss();
+                    }
+                });
+                meg.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(ListActivity.this, "Invited @og_meghana to collaborate", Toast.LENGTH_SHORT).show();
+                        collaboratorsPopup.dismiss();
+                    }
+                });
+                sita.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Toast.makeText(ListActivity.this, "Invited @mamasita to collaborate", Toast.LENGTH_SHORT).show();
+                        collaboratorsPopup.dismiss();
+                    }
+                });
+                searchCollab.setOnClickListener(this);
         }
     }
 
