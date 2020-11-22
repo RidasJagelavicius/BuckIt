@@ -276,10 +276,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // A bucket will just be a styled button or something
         Button bucket = new Button(thisContext);
         LinearLayout.LayoutParams bucketParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-        bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
+        bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), dpToPx(5));
         bucket.setLayoutParams(bucketParams);
         bucket.setText(name);
         bucket.setTransformationMethod(null); // removes the ALL-caps
+        bucket.setBackground(ContextCompat.getDrawable(thisContext, R.drawable.round_normal_outline_button));
+
 
         int bucketID;
         if (!addToJson)

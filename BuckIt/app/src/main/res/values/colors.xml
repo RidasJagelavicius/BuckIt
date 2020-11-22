@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#979DD1</color>
     <color name="colorPrimaryDark">#5F638A</color>
-    <color name="colorAccent">#BBF2ED</color>
+    <color name="colorAccent">#979DD1</color>
 
     <!-- Project-specific -->
-    <color name="buttonNormal">#B2CDF7</color>
+    <color name="superLightPurple">#E8EAFA</color>
+    <color name="buttonNormal">#CED2F5</color>
     <color name="buttonFriendly">#B5F5D6</color>
     <color name="buttonHazard">#F5BAB5</color>
     <color name="textPrimary">#222222</color>

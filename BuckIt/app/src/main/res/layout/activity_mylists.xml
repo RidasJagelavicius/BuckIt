@@ -56,7 +56,9 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/trash" />
+                android:background="@color/transparent"
+                android:padding="5dp"
+                android:src="@drawable/ic_trash" />
 
             <!-- Add a new bucket -->
             <!-- TODO: Clicking on this should add a new bucket -->
@@ -67,7 +69,8 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/add" />
+                android:background="@color/transparent"
+                android:src="@drawable/ic_add" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

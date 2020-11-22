@@ -273,11 +273,13 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         // A list will just be a styled button or something
         Button list = new Button(this);
         LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-        listParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
+        listParams.setMargins(dpToPx(10), 0, dpToPx(10), dpToPx(5));
         list.setLayoutParams(listParams);
         list.setText(name);
         list.setTransformationMethod(null); // removes the ALL-caps
         list.setClickable(true);
+        list.setBackground(ContextCompat.getDrawable(this, R.drawable.round_normal_outline_button));
+
 
         int listID;
         if (!addToJson)
