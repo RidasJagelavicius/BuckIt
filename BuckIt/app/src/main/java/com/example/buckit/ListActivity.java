@@ -138,8 +138,13 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         try {
             JSONObject thislist = listMaster.getJSONObject(listID);
             String privacy = thislist.getString("privacy");
+            JSONArray photos = thislist.getJSONArray("photos");
             if (privacy != "") {
                 updatePrivacy(-1, privacy);
+            }
+            for (int i = 0; i < photos.length(); i++) {
+                String s = photos.getString(i);
+                addToImageGallery(s);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -563,6 +568,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             thislist.put("photos", photos);
             listMaster.remove(listID);
             listMaster.put(listID, thislist);
+            SharedCode.create(this, "lists.json", listMaster.toString());
         } catch (JSONException e) {
             e.printStackTrace();
             return;
