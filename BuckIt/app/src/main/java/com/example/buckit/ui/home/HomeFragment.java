@@ -28,6 +28,7 @@ import com.example.buckit.SharedCode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -45,7 +46,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Dialog deletePopup;
     private Context thisContext;
     private ImageButton addBucket;
-    private ImageButton deleteBucket;
     private JSONObject master = null;
     private ArrayList<Button> buttonBucket  = new ArrayList<Button>();
 
@@ -148,7 +148,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         popup = new Dialog(thisContext);
         deletePopup = new Dialog(thisContext);
         addBucket = (ImageButton) root.findViewById(R.id.addBucket);
-        deleteBucket = (ImageButton) root.findViewById(R.id.deleteBucket);
         bucketContainer = root.findViewById(R.id.bucketContainer);
 
         // If data has already been created, retrieve it, otherwise display "Add a bucket"
@@ -156,7 +155,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Make it so that clicking a + will create a new container
         addBucket.setOnClickListener(this);
-        deleteBucket.setOnClickListener(this);
         return root;
     }
 
@@ -168,9 +166,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Check if clicked on a +
         if (myid == R.id.backgroundAddBuckets || myid == R.id.addBucket) {
             createBucket();
-        }
-        else if (myid == R.id.deleteBucket) {
-            deleteBucket();
         }
         else if (master != null){
             // See if it's a bucket
@@ -274,7 +269,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         name = name.toUpperCase();
 
         // A bucket will just be a styled button or something
-        Button bucket = new Button(thisContext);
+        final Button bucket = new Button(thisContext);
         LinearLayout.LayoutParams bucketParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
         bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
         bucket.setLayoutParams(bucketParams);
@@ -296,6 +291,40 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Give the button a listener so clicking on it opens its lists
         bucket.setOnClickListener(this);
+        bucket.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                popup.setContentView(R.layout.delete_popup);
+                popup.show();
+
+                Button cancel = popup.findViewById(R.id.cancel);
+                Button delete = popup.findViewById(R.id.delete);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup.dismiss();
+                    }
+                });
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View t) {
+                        // delete list from container
+                        bucketContainer.removeView(bucket);
+
+                        // delete list from JSON
+                        int bucketID  = bucket.getId();
+                        master.remove(Integer.toString(bucketID));
+                        SharedCode.create(thisContext, "bucket_to_list.json", master.toString());
+
+                        // delete list from internal buttonList arrayList
+                        buttonBucket.remove(bucket);
+
+                        popup.dismiss();
+                    }
+                });
+                return true;
+            }
+        });
 
         // Insert bucket into bucket container
         bucketContainer.addView(bucket);
