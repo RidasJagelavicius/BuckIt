@@ -169,8 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:background="@color/ridasDark"
-                android:padding="20dp"
-                android:progress="25"/>
+                android:padding="20dp"/>
         </LinearLayout>
     </ScrollView>
 

@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -243,9 +244,10 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                             // delete list from container
                             listContainer.removeView(currList);
 
-                            // delete list from JSON
+                            // delete list from JSON & update
                             int listID  = currList.getId();
                             listMaster.remove(Integer.toString(listID));
+//
 
                             // delete list from internal buttonList arrayList
                             buttonList.remove(currList);
@@ -266,8 +268,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     // Also removes the background "Create list" if it's the first list
     // TODO: Check if list with name already exists
     public void insertList(String name, boolean addToJson, int id) {
-        // uppercase name here so later store it as uppercase in JSON
-        name = name.toUpperCase();
+        name = name.toUpperCase(); // uppercase name here so later store it as uppercase in JSON
 
         // A list will just be a styled button or something
         Button list = new Button(this);
@@ -297,9 +298,8 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         list.setOnClickListener(this);
 
         // Insert bucket into bucket container
-        if(list.getParent() != null) {
+        if(list.getParent() != null)
             ((ViewGroup)list.getParent()).removeView(list); // fix for some weird error
-        }
         listContainer.addView(list);
 
         // Create JSON to represent bucket's lists

@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -272,6 +273,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
     private ArrayList<Boolean> crossedOutItems = new ArrayList<>(); // array of booleans tracking if goal/subgoal is crossed out
     private ArrayList<LinearLayout> linearLayoutsList = new ArrayList<>();
+    int numCompletedItems = 0;
 
     private void addGoal() {
         // each new element (a newGoal) consists of:
@@ -313,7 +315,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         plusButton.setClickable(true);
         plusButton.setOnClickListener(this);
         plusButtonIds.add(plusButton.getId());
-        crossedOutItems.add(false);
 
         // delete goal button
         Button xButton = new Button(this);
@@ -339,6 +340,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             ((ViewGroup)newGoal.getParent()).removeView(newGoal); // fix for some weird error
 
         goalContainer.addView((newGoal));
+        updateProgressBar();
     }
 
 //    private void addSubgoal(int plusId) {
@@ -398,8 +400,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         // find idx of parentLayout in our goal container and then add new subgoal right below
         int idx = goalContainer.indexOfChild(parentLayout);
         goalContainer.addView(newSubgoal,idx+1);
+        updateProgressBar();
     }
-
 
     private void changeDifficulty(int id) {
         Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
@@ -416,6 +418,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             EditText goal = goalsList.get(idx);
             goal.setText(goal.getText().toString());
             crossedOutItems.set(idx, false);
+
+            if (numCompletedItems > 0)
+                numCompletedItems--;
         }
 
         // if current bullet is blank (grey) --> change to easy (green)
@@ -443,11 +448,22 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 if (goal.length() > 0) {
                     goal.getText().setSpan(new StrikethroughSpan(), 0, goal.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     crossedOutItems.set(idx, true);
+
+                    if (numCompletedItems < crossedOutItems.size())
+                        numCompletedItems++;
                 }
             }
         }
+
+        updateProgressBar();
     }
 
+    private void updateProgressBar() {
+        ProgressBar bar = findViewById(R.id.progressBar);
+        double percentage = (double)(numCompletedItems)/crossedOutItems.size() * 100;
+        Toast.makeText(this, Integer.toString((crossedOutItems.size())), Toast.LENGTH_SHORT).show();
+        bar.setProgress((int)percentage);
+    }
     private void crossOut(int id) {
 
     }
