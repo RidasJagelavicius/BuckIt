@@ -1,5 +1,6 @@
 package com.example.buckit.ui.inspirationFeed;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -53,25 +55,30 @@ public class InspirationFeedFragment extends Fragment implements View.OnClickLis
         if(v.getId() == R.id.travel_button){
             Intent intent = new Intent(this.getActivity(), TravelActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.cooking_button){
-            Intent intent = new Intent(this.getActivity(), CookActivity.class);
-            startActivity(intent);
-        } else if(v.getId() == R.id.kindness_button){
-            Intent intent = new Intent(this.getActivity(), KindActivity.class);
-            startActivity(intent);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setMessage("Unable to load lists. Please try again later.");
+
+            // Set Alert Title
+            builder.setTitle("Error!");
+
+            builder.setCancelable(true);
+
+            //Set Ok button to dismiss popup
+            builder.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            // Create the Alert dialog
+            AlertDialog alertDialog = builder.create();
+
+            // Show the Alert Dialog box
+            alertDialog.show();
         }
     }
 }
-    /*
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        mViewModel =
-                ViewModelProviders.of(this).get(InspirationFeedViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_inspiration_feed, container, false);
-        final TextView textView = root.findViewById(R.id.text_inspiration_feed);
-        mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        }); */
