@@ -307,9 +307,15 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         if (diffIndicIds.contains(myid))
             changeDifficulty(myid);
 
-        if (crossOutIds.contains(myid)) {
-            Toast.makeText(this, "cross out clicked", Toast.LENGTH_SHORT).show();
+        if (xButtonIds.contains(myid)) {
+            Toast.makeText(this, "x clicked", Toast.LENGTH_SHORT).show();
             crossOut(myid);
+        }
+
+        if (plusButtonIds.contains(myid)) {
+            Toast.makeText(this, "add subgoal", Toast.LENGTH_SHORT).show();
+            int idx = plusButtonIds.indexOf(myid);
+            addSubgoal(linearLayoutsList.get(idx));
         }
 
         if (myid == R.id.addPhoto) {
@@ -359,28 +365,99 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 //        }
     }
 
-    private ArrayList<Integer> crossOutIds = new ArrayList<>(); // array of GOAL cross out button IDs
+    private ArrayList<Integer> xButtonIds = new ArrayList<>(); // array of GOAL cross out button IDs
     private ArrayList<Integer> diffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
     private ArrayList<Button> diffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
+    private ArrayList<Button> plusButtons = new ArrayList<>(); // array of plus buttons (buttons which add a new subgoal)
+    private ArrayList<Integer> plusButtonIds = new ArrayList<>(); // array of plus buttons IDs
     private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
     private ArrayList<Boolean> crossedOutItems = new ArrayList<>(); // array of booleans tracking if goal/subgoal is crossed out
+    private ArrayList<LinearLayout> linearLayoutsList = new ArrayList<>();
 
-    private void addGoal() { //Button currList
-        //
-//        Button list = new Button(this);
-//        LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-//        listParams.setMargins(dpToPx(10), 0, dpToPx(10), 0);
-//        list.setLayoutParams(listParams);
-//        list.setText(name);
-//        list.setTransformationMethod(null); // removes the ALL-caps
-//        list.setLongClickable(true);
-//        list.setClickable(true);
-
-        // each new element (a newGoal) consists of a difficult indicator (button) & a goal (text)
+    private void addGoal() {
+        // each new element (a newGoal) consists of:
+        // 1. difficult indicator (button)
+        // 2. a goal (text)
+        // 3. + (button to add subgoal)
+        // 4. × (button to delete goal)
         LinearLayout newGoal = new LinearLayout(this);
 //        LinearLayout.LayoutParams newGoal = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
         newGoal.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         newGoal.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayoutsList.add(newGoal);
+
+        // create difficulty button
+        final Button diffInd = new Button(this);
+        diffInd.setBackground(ContextCompat.getDrawable(this, R.drawable.difficulty_indicator_blank));
+        diffInd.setLayoutParams(new ViewGroup.LayoutParams(130,ViewGroup.LayoutParams.WRAP_CONTENT));
+        diffInd.setId(View.generateViewId());
+        diffIndicIds.add(diffInd.getId());
+        diffIndicators.add(diffInd);
+        diffInd.setClickable(true);
+        diffInd.setOnClickListener(this);
+//        Toast.makeText(this, goalDiffIndicIds.toString(), Toast.LENGTH_SHORT).show();
+
+        // goal
+        EditText goal = new EditText(this);
+        goal.setHint(R.string.new_goal);
+        goal.setSingleLine(false);
+        goal.setLayoutParams(new ViewGroup.LayoutParams(650,ViewGroup.LayoutParams.WRAP_CONTENT));
+        goal.setId(View.generateViewId());
+        goalsList.add(goal);
+
+        // add subgoal button
+        Button plusButton = new Button(this);
+        plusButton.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+        plusButton.setText("+");
+        plusButton.setGravity(Gravity.CENTER);
+        plusButton.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
+        plusButton.setId(View.generateViewId());
+        plusButton.setClickable(true);
+        plusButton.setOnClickListener(this);
+        plusButtonIds.add(plusButton.getId());
+        plusButtons.add(plusButton);
+        crossedOutItems.add(false);
+
+        // delete goal button
+        Button xButton = new Button(this);
+        xButton.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+        xButton.setTransformationMethod(null);
+        xButton.setText("×");
+        xButton.setGravity(Gravity.CENTER);
+        xButton.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
+        xButton.setId(View.generateViewId());
+        xButton.setClickable(true);
+        xButton.setOnClickListener(this);
+        xButtonIds.add(xButton.getId());
+        crossedOutItems.add(false);
+//        Toast.makeText(this, goalCrossOutIds.toString(), Toast.LENGTH_SHORT).show();
+
+        newGoal.addView(diffInd);
+        newGoal.addView(goal);
+        newGoal.addView(plusButton);
+        newGoal.addView(xButton);
+
+        // Insert goal into bucket container
+        if(newGoal.getParent() != null) {
+            ((ViewGroup)newGoal.getParent()).removeView(newGoal); // fix for some weird error
+        }
+
+//        int idx = goalContainer.indexOfChild(currList);
+//        goalContainer.addView(newGoal,idx + 1);
+        goalContainer.addView((newGoal));
+    }
+
+//    private void addSubgoal(int plusId) {
+    private void addSubgoal(LinearLayout parentLayout) {
+        // each new element (a newSubgoal) consists of:
+        // 1. difficult indicator (button)
+        // 2. a subgoal (text)
+        // 3. × (button to delete goal)
+        LinearLayout newSubgoal = new LinearLayout(this);
+        newSubgoal.setPadding(100,0,0,0);
+        newSubgoal.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        newSubgoal.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayoutsList.add(newSubgoal);
 
         // create difficulty icon button, goal text, and cross out button
         final Button diffInd = new Button(this);
@@ -394,51 +471,40 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         diffInd.setOnClickListener(this);
 //        Toast.makeText(this, goalDiffIndicIds.toString(), Toast.LENGTH_SHORT).show();
 
-        EditText goal = new EditText(this);
-        goal.setHint(R.string.new_goal);
-        goal.setSingleLine(false);
-        goal.setLayoutParams(new ViewGroup.LayoutParams(750,ViewGroup.LayoutParams.WRAP_CONTENT));
-        goal.setId(View.generateViewId());
-        goalsList.add(goal);
+        EditText subgoal = new EditText(this);
+        subgoal.setHint(R.string.new_subgoal);
+        subgoal.setSingleLine(false);
+        subgoal.setLayoutParams(new ViewGroup.LayoutParams(650,ViewGroup.LayoutParams.WRAP_CONTENT));
+        subgoal.setId(View.generateViewId());
+        goalsList.add(subgoal);
 
-        Button goal_crossOut = new Button(this);
-        goal_crossOut.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
-        goal_crossOut.setText("x");
-        goal_crossOut.setGravity(Gravity.CENTER);
-        goal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
-        goal_crossOut.setId(View.generateViewId());
-        goal_crossOut.setClickable(true);
-        goal_crossOut.setOnClickListener(this);
-        crossOutIds.add(goal_crossOut.getId());
+        Button xButton = new Button(this);
+        xButton.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
+        xButton.setTransformationMethod(null);
+        xButton.setText("×");
+        xButton.setGravity(Gravity.CENTER);
+        xButton.setLayoutParams(new ViewGroup.LayoutParams(100, ViewGroup.LayoutParams.WRAP_CONTENT));
+        xButton.setId(View.generateViewId());
+        xButton.setClickable(true);
+        xButton.setOnClickListener(this);
+        xButtonIds.add(xButton.getId());
         crossedOutItems.add(false);
 //        Toast.makeText(this, goalCrossOutIds.toString(), Toast.LENGTH_SHORT).show();
 
-
-        newGoal.addView(diffInd);
-        newGoal.addView(goal);
-        newGoal.addView(goal_crossOut);
+        newSubgoal.addView(diffInd);
+        newSubgoal.addView(subgoal);
+        newSubgoal.addView(xButton);
 
         // Insert goal into bucket container
-        if(newGoal.getParent() != null) {
-            ((ViewGroup)newGoal.getParent()).removeView(newGoal); // fix for some weird error
+        if(newSubgoal.getParent() != null) {
+            ((ViewGroup)newSubgoal.getParent()).removeView(newSubgoal); // fix for some weird error
         }
 
-//        int idx = goalContainer.indexOfChild(currList);
-//        goalContainer.addView(newGoal,idx + 1);
-        goalContainer.addView((newGoal));
-    }
-
-    private void addSubgoal() {
-        EditText subGoal = new EditText(this);
-        subGoal.setHint(R.string.new_subgoal);
-        subGoal.setMaxLines(2);
-
-        Button subgoal_crossOut = new Button(this);
-        subgoal_crossOut.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
-        subgoal_crossOut.setText("x");
-        subgoal_crossOut.setGravity(Gravity.RIGHT);
-        subgoal_crossOut.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
+        // parentLayout - the layout that contains the GOAL that the subgoal is nested under
+        // find idx of parentLayout in our goal container and then add new subgoal right below
+        int idx = goalContainer.indexOfChild(parentLayout);
+        goalContainer.addView(newSubgoal,idx+1);
+//        Toast.makeText(this, Integer.toString(idx), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -457,7 +523,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             EditText goal = goalsList.get(idx);
             goal.setText(goal.getText().toString());
         }
-        
+
         // check if current bullet is blank (grey) --> change to easy (green)
         else if (Objects.equals(bulletPoint.getBackground().getConstantState(), this.getResources().getDrawable(R.drawable.difficulty_indicator_blank).getConstantState()))
             bulletPoint.setBackground(easyBullet);
@@ -477,9 +543,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             bulletPoint.setBackground(blankBullet);
             // if item is not crossed out, cross out
             if (!crossedOutItems.get(idx)) {
-                crossedOutItems.set(idx, true);
                 EditText goal = goalsList.get(idx);
-                goal.getText().setSpan(new StrikethroughSpan(), 0, goal.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if (goal.length() > 0) {
+                    goal.getText().setSpan(new StrikethroughSpan(), 0, goal.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    crossedOutItems.set(idx, true);
+                }
             }
 
 
