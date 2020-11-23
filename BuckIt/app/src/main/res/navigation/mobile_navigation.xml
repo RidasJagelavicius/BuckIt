@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_achievement_wall"
-        android:name="com.example.buckit.ui.achievementwall.AchievementWallFragment"
+        android:name="com.example.buckit.ui.achievementWall.AchievementWallFragment"
         android:label="@string/menu_achievement_wall"
         tools:layout="@layout/fragment_achievement_wall" />
 

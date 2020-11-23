@@ -1,22 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ScrollView for Bucket overflow -->
+    <ScrollView
+        android:id="@+id/home_scrollable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/marginX"
+        android:layout_marginVertical="@dimen/marginY"
+        android:layout_weight="1">
+
+        <!-- This is where the buckets go -->
+        <LinearLayout
+            android:id="@+id/bucketContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
-        android:id="@+id/text_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:gravity="center"
+        android:text="Long-press to delete buckets"
+        android:textSize="15sp"
+        android:layout_marginBottom="@dimen/marginY"
+        android:textColor="@color/textSecondary" />
+
+    <!-- Button layout for adding or deleting buckets -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_weight="0">
+
+    <!-- Add a new bucket -->
+>>>>>>> 6752ac15aa17d629010a19b788891139bd46b22a
+        <ImageButton
+            android:id="@+id/addBucket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_add" />
+    </LinearLayout>
+
+</LinearLayout>
