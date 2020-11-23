@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdviceActivity">
+
+<!--    <Button-->
+<!--        android:id="@+id/post_advice_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:paddingHorizontal="50dp"-->
+<!--        android:background="@drawable/round_normal_button"-->
+<!--        android:textColor="@color/textPrimary"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:text="Post Advice" />-->
+
+
+<!--    on click, pop up should show to type in response-->
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/round_normal_button"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/advice_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="13dp"
+            android:textColor="@color/textPrimary"
+            android:layout_gravity="center"
+            android:text="Your Advice/Suggestions"
+            />
+
+        <EditText
+            android:layout_width="225dp"
+            android:layout_height="0dp"
+            android:gravity="top|left"
+            android:layout_weight="1"
+            android:layout_gravity="fill_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="13sp"
+            android:hint="&quot;don't forget to add...&quot;"
+            android:inputType="text"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/white"
+            />
+
+        <Button
+            android:id="@+id/post_advice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="50dp"
+            android:background="@drawable/round_friendly_button"
+            android:textColor="@color/textPrimary"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="Post Advice" />
+
+    </LinearLayout>
+
+</FrameLayout>

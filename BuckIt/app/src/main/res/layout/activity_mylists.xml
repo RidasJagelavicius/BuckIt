@@ -48,17 +48,12 @@
             android:textSize="15sp"
             android:layout_marginBottom="@dimen/marginY"
             android:textColor="@color/textSecondary" />
-
         <!-- Button layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_weight="0">
-
-
-                  <!-- Add a new bucket -->
->>>>>>> 6752ac15aa17d629010a19b788891139bd46b22a
             <ImageButton
                 android:id="@+id/addList"
                 android:layout_width="wrap_content"

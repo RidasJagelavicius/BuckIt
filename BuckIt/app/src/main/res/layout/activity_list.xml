@@ -124,7 +124,6 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:background="@color/transparent"
-
                     android:src="@drawable/ic_add" />
             </LinearLayout>
 

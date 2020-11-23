@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <!-- ScrollView for Bucket overflow -->
     <ScrollView
         android:id="@+id/home_scrollable"
@@ -40,8 +39,7 @@
         android:orientation="horizontal"
         android:layout_weight="0">
 
-    <!-- Add a new bucket -->
->>>>>>> 6752ac15aa17d629010a19b788891139bd46b22a
+
         <ImageButton
             android:id="@+id/addBucket"
             android:layout_width="wrap_content"
