@@ -1,4 +1,4 @@
-package com.example.buckit.ui.achievementwall;
+package com.example.buckit.ui.achievementWall;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +10,7 @@ public class AchievementWallViewModel extends ViewModel {
 
     public AchievementWallViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the acheivement wall fragment");
+        mText.setValue("This is the achievement wall fragment");
     }
 
     public LiveData<String> getText() {

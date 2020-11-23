@@ -1,4 +1,4 @@
-package com.example.buckit.ui.inspirationfeed;
+package com.example.buckit.ui.inspirationFeed;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
