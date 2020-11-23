@@ -43,52 +43,10 @@
             android:label="Inspiration for Travel"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <!--Activity to simulate the cooking inspiration bucket -->
-        <activity
-            android:name=".ui.inspirationFeed.CookActivity"
-            android:label="Inspiration for Cooking"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <!--Activity to simulate the kindness inspiration bucket -->
-        <activity
-            android:name=".ui.inspirationFeed.KindActivity"
-            android:label="Inspiration for Kindness"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
         <!--Activity for the simulated Florida travel list -->
         <activity
             android:name=".ui.inspirationFeed.Travel1List"
             android:label="Florida"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <!--Activity for the simulated India travel list -->
-        <activity
-            android:name=".ui.inspirationFeed.Travel2List"
-            android:label="India"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <!--Activity for the simulated Chocolate Chip Cookies cooking list -->
-        <activity
-            android:name=".ui.inspirationFeed.Cook1List"
-            android:label="Mexican Food"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <!--Activity for the simulated Fried Rice cooking list -->
-        <activity
-            android:name=".ui.inspirationFeed.Cook2List"
-            android:label="Korean Food"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <!--Activity for the simulated Donations kindness list -->
-        <activity
-            android:name=".ui.inspirationFeed.Kind1List"
-            android:label="Donations"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <!--Activity for the simulated Volunteering kindness list -->
-        <activity
-            android:name=".ui.inspirationFeed.Kind2List"
-            android:label="Volunteering"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity to go to simulated friend's home cooking page -->

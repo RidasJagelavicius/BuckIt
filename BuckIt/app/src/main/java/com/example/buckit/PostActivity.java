@@ -1,22 +1,14 @@
 package com.example.buckit;
 
-import android.app.Activity;
 import android.app.Dialog;
 //import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
@@ -143,7 +135,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     public void adviceInput() {
         assert (popup != null);
         // Create the dialog that asks user to give advice
-        popup.setContentView(R.layout.post_advice_popup);
+        popup.setContentView(R.layout.popup_post_advice);
         final EditText editText = (EditText) popup.findViewById(R.id.edit_advice);
         Button btnCreate = (Button) popup.findViewById(R.id.submit_advice_button);
 

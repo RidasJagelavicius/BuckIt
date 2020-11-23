@@ -10,17 +10,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -48,9 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 import static com.example.buckit.SharedCode.dpToPx;
@@ -228,7 +221,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             verifyStoragePermissions(this);
             selectImage(this);
         } else if (myid == R.id.changePrivacy) {
-            popup.setContentView(R.layout.change_privacy_popup); // Create the dialog that allows user to click on each
+            popup.setContentView(R.layout.popup_change_privacy); // Create the dialog that allows user to click on each
             popup.show(); // By default, show the popup
 
             // Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
@@ -246,7 +239,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         } else if (myid == R.id.collaboratorSearch) {
             collaboratorHandler();
         } else if (myid == R.id.addCollaborator) {
-            collaboratorsPopup.setContentView(R.layout.change_collaborator_popup);
+            collaboratorsPopup.setContentView(R.layout.popup_change_collaborator);
                 collaboratorsPopup.show();
 
                 // Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
