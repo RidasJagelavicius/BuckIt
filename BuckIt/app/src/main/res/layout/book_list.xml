@@ -217,9 +217,7 @@
                 android:paddingHorizontal="20dp"
                 android:text="Give Advice" />
 
-
             <!--            Button to post advice-->
-
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"

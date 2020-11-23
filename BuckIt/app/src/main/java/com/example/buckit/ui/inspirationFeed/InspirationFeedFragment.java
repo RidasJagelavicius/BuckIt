@@ -1,5 +1,6 @@
 package com.example.buckit.ui.inspirationFeed;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,10 +24,11 @@ import com.example.buckit.R;
 public class InspirationFeedFragment extends Fragment implements View.OnClickListener{
 
     private InspirationFeedViewModel mViewModel;
-    ViewPager viewPager;
     private Button travel_button;
     private Button cook_button;
     private Button kind_button;
+    private Dialog popup;
+    ViewPager viewPager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class InspirationFeedFragment extends Fragment implements View.OnClickLis
                 ViewModelProviders.of(this).get(InspirationFeedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_inspiration_feed, container, false);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
+
+        //Initialize popup
+        popup = new Dialog(this.getContext());
 
         //Creates the slider for the friends
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this.getContext());
@@ -56,29 +62,44 @@ public class InspirationFeedFragment extends Fragment implements View.OnClickLis
             Intent intent = new Intent(this.getActivity(), TravelActivity.class);
             startActivity(intent);
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setMessage("Unable to load lists. Please try again later.");
+            assert(popup != null);
+            // Create the dialog that asks user to name their bucket
+            popup.setContentView(R.layout.popup_error);
+            Button closePopup = (Button) popup.findViewById(R.id.closeErrorPopup);
 
-            // Set Alert Title
-            builder.setTitle("Error");
+            // By default, show the popup
+            popup.show();
 
-            builder.setCancelable(true);
+            closePopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popup.dismiss();
+                }
+            });
 
-            //Set Ok button to dismiss popup
-            builder.setPositiveButton(
-                    "Ok",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-            // Create the Alert dialog
-            AlertDialog alertDialog = builder.create();
-
-            // Show the Alert Dialog box
-            alertDialog.show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+//            builder.setMessage("Unable to load lists. Please try again later.");
+//
+//            // Set Alert Title
+//            builder.setTitle("Error");
+//
+//            builder.setCancelable(true);
+//
+//            //Set Ok button to dismiss popup
+//            builder.setPositiveButton(
+//                    "Ok",
+//                    new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+//            // Create the Alert dialog
+//            AlertDialog alertDialog = builder.create();
+//
+//            // Show the Alert Dialog box
+//            alertDialog.show();
         }
     }
 }

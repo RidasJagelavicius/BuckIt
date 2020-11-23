@@ -235,33 +235,16 @@
                 </TableLayout>
             </LinearLayout>
 
-            <!-- Button to add a photo -->
-
-            <!--                not sure if this liner layout inside is necessary-->
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-
-                <!--            Button to post advice-->
-                <Button
-                    android:id="@+id/post_advice_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Give Advice"
-                    android:layout_marginTop="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:background="@drawable/round_normal_button"/>
-
-                <!--                <EditText-->
-                <!--                    android:id="@+id/advice_input"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    >-->
-                <!--                </EditText>-->
-            </LinearLayout>
-
+            <!--   Button to post advice-->
+            <Button
+                android:id="@+id/post_advice_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Give Advice"
+                android:layout_marginVertical="@dimen/marginY"
+                android:paddingHorizontal="20dp"
+                android:background="@drawable/round_normal_button"/>
 
             <!--            Button to post advice-->
 
@@ -270,8 +253,8 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_weight="0"
+                android:layout_marginBottom="50dp"
                 android:background="@color/transparent"
                 android:padding="20dp"
                 android:progress="25" />

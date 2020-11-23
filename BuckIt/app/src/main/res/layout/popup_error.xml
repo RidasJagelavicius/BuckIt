@@ -5,7 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="25dp"
         android:layout_marginTop="50dp"
         android:background="@color/superLightPurple"
         android:orientation="vertical">
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="ARE YOU SURE?"
+                android:text="ERROR"
                 android:textSize="@dimen/textPrimary"
                 android:textColor="@color/textPrimary"
                 android:textStyle="bold" />
@@ -33,38 +33,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="Deleted items cannot be recovered"
+                android:text="Unable to load lists. Please try again later."
                 android:textSize="15sp"
                 android:textColor="@color/textPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/cancel"
+                    android:id="@+id/closeErrorPopup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/textPrimary"
-                    android:text="CANCEL"
-                    android:background="@drawable/round_normal_button"/>
+                    android:background="@drawable/round_normal_button"
+                    android:paddingHorizontal="50dp"
+                    android:text="OK"
+                    android:textColor="@color/textPrimary" />
 
-                <Button
-                    android:id="@+id/delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/red"
-                    android:text="DELETE"
-                    android:background="@drawable/round_normal_button"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

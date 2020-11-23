@@ -32,7 +32,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout listContainer;
     private ImageButton newListButton;
     private Dialog popup;
-    private Dialog deletePopup;
     private JSONObject master = null;
     private JSONObject dict;
     private JSONObject listMaster = null;
@@ -47,7 +46,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
 
         bucket = (TextView) findViewById(R.id.bucketName);
         popup = new Dialog(this);
-        deletePopup = new Dialog(this);
 
         // Get name and lists passed from bucket
         try {

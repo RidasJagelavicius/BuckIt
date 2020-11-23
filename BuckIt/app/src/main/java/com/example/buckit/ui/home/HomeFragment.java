@@ -37,7 +37,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout bucketContainer;
     private HomeViewModel homeViewModel;
     private Dialog popup;
-    private Dialog deletePopup;
     private Context thisContext;
     private ImageButton addBucket;
     private JSONObject master = null;
@@ -140,7 +139,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Initialize things
         popup = new Dialog(thisContext);
-        deletePopup = new Dialog(thisContext);
         addBucket = (ImageButton) root.findViewById(R.id.addBucket);
         bucketContainer = root.findViewById(R.id.bucketContainer);
 
