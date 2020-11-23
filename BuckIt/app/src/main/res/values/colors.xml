@@ -19,4 +19,7 @@
     <color name="yellow">#F0CC69</color>
     <color name="red">#F07569</color>
     <color name="transparent">#00000000</color>
+    <color name="popupBackground">#ECECEC</color>
+    <color name="textSecondary">#BCBCBC</color>
+    <color name="ridasDark">#88000000</color>
 </resources>

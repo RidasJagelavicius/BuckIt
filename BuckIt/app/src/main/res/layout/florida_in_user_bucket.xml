@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="115dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/marginX"
+            android:layout_marginVertical="@dimen/marginY"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <!-- Friend's list name -->
+            <TextView
+                android:id="@+id/listName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0"
+                android:text="Florida"
+                android:textColor="@color/textPrimary"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+
+            <!-- Privacy and Collaborators -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                android:background="@color/popupBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="3dp">
+
+            <!-- Visibility -->
+            <ImageButton
+                android:id="@+id/changePrivacy"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_weight="0"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/private_eye" />
+
+            <!-- Add collaborators button -->
+                <LinearLayout
+                    android:id="@+id/addCollaborator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/collaborator" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/add_in_circle" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- The actual bucket list -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <!-- android:background="@color/popupBackground"-->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Disney World">
+                </Button>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Beaches">
+                </Button>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:text="Photos"
+                android:textColor="@color/textSecondary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+            <!--            use backkground shadow to signify photos will be here-->
+
+            <!-- Nested layout so photos take up more space -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--
+                Programmatically, add to last Row until 3 children,
+                then make a new one -->
+                <TableLayout
+                    android:id="@+id/mylistgallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/popupBackground"
+                    android:padding="5dp">
+
+                    <!--                    first row in table-->
+                    <TableRow
+                        android:id="@+id/firstRow"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp">
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/disneyworld"
+                            android:padding="5dp"/>
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/beach" />
+                    </TableRow>
+                </TableLayout>
+
+                <!-- Button to add a photo -->
+                <Button
+                    android:id="@+id/addPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Add a Photo" />
+
+            </LinearLayout>
+
+            <!--Progress bar set back to 0 when user adds list -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                android:background="@color/ridasDark"
+                android:padding="20dp"
+                android:progress="0" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
