@@ -44,7 +44,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/username"
+                    android:id="@+id/username4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/cardView"
@@ -57,7 +57,7 @@
                     android:id="@+id/friend_request_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/username"
+                    android:layout_below="@+id/username4"
                     android:layout_toRightOf="@+id/cardView"
                     android:layout_marginLeft="20dp"
                     android:text="FRIENDS"

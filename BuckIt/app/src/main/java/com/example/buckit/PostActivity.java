@@ -40,6 +40,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private Button friendButton;
     private Button sendFriendRequestButton;
     private Button cookingButton;
+    private Button openAdvicePopup;
     private Button submitAdvice;
     private ImageButton searchButton;
      TextView messageTextView;
@@ -69,7 +70,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             if (input.length() == 0) {
                 Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show();
             } else {
-                username = input;
+                username = "@" + input;
                 setContentView(R.layout.activity_addusers2);
                 friendButton = findViewById(R.id.friend_button);
                 friendButton.setOnClickListener(this);
@@ -102,19 +103,26 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (v.getId() == R.id.send_friend_request_button) {
             setContentView(R.layout.activity_addusers4);
+            TextView username4 = findViewById(R.id.username4);
+            username4.setText(username);
             cookingButton = findViewById(R.id.cooking_button);
             cookingButton.setOnClickListener(this);
         }
         else if (v.getId() == R.id.cooking_button) {
             setContentView(R.layout.activity_friend_list);
-            submitAdvice = findViewById(R.id.submit_advice_button);
-            submitAdvice.setOnClickListener(this);
-        }
-        else if (v.getId() == R.id.post_advice_button) {
+            openAdvicePopup = findViewById(R.id.post_advice_button);
+            openAdvicePopup.setOnClickListener(this);
+            TextView listName = findViewById(R.id.listName);
+            listName.setText(username + "'s list");
+        } else if (v.getId() == R.id.post_advice_button) {
             adviceInput();
             setContentView(R.layout.activity_friend_list);
-            submitAdvice = findViewById(R.id.submit_advice_button);
-            submitAdvice.setOnClickListener(this);
+            openAdvicePopup = findViewById(R.id.post_advice_button);
+            openAdvicePopup.setOnClickListener(this);
+            TextView listName = findViewById(R.id.listName);
+            listName.setText(username + "'s list");
+//            submitAdvice = findViewById(R.id.submit_advice_button);
+//            submitAdvice.setOnClickListener(this);
         }
 //        else if (v.getId() == R.id.submit_advice_button) {
 //            setContentView(R.layout.activity_friend_list2);

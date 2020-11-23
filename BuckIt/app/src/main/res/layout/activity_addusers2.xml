@@ -22,17 +22,14 @@
                     android:layout_marginRight="10dp"
                     android:padding="10dp"
                     android:orientation="horizontal"
+                    android:gravity="center_horizontal"
                     android:background="@color/popupBackground">
-
-<!--                    <EditText-->
-<!--                        android:id="@+id/search_bar"-->
-<!--                        android:layout_width="334dp"-->
-<!--                        android:layout_height="70dp"-->
-<!--                        android:hint="  Search \@\my_good_friend or \#\category"/>"-->
+                    
                     <TextView
                         android:id="@+id/username2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="\@\my_good_friend"
                         android:layout_marginLeft="70dp"
                         android:layout_gravity="center_vertical"
@@ -42,7 +39,8 @@
                     <ImageButton
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0"
                         android:layout_marginLeft="65dp"
                         app:srcCompat="@drawable/ic_search"
                         android:background="@color/popupBackground"/>
