@@ -44,9 +44,20 @@
             android:label="Current List" />
 
 
-
         <activity
-            android:name=".PostActivity"
+            android:name=".ui.search.PostActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.search.PostActivity2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.search.PostActivity3a"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.search.PostActivity3b"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.search.PostActivity4"
             android:theme="@style/AppTheme.NoActionBar" />
 
 
