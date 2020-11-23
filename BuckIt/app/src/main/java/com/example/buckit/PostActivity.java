@@ -147,6 +147,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                     advice_container.addView(advice);
 
                     popup.dismiss();
+                    Toast.makeText(PostActivity.this, "Successfully posted advice", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(PostActivity.this, "Invalid input, please try again", Toast.LENGTH_SHORT).show();
                 }

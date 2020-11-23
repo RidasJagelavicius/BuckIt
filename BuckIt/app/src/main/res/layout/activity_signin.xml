@@ -68,6 +68,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/signinuser"
                         android:singleLine="true"
                         android:paddingVertical="10dp"
                         android:paddingHorizontal="15dp"
@@ -97,6 +98,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/signinpass"
                         android:inputType="textPassword"
                         android:paddingVertical="10dp"
                         android:paddingHorizontal="15dp"
