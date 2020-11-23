@@ -23,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -186,7 +185,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
     public void createList() {
         assert(popup != null);
         // Create the dialog that asks user to name their bucket
-        popup.setContentView(R.layout.new_list_popup);
+        popup.setContentView(R.layout.popup_new_list);
         final EditText editText = (EditText) popup.findViewById(R.id.popupListName);
         Button btnCreate = (Button) popup.findViewById(R.id.popupCreateList);
 
@@ -248,7 +247,7 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         list.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                popup.setContentView(R.layout.delete_popup);
+                popup.setContentView(R.layout.popup_delete);
                 popup.show();
 
                 Button cancel = popup.findViewById(R.id.cancel);

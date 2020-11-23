@@ -5,16 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -25,10 +22,8 @@ import com.example.buckit.MyListsActivity;
 import com.example.buckit.R;
 import com.example.buckit.SharedCode;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -192,7 +187,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     // https://www.youtube.com/watch?v=0DH2tZjJtm0
     public void createBucket() {
         // Create the dialog that asks user to name their bucket
-        popup.setContentView(R.layout.new_bucket_popup);
+        popup.setContentView(R.layout.popup_new_bucket);
         final EditText editText = (EditText) popup.findViewById(R.id.popupBucketName);
         Button btnCreate = (Button) popup.findViewById(R.id.popupCreateBucket);
 
@@ -252,7 +247,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bucket.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                popup.setContentView(R.layout.delete_popup);
+                popup.setContentView(R.layout.popup_delete);
                 popup.show();
 
                 Button cancel = popup.findViewById(R.id.cancel);

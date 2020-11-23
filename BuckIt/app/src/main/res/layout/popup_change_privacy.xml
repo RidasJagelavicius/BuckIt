@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="25dp"
+    android:layout_marginTop="50dp"
+    android:background="@drawable/popup_bkgrnd"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
-        android:background="@color/popupBackground"
         android:orientation="vertical">
 
         <TextView
@@ -43,11 +41,9 @@
 
                 <ImageButton
                     android:id="@+id/vispublic"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/public_eye" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/public_eye" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,11 +72,9 @@
 
                 <ImageButton
                     android:id="@+id/visfriend"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/friend" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/friend" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,11 +113,9 @@
 
                 <ImageButton
                     android:id="@+id/vislist"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/collaborator" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/collaborator" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -152,11 +144,9 @@
 
                 <ImageButton
                     android:id="@+id/visprivate"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/private_eye" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/private_eye" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,5 +165,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

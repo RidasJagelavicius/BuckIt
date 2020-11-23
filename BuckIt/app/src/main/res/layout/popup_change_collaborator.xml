@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="25dp"
+    android:layout_marginTop="50dp"
+    android:background="@drawable/popup_bkgrnd"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="50dp"
-        android:paddingHorizontal="@dimen/marginX"
         android:gravity="center_horizontal"
-        android:background="@color/popupBackground"
+        android:padding="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -53,12 +52,12 @@
 
             <ImageButton
                 android:id="@+id/collaboratorSearch"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
                 android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/invite" />
+                android:scaleType="fitCenter"
+                android:background="@drawable/invite" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,8 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textPrimary"
-                android:textColor="@color/textSecondary"
-                android:background="@color/ridasDark"
+                android:textColor="@color/ridasDark"
                 android:padding="5dp"
                 android:layout_marginVertical="5dp"
                 android:text="\@bell" />
@@ -95,8 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textPrimary"
-                android:textColor="@color/textSecondary"
-                android:background="@color/ridasDark"
+                android:textColor="@color/ridasDark"
                 android:padding="5dp"
                 android:layout_marginVertical="5dp"
                 android:text="\@og_meghana" />
@@ -106,13 +103,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textPrimary"
-                android:textColor="@color/textSecondary"
-                android:background="@color/ridasDark"
+                android:textColor="@color/ridasDark"
                 android:padding="5dp"
                 android:layout_marginVertical="5dp"
                 android:text="\@mamasita" />
         </LinearLayout>
-
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
