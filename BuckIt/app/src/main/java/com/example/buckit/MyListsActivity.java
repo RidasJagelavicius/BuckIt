@@ -142,7 +142,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
             TextView addListText = new TextView(this);
             LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
-            addListText.setLayoutParams(theseParams);
             addListText.setGravity(Gravity.CENTER);
             addListText.setText("Create your first list by pressing the \"+\" button below");
             addListText.setTextColor(ContextCompat.getColor(this, R.color.textPrimary));

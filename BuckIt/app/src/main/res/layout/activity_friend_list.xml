@@ -245,7 +245,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 android:text="Photos"
-                android:textColor="@color/textSecondary"
+                android:textColor="@color/textPrimary"
                 android:textSize="25sp"
                 android:textStyle="bold" />
             <!--            use backkground shadow to signify photos will be here-->
@@ -287,6 +287,16 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:text="Advice"
+                android:textColor="@color/textPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
             <!-- Button to add a photo -->
 
             <!--                not sure if this liner layout inside is necessary-->
@@ -297,6 +307,13 @@
 
 
                 <!--            Button to post advice-->
+                <LinearLayout
+                    android:id="@+id/advice_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"></LinearLayout>
+
                 <Button
                     android:id="@+id/post_advice_button"
                     android:layout_width="120dp"
