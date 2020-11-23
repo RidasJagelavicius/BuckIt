@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="115dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:background="@color/popupBackground">
+
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="334dp"
+                android:layout_height="70dp"
+                android:hint="  Search \@\my_good_friend or \#\category"/>
+
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_search"
+                android:background="@color/popupBackground"
+                android:onClick="onClick"/>
+
+        </LinearLayout>
+
+<!--            pops up when username searched-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:layout_marginTop="100dp"-->
+<!--                android:layout_marginLeft="17dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:background="@color/popupBackground">-->
+
+<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/imageView3"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="35dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="35dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_marginTop="35dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_marginLeft="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_weight="0"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:adjustViewBounds="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:scaleType="fitCenter"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:srcCompat="@drawable/collaborator" />&ndash;&gt;-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/cardView"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    app:cardCornerRadius="50dp"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:layout_marginLeft="35dp"-->
+<!--                    >-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:srcCompat="@drawable/tenor" />-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginLeft="25dp"-->
+
+<!--                    android:text="\@\my_good_friend"-->
+<!--                    />-->
+
+<!--            </LinearLayout>-->
+
+
+
+
+
+
+    </ScrollView>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

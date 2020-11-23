@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/round_normal_button"
+    android:padding="10dp" >
+
+    <TextView
+    android:id="@+id/advice_box"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="13dp"
+    android:textColor="@color/textPrimary"
+    android:layout_gravity="center"
+    android:text="Your Advice/Suggestions" />
+
+    <EditText
+        android:id="@+id/edit_advice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:hint="&quot;don't forget to add...&quot;"
+        android:textSize="12sp"
+        android:inputType="text"
+        android:textColor="@color/textPrimary"
+        android:textColorHint="@color/white">
+
+        <requestFocus/>
+    </EditText>
+
+    <Button
+        android:id="@+id/submit_advice_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:paddingHorizontal="50dp"
+        android:background="@drawable/round_friendly_button"
+        android:textColor="@color/textPrimary"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:text="Post Advice"
+        android:onClick="onClick"/>
+</LinearLayout>
+
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent">-->
+    <!--    -->
+    <!--    -->
+    <!--    -->
+    <!--    -->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

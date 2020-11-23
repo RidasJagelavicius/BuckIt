@@ -1,4 +1,4 @@
-package com.example.buckit.ui.achievementwall;
+package com.example.buckit.ui.achievementWall;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
