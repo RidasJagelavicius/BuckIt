@@ -136,6 +136,21 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    // Just changes the JSON to show that this has collaborators
+    private void setCollaborator() {
+        try {
+            JSONObject thislist = listMaster.getJSONObject(listID);
+            thislist.remove("collaborators");
+            thislist.put("collaborators", "1");
+            listMaster.remove(listID);
+            listMaster.put(listID, thislist);
+            SharedCode.create(this, "lists.json", listMaster.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+    }
     // Handles clicking on bell, meg, sita, or the search button
     private void collaboratorHandler() {
         EditText collaboratorName = popup.findViewById(R.id.collaboratorName);
@@ -153,6 +168,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             String message = "Invited " + input + " to collaborate";
             Toast.makeText(ListActivity.this, message, Toast.LENGTH_SHORT).show();
+            setCollaborator();
             popup.dismiss();
         }
     }
@@ -250,18 +266,21 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 bell.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Toast.makeText(ListActivity.this, "Invited @bell to collaborate", Toast.LENGTH_SHORT).show();
+                        setCollaborator();
                         collaboratorsPopup.dismiss();
                     }
                 });
                 meg.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Toast.makeText(ListActivity.this, "Invited @og_meghana to collaborate", Toast.LENGTH_SHORT).show();
+                        setCollaborator();
                         collaboratorsPopup.dismiss();
                     }
                 });
                 sita.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Toast.makeText(ListActivity.this, "Invited @mamasita to collaborate", Toast.LENGTH_SHORT).show();
+                        setCollaborator();
                         collaboratorsPopup.dismiss();
                     }
                 });
