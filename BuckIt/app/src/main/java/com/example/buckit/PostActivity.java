@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 public class PostActivity extends AppCompatActivity implements View.OnClickListener{
 
 //    Context context = this;
@@ -29,54 +33,80 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private Button sendFriendRequestButton;
     private Button cookingButton;
     private Button submitAdvice;
-    //private ImageButton searchButton;
+    private ImageButton searchButton;
      TextView messageTextView;
+     private EditText search_bar;
+     private String username;
+     private boolean isAdded = false;
+     private ArrayList<String> added_users = new ArrayList();
 
 
     private Dialog popup;
 
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addusers1);
         popup = new Dialog(this);
 
-
-        friendButton = (Button) findViewById(R.id.friend_button);
-        sendFriendRequestButton = (Button) findViewById(R.id.send_friend_request_button);
-        cookingButton = (Button) findViewById(R.id.cooking_button);
-        submitAdvice = (Button) findViewById(R.id.submit_advice_button);
-
-//        searchButton = (ImageButton) findViewById(R.id.search_button);
-//
-//        friendButton.setOnClickListener(this);
-//        sendFriendRequestButton.setOnClickListener(this);
-//        cookingButton.setOnClickListener(this);
-        //submitAdvice.setOnClickListener(this);
+        searchButton = (ImageButton) findViewById(R.id.search_button);
+        search_bar = findViewById(R.id.search_bar);
+        searchButton.setOnClickListener(this);
     }
-
-
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.search_button) {
-            this.setContentView(R.layout.activity_addusers2);
+            String input = search_bar.getText().toString();
+            if (input.length() == 0) {
+                Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show();
+            } else {
+                username = input;
+                setContentView(R.layout.activity_addusers2);
+                friendButton = findViewById(R.id.friend_button);
+                friendButton.setOnClickListener(this);
+                TextView username2 = findViewById(R.id.username2);
+                username2.setText(username);
+                friendButton.setText(username);
+
+                isAdded = false;
+                for (int i = 0; i < added_users.size(); i++) {
+                    if (added_users.get(i).equals(username)) {
+                        isAdded = true;
+                        break;
+                    }
+                }
+            }
         }
-         else if (v.getId() == R.id.friend_button) {
-            setContentView(R.layout.activity_addusers3);
+        else if (v.getId() == R.id.friend_button) {
+            if (!isAdded) {
+                setContentView(R.layout.activity_addusers3);
+                TextView username3 = findViewById(R.id.username3);
+                username3.setText(username);
+                sendFriendRequestButton = findViewById(R.id.send_friend_request_button);
+                sendFriendRequestButton.setOnClickListener(this);
+            }
+            else {
+                added_users.add(username);
+                Toast.makeText(this, "Friend request accepted.", Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.activity_addusers4);
+            }
         }
         else if (v.getId() == R.id.send_friend_request_button) {
-            Toast.makeText(this, "Friend request accepted.", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_addusers4);
+            cookingButton = findViewById(R.id.cooking_button);
+            cookingButton.setOnClickListener(this);
         }
         else if (v.getId() == R.id.cooking_button) {
             setContentView(R.layout.activity_friend_list);
+            submitAdvice = findViewById(R.id.submit_advice_button);
+            submitAdvice.setOnClickListener(this);
         }
         else if (v.getId() == R.id.post_advice_button) {
             adviceInput();
             setContentView(R.layout.activity_friend_list);
+            submitAdvice = findViewById(R.id.submit_advice_button);
+            submitAdvice.setOnClickListener(this);
         }
 //        else if (v.getId() == R.id.submit_advice_button) {
 //            setContentView(R.layout.activity_friend_list2);

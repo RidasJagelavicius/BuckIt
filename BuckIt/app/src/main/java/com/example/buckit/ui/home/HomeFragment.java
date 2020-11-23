@@ -30,7 +30,6 @@ import java.util.Iterator;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
-// TODO: Figure out how to save state between fragments
 // Because rn if you navigate to a different fragment and back, it's reset
 public class HomeFragment extends Fragment implements View.OnClickListener {
 

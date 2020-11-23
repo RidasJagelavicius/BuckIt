@@ -90,6 +90,9 @@
             android:name=".ListActivity"
             android:label="My List"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PostActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
