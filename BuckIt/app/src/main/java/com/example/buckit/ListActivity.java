@@ -65,7 +65,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton changePrivacy;
     private LinearLayout goalContainer;
     private ImageButton newGoalButton;
-    private ImageButton deleteGoalButton;
     private Dialog popup;
     private Dialog deletePopup;
     private Dialog collaboratorsPopup;
@@ -114,18 +113,11 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize other components
         goalContainer = (LinearLayout) findViewById(R.id.goalContainer);
         newGoalButton = (ImageButton) findViewById(R.id.addGoal);
-        deleteGoalButton = (ImageButton) findViewById(R.id.deleteGoal);
 
         newGoalButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 //                createGoal();
                 addGoal();
-            }
-        });
-
-        deleteGoalButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                deleteGoal();
             }
         });
 
@@ -212,51 +204,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // Open a popup for user to type in name of goal to delete
-    public void deleteGoal() {
-        assert(deletePopup != null);
-        // Create the dialog that asks user to name their bucket
-        deletePopup.setContentView(R.layout.delete_goal_popup);
-        final EditText editText = (EditText) deletePopup.findViewById(R.id.popupGoalToDelete);
-        Button btnDelete = (Button) deletePopup.findViewById(R.id.popupDeleteGoal);
-
-        // By default, show the popup
-        deletePopup.show();
-        Log.v("popup","delete popup should be showing");
-
-        // compare user input string with text on the current buckets (buttons)
-        // delete bucket if text matches
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String toDelete = editText.getText().toString().toUpperCase();
-
-                // Make sure that the name for the goal is valid
-                if (toDelete.length() > 0) {
-                    for (int i = 0; i < buttonGoal.size(); i++) {
-                        Button currGoal = buttonGoal.get(i);
-                        if (currGoal.getText().equals(toDelete)) {
-                            // delete goal from container
-                            goalContainer.removeView(currGoal);
-
-                            // delete goal from JSON
-                            int goalID  = currGoal.getId();
-//                            goalMaster.remove(Integer.toString(goalID));
-
-                            // delete goal from internal buttonGoal arrayGoal
-                            buttonGoal.remove(currGoal);
-                            break;
-
-                        }
-                    }
-
-                    // Close the popup
-                    deletePopup.dismiss();
-                }
-            }
-        });
-        Log.v("popup","delete popup - activated onlick");
-    }
 
     @Override
     public void onClick(View v) {

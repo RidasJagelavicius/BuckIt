@@ -187,50 +187,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    // Open a popup for to type in name of  bucket to delete
-    public void deleteBucket() {
-//        assert(deletePopup != null);
-        // Create the dialog that asks user to name their bucket
-        deletePopup.setContentView(R.layout.delete_bucket_popup);
-        final EditText editText = (EditText) popup.findViewById(R.id.popupBucketToDelete);
-        Button btnDelete = (Button) popup.findViewById(R.id.popupDeleteBucket);
-
-        // By default, show the popup
-        deletePopup.create();
-
-        // Once name bucket, create a new bucket
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String toDelete = editText.getText().toString().toUpperCase();
-
-                // Make sure that the name for the list is valid
-                if (toDelete.length() > 0) {
-                    for (int i = 0; i < buttonBucket.size(); i++) {
-                        Button currBucket = buttonBucket.get(i);
-                        if (currBucket.getText().equals(toDelete)) {
-                            // delete list from container
-                            bucketContainer.removeView(currBucket);
-
-                            // delete list from JSON
-                            int bucketID  = currBucket.getId();
-                            master.remove(Integer.toString(bucketID));
-
-                            // delete list from internal buttonList arrayList
-                            buttonBucket.remove(currBucket);
-                            break;
-
-                        }
-                    }
-
-                    // Close the popup
-                    deletePopup.dismiss();
-                }
-            }
-        });
-        Log.v("popup","delete popup - activated onlick");
-    }
 
     // Open a popup for user to type in name of new bucket, then calls insertBucket()
     // https://www.youtube.com/watch?v=0DH2tZjJtm0
@@ -271,7 +227,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // A bucket will just be a styled button or something
         final Button bucket = new Button(thisContext);
         LinearLayout.LayoutParams bucketParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(100));
-        bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), dpToPx(5));
+        bucketParams.setMargins(dpToPx(10), 0, dpToPx(10), dpToPx(10));
         bucket.setLayoutParams(bucketParams);
         bucket.setText(name);
         bucket.setTransformationMethod(null); // removes the ALL-caps

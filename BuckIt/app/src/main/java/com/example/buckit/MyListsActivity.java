@@ -211,53 +211,6 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    // Open a popup for user to type in name of list to delete
-    public void deleteList() {
-        assert(deletePopup != null);
-        // Create the dialog that asks user to name their bucket
-        deletePopup.setContentView(R.layout.delete_list_popup);
-        final EditText editText = (EditText) deletePopup.findViewById(R.id.popupListToDelete);
-        Button btnDelete = (Button) deletePopup.findViewById(R.id.popupDeleteList);
-
-        // By default, show the popup
-        deletePopup.show();
-        Log.v("popup","delete popup should be showing");
-
-        // compare user input string with text on the current buckets (buttons)
-        // delete bucket if text matches
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String toDelete = editText.getText().toString().toUpperCase();
-
-                // Make sure that the name for the list is valid
-                if (toDelete.length() > 0) {
-                    for (int i = 0; i < buttonList.size(); i++) {
-                        Button currList = buttonList.get(i);
-                        if (currList.getText().equals(toDelete)) {
-                            // delete list from container
-                            listContainer.removeView(currList);
-
-                            // delete list from JSON & update
-                            int listID  = currList.getId();
-                            listMaster.remove(Integer.toString(listID));
-//
-
-                            // delete list from internal buttonList arrayList
-                            buttonList.remove(currList);
-                            break;
-
-                        }
-                    }
-
-                    // Close the popup
-                    deletePopup.dismiss();
-                }
-            }
-        });
-        Log.v("popup","delete popup - activated onlick");
-    }
-
     // Given the name for the list, actually inserts the list
     // Also removes the background "Create list" if it's the first list
     // TODO: Check if list with name already exists
