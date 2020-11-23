@@ -546,6 +546,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             listMaster.remove(listID);
             listMaster.put(listID, thislist);
             SharedCode.create(this, "lists.json", listMaster.toString());
+            Toast.makeText(this, "Successfully added photo", Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -626,6 +627,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             listMaster.remove(listID);
             listMaster.put(listID, thislist);
             SharedCode.create(this, "lists.json", listMaster.toString());
+
+            if (loadPrivacy.equals(""))
+                Toast.makeText(this, "Updated privacy", Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
             return;

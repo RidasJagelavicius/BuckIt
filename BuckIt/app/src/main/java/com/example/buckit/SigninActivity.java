@@ -35,7 +35,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
             String innerUser = signinuser.getText().toString();
             String innerPass = signinpass.getText().toString();
             if (innerUser.length() == 0) {
-                Toast.makeText(this, "Username not found, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Username cannot be empty, please try again", Toast.LENGTH_SHORT).show();
             } else if (innerPass.length() == 0) {
                 Toast.makeText(this, "Incorrect password, please try again", Toast.LENGTH_SHORT).show();
             } else {

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.TooManyListenersException;
 
 import static com.example.buckit.SharedCode.dpToPx;
 
@@ -270,6 +272,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         buttonBucket.remove(bucket);
 
                         popup.dismiss();
+                        Toast.makeText(thisContext, "Deleted bucket", Toast.LENGTH_SHORT).show();
                     }
                 });
                 return true;
@@ -278,6 +281,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // Insert bucket into bucket container
         bucketContainer.addView(bucket);
+        if (addToJson)
+            Toast.makeText(thisContext, "Created a new bucket", Toast.LENGTH_SHORT).show();
 
         // Create JSON to represent bucket's lists
         if (addToJson)

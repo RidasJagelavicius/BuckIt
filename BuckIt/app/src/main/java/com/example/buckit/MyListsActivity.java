@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -207,6 +208,32 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    private boolean contains(JSONArray arr, String id) {
+        for (int i = 0; i < arr.length(); i++) {
+            try {
+                if (arr.getString(i).equals(id))
+                    return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private int indexOf(JSONArray arr, String id) {
+        for (int i = 0; i < arr.length(); i++) {
+            try {
+                if (arr.getString(i).equals(id))
+                    return i;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+        return -1;
+    }
+
     // Given the name for the list, actually inserts the list
     // Also removes the background "Create list" if it's the first list
     // TODO: Check if list with name already exists
@@ -266,10 +293,28 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
                         listMaster.remove(Integer.toString(listID));
                         SharedCode.create(currContext, "lists.json", listMaster.toString());
 
+                        // also need to remove it from the bucket's lists
+                        try {
+                            JSONObject thisbucket = master.getJSONObject(bucketID);
+                            JSONArray lists = thisbucket.getJSONArray("lists");
+                            String idAsString = Integer.toString(listID);
+                            while (contains(lists, idAsString))
+                                lists.remove(indexOf(lists, idAsString));
+                            thisbucket.remove("lists");
+                            thisbucket.put("lists", lists);
+                            master.remove(bucketID);
+                            master.put(bucketID, thisbucket);
+                            SharedCode.create(currContext, "bucket_to_list.json", master.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+
                         // delete list from internal buttonList arrayList
                         buttonList.remove(list);
 
                         popup.dismiss();
+                        Toast.makeText(currContext, "Deleted list", Toast.LENGTH_SHORT).show();
                     }
                 });
                 return true;
@@ -280,6 +325,9 @@ public class MyListsActivity extends AppCompatActivity implements View.OnClickLi
         if(list.getParent() != null)
             ((ViewGroup)list.getParent()).removeView(list); // fix for some weird error
         listContainer.addView(list);
+
+        if (addToJson)
+        Toast.makeText(this, "Created a new list", Toast.LENGTH_SHORT).show();
 
         // Create JSON to represent bucket's lists
         if (addToJson)
