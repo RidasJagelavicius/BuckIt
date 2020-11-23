@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/popup_bkgrnd"
+    android:padding="20dp"
     android:orientation="vertical">
 
     <TextView
@@ -20,9 +21,8 @@
         android:id="@+id/edit_advice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:hint="&quot;Make sure you ...&quot;"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:inputType="text"
         android:textColor="@color/textPrimary"
         android:textColorHint="@color/textSecondary">
