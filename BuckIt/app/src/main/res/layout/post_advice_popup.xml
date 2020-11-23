@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    android:layout_width="250dp"
-    android:layout_height="250dp"
-    android:layout_gravity="center"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="75dp"
+    android:layout_marginTop="50dp"
     android:background="@drawable/popup_bkgrnd"
-    android:padding="10dp" >
+    android:orientation="vertical">
 
     <TextView
     android:id="@+id/advice_box"
