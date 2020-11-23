@@ -206,8 +206,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             changeDifficulty(myid);
 
         if (xButtonIds.contains(myid)) {
-            Toast.makeText(this, "x clicked", Toast.LENGTH_SHORT).show();
-            crossOut(myid);
+//            Toast.makeText(this, "x clicked", Toast.LENGTH_SHORT).show();
+            deleteAction(myid);
         }
 
         if (plusButtonIds.contains(myid)) {
@@ -273,7 +273,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Integer> diffIndicIds = new ArrayList<>(); // array of GOAL difficulty indicator IDs
     private ArrayList<Button> diffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
     private ArrayList<Integer> plusButtonIds = new ArrayList<>(); // array of plus buttons IDs
-    private ArrayList<EditText> goalsList = new ArrayList<>(); // array of GOAL edittexts
+    private ArrayList<EditText> goalsList = new ArrayList<>(); // array of goal/subgoal edittexts
     private ArrayList<Boolean> crossedOutItems = new ArrayList<>(); // array of booleans tracking if goal/subgoal is crossed out
     private ArrayList<LinearLayout> linearLayoutsList = new ArrayList<>();
     int numCompletedItems = 0;
@@ -377,6 +377,10 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         subgoal.setId(View.generateViewId());
         goalsList.add(subgoal);
 
+        // add an invalid id val (-1) to plusButtonIds list so that everything matches
+        // -1 will signify this is a subgoal, since you cannot add a subgoal to a subgoal.
+        plusButtonIds.add(-1);
+
         // delete subgoal button
         Button xButton = new Button(this);
         xButton.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
@@ -466,7 +470,22 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         double percentage = (double)(numCompletedItems)/crossedOutItems.size() * 100;
         bar.setProgress((int)percentage);
     }
-    private void crossOut(int id) {
+
+    private void deleteAction(int id) {
+        int idx = xButtonIds.indexOf(id);
+        LinearLayout goal = linearLayoutsList.get(idx);
+        linearLayoutsList.remove(idx);
+        goalContainer.removeView(goal); // remove goal from container
+
+        // remove goal/subgoal info from all our arrays
+        xButtonIds.remove(idx);
+        diffIndicIds.remove(idx);
+        diffIndicators.remove(idx);
+        plusButtonIds.remove(idx);
+        crossedOutItems.remove(idx);
+        goalsList.remove(idx);
+
+        updateProgressBar();
 
     }
 
