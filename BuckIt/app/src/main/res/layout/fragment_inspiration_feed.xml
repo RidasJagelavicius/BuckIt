@@ -4,19 +4,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.inspirationfeed.InspirationFeedFragment">
+    tools:context=".ui.inspirationFeed.InspirationFeedFragment">
 
-    <TextView
-        android:id="@+id/text_inspiration_feed"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/friend_act"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Friend Activity"
+            android:textSize="@dimen/textPrimary"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/friend_act"
+            android:text="Swipe for more"
+            android:textSize="15sp"
+            android:layout_marginVertical="0dp"
+            android:textColor="@color/textSecondary" />
+
+        <!-- Please fix -->
+        <TextView
+            android:layout_above="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Trending"
+            android:textSize="@dimen/textPrimary"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="150dp"
+            android:id="@+id/travel_button"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:text="Travel"
+            android:layout_centerHorizontal="true"
+            >
+        </Button>
+
+        <Button
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/cooking_button"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:text="Cooking"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/travel_button"
+            >
+        </Button>
+
+        <Button
+            android:layout_margin="15dp"
+            android:id="@+id/kindness_button"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:text="Kindness"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/cooking_button"
+            >
+        </Button>
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_marginTop="135dp"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            tools:ignore="MissingConstraints" />
+    </RelativeLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

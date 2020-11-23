@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <!-- ScrollView for Bucket overflow -->
     <ScrollView
         android:id="@+id/home_scrollable"
@@ -24,6 +23,15 @@
         </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Long-press to delete buckets"
+        android:textSize="15sp"
+        android:layout_marginBottom="@dimen/marginY"
+        android:textColor="@color/textSecondary" />
+
     <!-- Button layout for adding or deleting buckets -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,27 +39,16 @@
         android:orientation="horizontal"
         android:layout_weight="0">
 
-        <!-- Delete button -->
-        <!-- TODO: Clicking on this should enter a mode where you can delete buckets -->
-        <ImageButton
-            android:id="@+id/deleteBucket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/trash" />
 
-        <!-- Add a new bucket -->
-        <!-- TODO: Clicking on this should add a new bucket -->
         <ImageButton
             android:id="@+id/addBucket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:background="@color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/add" />
+            android:src="@drawable/ic_add" />
     </LinearLayout>
 
 </LinearLayout>

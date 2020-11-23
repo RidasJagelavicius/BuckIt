@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="50dp"
+        android:paddingHorizontal="@dimen/marginX"
+        android:gravity="center_horizontal"
+        android:background="@color/popupBackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Invite collaborators"
+            android:textSize="@dimen/textPrimary"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Collaborators can edit your list"
+            android:textSize="15sp"
+            android:layout_marginBottom="@dimen/marginY"
+            android:textColor="#acacac" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/collaboratorName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/collaboratorSearch"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/invite" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_marginVertical="@dimen/marginY"
+            android:layout_marginHorizontal="@dimen/marginX"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textPrimary"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold"
+                android:text="Recently invited" />
+
+            <TextView
+                android:id="@+id/bell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textPrimary"
+                android:textColor="@color/textSecondary"
+                android:background="@color/ridasDark"
+                android:padding="5dp"
+                android:layout_marginVertical="5dp"
+                android:text="\@bell" />
+
+            <TextView
+                android:id="@+id/meghana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textPrimary"
+                android:textColor="@color/textSecondary"
+                android:background="@color/ridasDark"
+                android:padding="5dp"
+                android:layout_marginVertical="5dp"
+                android:text="\@og_meghana" />
+
+            <TextView
+                android:id="@+id/sita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textPrimary"
+                android:textColor="@color/textSecondary"
+                android:background="@color/ridasDark"
+                android:padding="5dp"
+                android:layout_marginVertical="5dp"
+                android:text="\@mamasita" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
