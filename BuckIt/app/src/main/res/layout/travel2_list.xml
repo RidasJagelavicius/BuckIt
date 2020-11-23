@@ -11,7 +11,8 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/marginX"
             android:layout_marginVertical="@dimen/marginY"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="top
+"
             android:orientation="vertical" >
 
             <!-- List name -->
@@ -21,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:layout_gravity="center_horizontal"
-                android:text="India"
+                android:text="INDIA"
                 android:textColor="@color/textPrimary"
                 android:textSize="35sp"
                 android:textStyle="bold"/>
@@ -34,14 +35,23 @@
                 android:layout_marginTop="@dimen/marginY"
                 android:orientation="vertical">
                 <!-- android:background="@color/popupBackground"-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Looks like this bucket has no lists yet"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="@dimen/marginY"
+                    android:textColor="@color/textSecondary" />
 
                 <Button
+                    android:id="@+id/addinspolist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Add List"
-                    android:id="@+id/addinspolist">
-
-                </Button>
+                    android:paddingHorizontal="30dp"
+                    android:background="@drawable/round_normal_button"/>
 
                 <!-- The + button to add a new item
                 <ImageButton

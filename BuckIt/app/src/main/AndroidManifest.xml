@@ -29,84 +29,97 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="Register" /> <!-- main -->
+            android:label="Register" />
+
+        <!-- main -->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity to simulate the travel inspiration bucket -->
         <activity
             android:name=".ui.inspirationFeed.TravelActivity"
-            android:label="Inspiration for Travel">
-        </activity>
+            android:label="Inspiration for Travel"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity to simulate the cooking inspiration bucket -->
         <activity
             android:name=".ui.inspirationFeed.CookActivity"
-            android:label="Inspiration for Cooking">
-        </activity>
+            android:label="Inspiration for Cooking"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity to simulate the kindness inspiration bucket -->
         <activity
             android:name=".ui.inspirationFeed.KindActivity"
-            android:label="Inspiration for Kindness">
-        </activity>
+            android:label="Inspiration for Kindness"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity for the simulated Florida travel list -->
-        <activity android:name=".ui.inspirationFeed.Travel1List"
-            android:label="Florida">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.Travel1List"
+            android:label="Florida"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity for the simulated India travel list -->
-        <activity android:name=".ui.inspirationFeed.Travel2List"
-            android:label="India">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.Travel2List"
+            android:label="India"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity for the simulated Chocolate Chip Cookies cooking list -->
-        <activity android:name=".ui.inspirationFeed.Cook1List"
-            android:label="Mexican Food">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.Cook1List"
+            android:label="Mexican Food"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity for the simulated Fried Rice cooking list -->
-        <activity android:name=".ui.inspirationFeed.Cook2List"
-            android:label="Korean Food">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.Cook2List"
+            android:label="Korean Food"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity for the simulated Donations kindness list -->
-        <activity android:name=".ui.inspirationFeed.Kind1List"
-            android:label="Donations">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.Kind1List"
+            android:label="Donations"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity for the simulated Volunteering kindness list -->
-        <activity android:name=".ui.inspirationFeed.Kind2List"
-            android:label="Volunteering">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.Kind2List"
+            android:label="Volunteering"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--Activity to go to simulated friend's home cooking page -->
-        <activity android:name=".ui.inspirationFeed.HomeCookingFriend"
-            android:label="Home Cooking">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.HomeCookingFriend"
+            android:label="Home Cooking"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- Activity to go to simulated friend's spring break list -->
-        <activity android:name=".ui.inspirationFeed.SpringBreakFriend"
-            android:label="Spring Break">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.SpringBreakFriend"
+            android:label="Spring Break"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- Activity to go to simulated friend's books to read list -->
-        <activity android:name=".ui.inspirationFeed.BookFriend"
-            android:label="Books to Read">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.BookFriend"
+            android:label="Books to Read"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- Bucket with inspiration feed travel list added to it -->
-        <activity android:name=".ui.inspirationFeed.BucketWithInspo"
-            android:label="Travel">
-        </activity>
+        <activity
+            android:name=".ui.inspirationFeed.BucketWithInspo"
+            android:label="Travel"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- Florida list within the user's buckets -->
-        <activity android:name=".ui.inspirationFeed.FloridaInBucket"
-            android:label="Florida">
+        <activity
+            android:name=".ui.inspirationFeed.FloridaInBucket"
+            android:label="Florida"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
             android:label="My Buckets"
@@ -118,10 +131,6 @@
         <activity
             android:name=".ListActivity"
             android:label="My List"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".SubgoalActivity"
-            android:label="Subgoals"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

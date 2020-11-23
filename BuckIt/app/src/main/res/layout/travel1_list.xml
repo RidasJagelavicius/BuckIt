@@ -8,14 +8,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="115dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="top"
             android:layout_marginHorizontal="@dimen/marginX"
             android:layout_marginVertical="@dimen/marginY"
             android:layout_marginBottom="10dp"
@@ -28,36 +26,79 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
-                android:text="Florida"
+                android:text="FLORIDA"
                 android:textColor="@color/textPrimary"
-                android:textSize="30sp"
+                android:textSize="35sp"
                 android:textStyle="bold" />
 
             <!-- The actual bucket list -->
+            <!--goal-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="0"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <!--difficulty button-->
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Disney World">
-                </Button>
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/difficulty_indicator_med"/>
 
-                <Button
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Beaches">
-                </Button>
-
+                    android:layout_height="wrap_content"
+                    android:text="Visit Disney World" />
             </LinearLayout>
+            <!--goal-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <!--difficulty button-->
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/difficulty_indicator_easy"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Visit local beaches" />
+            </LinearLayout>
+
+            <!--sub goal-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="25dp"
+                android:orientation="horizontal">
+                <!--difficulty button-->
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/difficulty_indicator_easy"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Crystal Cove beach" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="25dp"
+                android:orientation="horizontal">
+                <!--difficulty button-->
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/difficulty_indicator_hard"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Huntington State beach" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,6 +106,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 android:text="Photos"
+                android:layout_marginVertical="@dimen/marginY"
                 android:textColor="@color/textSecondary"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -118,7 +160,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Add List" />
+                    android:text="Add List"
+                    android:background="@drawable/round_normal_button"
+                    android:layout_marginVertical="@dimen/marginY"
+                    android:paddingHorizontal="30dp"/>
 
             </LinearLayout>
         </LinearLayout>

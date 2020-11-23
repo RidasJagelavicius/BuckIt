@@ -191,6 +191,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             // Otherwise add the blank view
             TextView addGoalText = new TextView(this);
             LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    //left      top        right       bottom
             theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
             addGoalText.setLayoutParams(theseParams);
             addGoalText.setGravity(Gravity.CENTER);

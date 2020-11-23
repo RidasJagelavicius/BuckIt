@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
-                android:text="Spring Break List"
+                android:text="SPRING BREAK"
                 android:textColor="@color/textPrimary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -40,7 +40,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
                 android:text="\@mygoodfriend2"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/textSecondary"
                 android:textSize="20sp"
                 />
 
@@ -122,29 +122,82 @@
 
                 android:orientation="vertical"
                 android:layout_gravity="center">
-                <!-- android:background="@color/popupBackground"-->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Cancun, Mexico">
-                </Button>
 
-                <Button
+                <!--goal-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Miami, Florida">
-                </Button>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_hard"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Visit Cancun, Mexico" />
+                </LinearLayout>
+                <!--goal-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_easy"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Visit Florida" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--sub goal-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="25dp"
+                android:orientation="horizontal">
+                <!--difficulty button-->
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/difficulty_indicator_blank"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/strikethrough_miami"/>
+
+             </LinearLayout>
+            <!--sub goal-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="25dp"
+                android:orientation="horizontal">
+                <!--difficulty button-->
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/difficulty_indicator_med"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Go to Disney World" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 android:text="Photos"
@@ -166,8 +219,7 @@
                     android:id="@+id/mylistgallery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/popupBackground"
-                    android:padding="5dp">
+                    android:background="@color/popupBackground" >
 
                     <!--                    first row in table-->
                     <TableRow
@@ -181,14 +233,6 @@
 
                     </TableRow>
                 </TableLayout>
-                <!--
-                <Button
-                    android:id="@+id/addPhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Add a Photo" /> -->
-
             </LinearLayout>
 
             <!-- Button to add a photo -->
@@ -205,7 +249,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Give Advice" />
+                    android:text="Give Advice"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/round_normal_button"/>
 
                 <!--                <EditText-->
                 <!--                    android:id="@+id/advice_input"-->
@@ -225,9 +272,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0"
-                android:background="@color/ridasDark"
+                android:background="@color/transparent"
                 android:padding="20dp"
-                android:progress="70" />
+                android:progress="25" />
         </LinearLayout>
     </ScrollView>
 
