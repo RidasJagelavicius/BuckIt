@@ -113,25 +113,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         } else {
             // Otherwise add the blank view
-            TextView addBucketText = new TextView(thisContext);
-            LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
-            addBucketText.setLayoutParams(theseParams);
-            addBucketText.setText("Add your first bucket");
-            addBucketText.setTextColor(ContextCompat.getColor(thisContext, R.color.textPrimary));
-            addBucketText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
-
-            ImageButton backgroundAddBuckets = new ImageButton(thisContext);
-            theseParams = new LinearLayout.LayoutParams(dpToPx(200), dpToPx(200));
-            backgroundAddBuckets.setLayoutParams(theseParams);
-            backgroundAddBuckets.setAdjustViewBounds(true);
-            backgroundAddBuckets.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            backgroundAddBuckets.setBackgroundResource(R.drawable.add_in_circle);
-            backgroundAddBuckets.setId(R.id.backgroundAddBuckets);
-            backgroundAddBuckets.setOnClickListener(this);
-
-            bucketContainer.addView(addBucketText);
-            bucketContainer.addView(backgroundAddBuckets);
+//            TextView addBucketText = new TextView(thisContext);
+//            LinearLayout.LayoutParams theseParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            theseParams.setMargins(dpToPx(0), dpToPx(0), dpToPx(0), dpToPx(30)); // set size in DP
+//            addBucketText.setLayoutParams(theseParams);
+//            addBucketText.setText("Add your first bucket");
+//            addBucketText.setTextColor(ContextCompat.getColor(thisContext, R.color.textPrimary));
+//            addBucketText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25); // set size in SP
+//
+//            ImageButton backgroundAddBuckets = new ImageButton(thisContext);
+//            theseParams = new LinearLayout.LayoutParams(dpToPx(200), dpToPx(200));
+//            backgroundAddBuckets.setLayoutParams(theseParams);
+//            backgroundAddBuckets.setAdjustViewBounds(true);
+//            backgroundAddBuckets.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//            backgroundAddBuckets.setBackgroundResource(R.drawable.add_in_circle);
+//            backgroundAddBuckets.setId(R.id.backgroundAddBuckets);
+//            backgroundAddBuckets.setOnClickListener(this);
+//
+//            bucketContainer.addView(addBucketText);
+//            bucketContainer.addView(backgroundAddBuckets);
         }
     }
 
