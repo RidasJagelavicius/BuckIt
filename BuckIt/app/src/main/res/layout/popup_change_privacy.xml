@@ -19,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginVertical="15dp"
-            android:text="Select visibility"
+            android:layout_marginTop="15dp"
+            android:text="Select visbility"
             android:textSize="@dimen/textPrimary"
             android:textColor="@color/textPrimary"
             android:textStyle="bold" />
@@ -44,24 +44,26 @@
 
                 <ImageButton
                     android:id="@+id/vispublic"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/public_eye" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/public_eye" >
 
+                </ImageButton>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textPrimary"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="center_horizontal"
-                    android:text="Public" />
-
+                    android:text="PUBLIC" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:textSize="10sp"
                     android:text="Anybody can view this list" />
+
             </LinearLayout>
 
             <!-- The friends eye -->
@@ -75,23 +77,24 @@
 
                 <ImageButton
                     android:id="@+id/visfriend"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/friend" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textPrimary"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="center_horizontal"
-                    android:text="Friends" />
+                    android:text="FRIENDS" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:textSize="10sp"
                     android:text="Only you and people you have added can view this list" />
             </LinearLayout>
         </LinearLayout>
@@ -116,23 +119,24 @@
 
                 <ImageButton
                     android:id="@+id/vislist"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/collaborator" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textPrimary"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="center_horizontal"
-                    android:text="List" />
+                    android:text="LIST" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:textSize="10sp"
                     android:text="Only you and your collaborators can view this list" />
             </LinearLayout>
 
@@ -147,23 +151,24 @@
 
                 <ImageButton
                     android:id="@+id/visprivate"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/private_eye" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textPrimary"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:gravity="center_horizontal"
-                    android:text="Private" />
+                    android:text="PRIVATE" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:textSize="10sp"
                     android:text="Only you can view this list" />
             </LinearLayout>
         </LinearLayout>

@@ -138,7 +138,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
     // Handles clicking on bell, meg, sita, or the search button
     private void collaboratorHandler() {
-        EditText collaboratorName = collaboratorsPopup.findViewById(R.id.collaboratorName);
+        EditText collaboratorName = popup.findViewById(R.id.collaboratorName);
         String input = collaboratorName.getText().toString();
 
         // Check not empty
@@ -153,7 +153,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             String message = "Invited " + input + " to collaborate";
             Toast.makeText(ListActivity.this, message, Toast.LENGTH_SHORT).show();
-            collaboratorsPopup.dismiss();
+            popup.dismiss();
         }
     }
 
@@ -238,14 +238,14 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         } else if (myid == R.id.collaboratorSearch) {
             collaboratorHandler();
         } else if (myid == R.id.addCollaborator) {
-            collaboratorsPopup.setContentView(R.layout.popup_change_collaborator);
-                collaboratorsPopup.show();
+            popup.setContentView(R.layout.popup_change_collaborator);
+            popup.show();
 
                 // Add id's to each button, give them a listener for clicks, and on click, change JSON and icon in list
-                TextView bell = collaboratorsPopup.findViewById(R.id.bell);
-                TextView meg = collaboratorsPopup.findViewById(R.id.meghana);
-                TextView sita = collaboratorsPopup.findViewById(R.id.sita);
-                ImageButton searchCollab = collaboratorsPopup.findViewById(R.id.collaboratorSearch);
+                TextView bell = popup.findViewById(R.id.bell);
+                TextView meg = popup.findViewById(R.id.meghana);
+                TextView sita = popup.findViewById(R.id.sita);
+                ImageButton searchCollab = popup.findViewById(R.id.collaboratorSearch);
 
                 bell.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -487,6 +487,25 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
         updateProgressBar();
 
+    }
+
+    // TODO: update json :(
+    private void insertGoals() {
+//        try {
+//            JSONObject thislist = listMaster.getJSONObject(listID);
+//            JSONArray goals = thislist.getJSONArray("goals"); //include subgoals
+//            goals.put(path);
+//
+//            // Remake JSON
+//            thislist.remove("goals");
+//            thislist.put("goals", goals);
+//            listMaster.remove(listID);
+//            listMaster.put(listID, thislist);
+//            SharedCode.create(this, "lists.json", listMaster.toString());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            return;
+//        }
     }
 
     // Allow user to select an image from gallery or from phone when click on Add Photo
