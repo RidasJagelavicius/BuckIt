@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="Friend Activity"
             android:textSize="@dimen/textPrimary"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/textPrimary"
             android:textStyle="bold" />
 
@@ -35,25 +35,27 @@
 
         <!-- Please fix -->
         <TextView
-            android:layout_above="@+id/viewpager"
+            android:layout_marginTop="120dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Trending"
             android:textSize="@dimen/textPrimary"
             android:textColor="@color/textPrimary"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:id="@+id/trending"/>
 
         <Button
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/travel_button"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:textSize="25sp"
             android:gravity="center"
             android:text="Travel"
+            android:layout_below="@id/trending"
             android:layout_centerHorizontal="true"
             >
         </Button>
