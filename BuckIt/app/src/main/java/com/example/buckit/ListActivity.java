@@ -467,7 +467,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void changeDifficulty(int id) {
-        Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
         int idx = diffIndicIds.indexOf(id);
         Button bulletPoint = diffIndicators.get(idx);
 
@@ -524,7 +524,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private void updateProgressBar() {
         ProgressBar bar = findViewById(R.id.progressBar);
         double percentage = (double)(numCompletedItems)/crossedOutItems.size() * 100;
-        Toast.makeText(this, Integer.toString((crossedOutItems.size())), Toast.LENGTH_SHORT).show();
         bar.setProgress((int)percentage);
     }
     private void crossOut(int id) {
