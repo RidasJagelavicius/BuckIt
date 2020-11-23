@@ -60,7 +60,7 @@ public class InspirationFeedFragment extends Fragment implements View.OnClickLis
             builder.setMessage("Unable to load lists. Please try again later.");
 
             // Set Alert Title
-            builder.setTitle("Error!");
+            builder.setTitle("Error");
 
             builder.setCancelable(true);
 
