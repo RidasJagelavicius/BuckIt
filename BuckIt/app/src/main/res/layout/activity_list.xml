@@ -101,11 +101,6 @@
                 android:orientation="horizontal"
                 android:layout_weight="0">
 
-                <!-- Delete button -->
-                <!-- TODO: Clicking on this should enter a mode where you can delete buckets -->
-
-                <!-- Add a new bucket -->
-                <!-- TODO: Clicking on this should add a new bucket -->
                 <ImageButton
                     android:id="@+id/addGoal"
                     android:layout_width="wrap_content"

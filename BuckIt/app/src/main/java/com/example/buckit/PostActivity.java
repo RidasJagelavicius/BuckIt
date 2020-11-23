@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,11 +36,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private Button openAdvicePopup;
     private Button submitAdvice;
     private ImageButton searchButton;
-     TextView messageTextView;
-     private EditText search_bar;
-     private String username;
-     private boolean isAdded = false;
-     private ArrayList<String> added_users = new ArrayList();
+    TextView messageTextView;
+    private EditText search_bar;
+    private String username;
+    private boolean isAdded = false;
+    private ArrayList<String> added_users = new ArrayList();
 
 
     private Dialog popup;

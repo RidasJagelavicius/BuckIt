@@ -16,4 +16,8 @@
     <string name="new_subgoal">subgoal...</string>
     <string name="x">x</string>
     <string name="strikethrough_miami"><strike>Miami beach</strike></string>
+    <string name="strikethrough_friedrice"><strike>Shrimp Fried Rice</strike></string>
+    <string name="strikethrough_lemoncake"><strike>Lemon Ricotta Cake</strike></string>
+    <string name="strikethrough_himself"><strike>Himself</strike></string>
+    <string name="strikethrough_becoming"><strike>Becoming</strike></string>
 </resources>

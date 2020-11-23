@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.inspirationFeed.InspirationFeedFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="Friend Activity"
             android:textSize="@dimen/textPrimary"
-            android:layout_marginTop="10dp"
+            android:layout_marginVertical="10dp"
             android:textColor="@color/textPrimary"
             android:textStyle="bold" />
 
@@ -27,76 +27,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_below="@+id/friend_act"
             android:text="Swipe for more"
             android:textSize="15sp"
             android:layout_marginVertical="0dp"
             android:textColor="@color/textSecondary" />
 
-        <!-- Please fix -->
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            tools:ignore="MissingConstraints" />
+
         <TextView
-            android:layout_marginTop="125dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="Trending"
-            android:textSize="@dimen/textPrimary"
+            android:text="TRENDING"
+            android:textSize="35sp"
             android:textColor="@color/textPrimary"
             android:textStyle="bold"
             android:id="@+id/trending"/>
 
         <Button
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
             android:id="@+id/travel_button"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:text="Travel"
             android:layout_below="@id/trending"
-            android:layout_centerHorizontal="true"
-            >
-        </Button>
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/round_normal_outline_button"
+            android:gravity="center"
+            android:text="TRAVEL"/>
 
         <Button
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
             android:id="@+id/cooking_button"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:text="Cooking"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/travel_button"
-            >
-        </Button>
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/round_normal_outline_button"
+            android:gravity="center"
+            android:text="Cooking" />
 
         <Button
-            android:layout_margin="15dp"
             android:id="@+id/kindness_button"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:text="Kindness"
-            android:layout_centerInParent="true"
             android:layout_below="@id/cooking_button"
-            >
-        </Button>
-
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_marginTop="135dp"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            tools:ignore="MissingConstraints" />
-    </RelativeLayout>
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round_normal_outline_button"
+            android:gravity="center"
+            android:text="Kindness" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

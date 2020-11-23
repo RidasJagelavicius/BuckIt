@@ -8,14 +8,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="115dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="top"
             android:layout_marginHorizontal="@dimen/marginX"
             android:layout_marginVertical="@dimen/marginY"
             android:layout_marginBottom="10dp"
@@ -28,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
-                android:text="Books to Read List"
+                android:text="BOOKS TO READ"
                 android:textColor="@color/textPrimary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -40,7 +38,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
                 android:text="\@mygoodfriend3"
-                android:textColor="@color/textPrimary"
+                android:textColor="@color/textSecondary"
                 android:textSize="20sp"
                 />
 
@@ -97,65 +95,83 @@
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/add_in_circle" />
                 </LinearLayout>
-
             </LinearLayout>
-
-            <!--            Name of List-->
-            <!--
-            <TextView
-                android:id="@+id/uh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0"
-                android:text="Cooking"
-                android:textColor="@color/textPrimary"
-                android:textSize="25sp"
-                android:textStyle="bold" /> -->
-
             <!-- The actual bucket list -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0"
-
                 android:orientation="vertical"
                 android:layout_gravity="center">
-                <!-- android:background="@color/popupBackground"-->
-                <Button
+
+                <!--goal-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Holding Up the Universe">
-                </Button>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_blank"/>
 
-                <Button
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Holding Up the Universe"/>
+                </LinearLayout>
+
+                <!--goal-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="If You're Out There">
-                </Button>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_blank"/>
 
-                <Button
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="If You're Out There"/>
+                </LinearLayout>
+
+                <!--goal-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Himself">
-                </Button>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_blank"/>
 
-                <Button
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/strikethrough_himself"/>
+                </LinearLayout>
+
+                <!--goal-->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Becoming">
-                </Button>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_blank"/>
 
-
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/strikethrough_becoming"/>
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -163,6 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0"
+                android:layout_marginVertical="@dimen/marginY"
                 android:text="Photos"
                 android:textColor="@color/textSecondary"
                 android:textSize="25sp"
@@ -185,57 +202,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/popupBackground"
-                    android:padding="5dp">-->
-
-                    <!--                    first row in table-->
-                <!--
-                    <TableRow
-                        android:id="@+id/firstRow"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@drawable/lemonricottacake" />
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@drawable/shrimpfryrye" />
-                    </TableRow>-->
+                    android:padding="5dp">
                 </TableLayout>
-                <!--
-                <Button
-                    android:id="@+id/addPhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Add a Photo" /> -->
-
             </LinearLayout>
 
             <!-- Button to add a photo -->
-
-            <!--                not sure if this liner layout inside is necessary-->
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-
-                <!--            Button to post advice-->
-                <Button
-                    android:id="@+id/post_advice_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Give Advice" />
-
-                <!--                <EditText-->
-                <!--                    android:id="@+id/advice_input"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    >-->
-                <!--                </EditText>-->
-            </LinearLayout>
+            <Button
+                android:id="@+id/post_advice_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="@dimen/marginY"
+                android:background="@drawable/round_normal_button"
+                android:paddingHorizontal="20dp"
+                android:text="Give Advice" />
 
 
             <!--            Button to post advice-->
@@ -245,11 +225,11 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
                 android:layout_weight="0"
-                android:background="@color/ridasDark"
+                android:background="@color/transparent"
                 android:padding="20dp"
-                android:progress="90" />
+                android:progress="50" />
         </LinearLayout>
     </ScrollView>
 

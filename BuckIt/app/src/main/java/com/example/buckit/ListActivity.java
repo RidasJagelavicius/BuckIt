@@ -59,7 +59,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout goalContainer;
     private ImageButton newGoalButton;
     private Dialog popup;
-    private Dialog deletePopup;
     private Dialog collaboratorsPopup;
     private LinearLayout addCollab;
     private ArrayList<Button> buttonGoal  = new ArrayList<Button>();
