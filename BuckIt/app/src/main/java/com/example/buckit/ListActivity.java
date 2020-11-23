@@ -114,7 +114,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize other components
         goalContainer = (LinearLayout) findViewById(R.id.goalContainer);
         newGoalButton = (ImageButton) findViewById(R.id.addGoal);
-        deleteGoalButton = (ImageButton) findViewById(R.id.deleteGoal);
 
         newGoalButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
