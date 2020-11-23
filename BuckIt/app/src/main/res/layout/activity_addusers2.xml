@@ -30,6 +30,7 @@
 <!--                        android:layout_height="70dp"-->
 <!--                        android:hint="  Search \@\my_good_friend or \#\category"/>"-->
                     <TextView
+                        android:id="@+id/username2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="\@\my_good_friend"

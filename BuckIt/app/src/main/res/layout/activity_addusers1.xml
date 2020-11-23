@@ -13,25 +13,33 @@
         tools:layout_editor_absoluteY="115dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:padding="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:background="@color/popupBackground">
 
-            <EditText
-                android:id="@+id/search_bar"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="334dp"
                 android:layout_height="70dp"
-                android:hint="  Search \@\my_good_friend or \#\category"/>
+                android:paddingBottom="15dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_bar"
+                    android:layout_width="334dp"
+                    android:layout_height="70dp"
+                    android:hint="Search username" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/search_button"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
+                android:paddingTop="15dp"
                 app:srcCompat="@drawable/ic_search"
                 android:background="@color/popupBackground"
                 android:onClick="onClick"/>
