@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    android:layout_width="250dp"
-    android:layout_height="250dp"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:background="@drawable/round_normal_button"
-    android:padding="10dp" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="75dp"
+    android:layout_marginTop="50dp"
+    android:background="@drawable/popup_bkgrnd"
+    android:orientation="vertical">
 
     <TextView
     android:id="@+id/advice_box"
@@ -37,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:paddingHorizontal="50dp"
-        android:background="@drawable/round_friendly_button"
+        android:background="@drawable/round_normal_button"
         android:textColor="@color/textPrimary"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
