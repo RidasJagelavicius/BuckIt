@@ -19,7 +19,7 @@
     android:textColor="@color/textPrimary"
     android:layout_gravity="center"
     android:textStyle="bold"
-        android:textSize="@dimen/textPrimary"
+    android:textSize="@dimen/textPrimary"
     android:text="NEW ADVICE" />
 
     <EditText

@@ -54,6 +54,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Button addPhoto;
     private String listID;
     private JSONObject listMaster = null;
+    private JSONObject goalsMaster = null;
     private TableLayout gallery;
     private ImageButton changePrivacy;
     private LinearLayout goalContainer;
@@ -176,24 +177,32 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     // Load in the saved goals or say "Create your first goal"
     private void loadOrBlank() {
         // Get the master directory if it exists, otherwise create one
-        // DO NOT MAKE THIS GOALS
-        boolean masterExists = listMaster != null;
+        boolean masterExists = SharedCode.fileExists(this, "goals.json");
         // If master already existed, populate the buckets
         if (masterExists) {
             // Iterate through keys and make goals of their name
-//            Iterator<String> keys = listMaster.keys();
-//            if (keys.hasNext()) {
-//                do {
-//                    String goalID = keys.next();
-//                    try {
-//                        JSONObject goal = listMaster.getJSONObject(goalID);
-//                        String name = goal.getString("name");
-//                        listMaster(name, false);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        return;
+//            String jsonString = SharedCode.read(this, "goals.json");
+//            try {
+//                JSONObject thislist = listMaster.getJSONObject(listID);
+//                JSONArray goalIDs = thislist.getJSONArray("goals");
+//                for (int i = 0; i < goalIds.size(); i++) {
+//                    String goalID = goalIds.get(i);
+//                    JSONObject goal = goalsMaster.getJSONObject(goalID);
+//                    String difficulty = goal.getString("difficulty");
+//                    String goal_text = // you actually need to amend the JSON so goal and subgoal have
+//
+//                            // Insert goal
+//                            addGoal(difficulty, goal_text, true);
+//                    // Insert subgoal
+//                    if (goal.has("subgoal")) {
+//                        JSONObject subgoal = goal.getJSONObject("subgoal");
+//                        // get difficulty and text, then call addSubGoal
 //                    }
-//                } while(keys.hasNext());
+//                }
+//                Log.v("JSON", "Successfully read list mapping");
+//            } catch (JSONException e) {
+//                Log.e("JSON", "Failed to parse master JSON file");
+//                return;
 //            }
         } else {
             // Otherwise add the blank view
@@ -210,6 +219,23 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
 
             // Add it to the container
             goalContainer.addView(addGoalText);
+
+
+            // Create
+            boolean fileCreated = SharedCode.create(this, "goals.json", "{}");
+            if (!fileCreated) {
+                Log.e("JSON", "Failed to create master JSON file");
+                return;
+            } else {
+                String jsonString = SharedCode.read(this, "goals.json");
+                try {
+                    goalsMaster = new JSONObject(jsonString);
+                } catch (Throwable t) {
+                    Log.e("JSON", "Failed to parse master JSON file");
+                    t.printStackTrace();
+                    return;
+                }
+            }
         }
     }
 
@@ -293,6 +319,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Button> diffIndicators = new ArrayList<>(); // array of GOAL difficulty indicator buttons
     private ArrayList<Integer> plusButtonIds = new ArrayList<>(); // array of plus buttons IDs
     private ArrayList<EditText> goalsList = new ArrayList<>(); // array of goal/subgoal edittexts
+    private ArrayList<String> goalIds = new ArrayList<>(); // array of goal/subgoal ids
     private ArrayList<Boolean> crossedOutItems = new ArrayList<>(); // array of booleans tracking if goal/subgoal is crossed out
     private ArrayList<LinearLayout> linearLayoutsList = new ArrayList<>();
     int numCompletedItems = 0;
@@ -326,6 +353,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         goal.setLayoutParams(new ViewGroup.LayoutParams(650,ViewGroup.LayoutParams.WRAP_CONTENT));
         goal.setId(View.generateViewId());
         goalsList.add(goal);
+        goalIds.add(Integer.toString(goal.getId()));
 
         // add subgoal button
         Button plusButton = new Button(this);
@@ -395,6 +423,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         subgoal.setLayoutParams(new ViewGroup.LayoutParams(650,ViewGroup.LayoutParams.WRAP_CONTENT));
         subgoal.setId(View.generateViewId());
         goalsList.add(subgoal);
+        goalIds.add(Integer.toString(subgoal.getId()));
 
         // add an invalid id val (-1) to plusButtonIds list so that everything matches
         // -1 will signify this is a subgoal, since you cannot add a subgoal to a subgoal.
@@ -509,22 +538,24 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // TODO: update json :(
-    private void insertGoals() {
-//        try {
-//            JSONObject thislist = listMaster.getJSONObject(listID);
+    private void createGoalsJSON() {
+        try {
+            JSONObject thislist = listMaster.getJSONObject(listID);
 //            JSONArray goals = thislist.getJSONArray("goals"); //include subgoals
-//            goals.put(path);
-//
-//            // Remake JSON
-//            thislist.remove("goals");
-//            thislist.put("goals", goals);
-//            listMaster.remove(listID);
-//            listMaster.put(listID, thislist);
-//            SharedCode.create(this, "lists.json", listMaster.toString());
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            return;
-//        }
+            JSONArray goals = new JSONArray(goalsList); // an array of the editText goals/subgoals
+            JSONArray difficulties = new JSONArray();
+//            goals.put;
+
+            // Remake JSON
+            thislist.remove("goals");
+            thislist.put("goals", goals);
+            listMaster.remove(listID);
+            listMaster.put(listID, thislist);
+            SharedCode.create(this, "goals.json", listMaster.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     // Allow user to select an image from gallery or from phone when click on Add Photo

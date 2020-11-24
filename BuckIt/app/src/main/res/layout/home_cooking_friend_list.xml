@@ -26,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
-                android:text="Home Cooking List"
+                android:text="HOME COOKING"
                 android:textColor="@color/textPrimary"
-                android:textSize="30sp"
+                android:textSize="35sp"
                 android:textStyle="bold" />
 
             <TextView

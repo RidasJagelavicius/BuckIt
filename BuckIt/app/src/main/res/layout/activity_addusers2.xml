@@ -23,7 +23,7 @@
                     android:padding="10dp"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
-                    android:background="@color/popupBackground">
+                    android:background="@color/superLightPurple">
 
                     <TextView
                         android:id="@+id/username2"
@@ -31,55 +31,56 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="\@\my_good_friend"
-                        android:layout_marginLeft="70dp"
+                        android:layout_marginLeft="35dp"
                         android:layout_gravity="center_vertical"
                         android:textSize="25sp"
                         />
 
                     <ImageButton
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="0"
                         android:layout_marginLeft="65dp"
                         app:srcCompat="@drawable/ic_search"
-                        android:background="@color/popupBackground"/>
+                        android:background="@color/transparent"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="350dp"
-                    android:layout_height="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
-                    android:layout_marginLeft="27dp"
+                    android:gravity="center"
                     android:orientation="horizontal"
-                    android:background="@color/popupBackground">
+                    android:background="@color/transparent">
+<!--                    android:layout_marginLeft="27dp"-->
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:cardCornerRadius="50dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginLeft="35dp"
-                        >
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/cardView"-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        app:cardCornerRadius="50dp"-->
+<!--                        android:layout_marginTop="30dp"-->
+<!--                        android:layout_marginLeft="35dp">-->
 
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/tenor" />
-                    </androidx.cardview.widget.CardView>
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            app:srcCompat="@drawable/tenor" />-->
+<!--                    </androidx.cardview.widget.CardView>-->
 
                     <Button
                         android:id="@+id/friend_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="35dp"
                         android:text="\@\my_good_friend"
                         android:onClick="onClick"
-                        />
+                        android:paddingHorizontal="40dp"
+                        android:background="@drawable/round_normal_button"/>
+<!--                    android:layout_marginLeft="35dp"-->
 
                 </LinearLayout>
 

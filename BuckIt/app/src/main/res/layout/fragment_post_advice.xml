@@ -23,7 +23,7 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/round_normal_button"
+        android:background="@color/superLightPurple"
         android:layout_margin="10dp">
 
         <TextView
@@ -33,7 +33,9 @@
             android:paddingTop="13dp"
             android:textColor="@color/textPrimary"
             android:layout_gravity="center"
-            android:text="Your Advice/Suggestions"
+            android:textStyle="bold"
+            android:textSize="@dimen/textPrimary"
+            android:text="NEW ADVICE"
             />
 
         <EditText
@@ -45,10 +47,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="13sp"
-            android:hint="&quot;don't forget to add...&quot;"
+            android:hint="Share some knowledge..."
             android:inputType="text"
             android:textColor="@color/textPrimary"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/textSecondary"
             />
 
         <Button
@@ -57,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:paddingHorizontal="50dp"
-            android:background="@drawable/round_friendly_button"
+            android:background="@drawable/round_normal_button"
             android:textColor="@color/textPrimary"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"

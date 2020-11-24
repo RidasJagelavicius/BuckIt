@@ -8,30 +8,38 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="115dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="top"
             android:layout_marginHorizontal="@dimen/marginX"
             android:layout_marginVertical="@dimen/marginY"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-            <!-- Friend's list name -->
             <TextView
                 android:id="@+id/listName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
-                android:text="my_good_friend 's List"
+                android:text="HOME COOKING"
                 android:textColor="@color/textPrimary"
-                android:textSize="30sp"
+                android:textSize="35sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/friendName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0"
+                android:text="\@mygoodfriend1"
+                android:textColor="@color/textSecondary"
+                android:textSize="20sp"
+                />
 
             <!-- Privacy and Collaborators -->
             <LinearLayout
@@ -88,155 +96,64 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-<!--            Name of List-->
-            <TextView
-                android:id="@+id/uh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0"
-                android:text="Cooking"
-                android:textColor="@color/textPrimary"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <!-- The actual bucket list -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="145dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
-<!--                arrow and goal in horizontal layout-->
+                <!--goal-->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/dropdownarrow" />
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_blank"/>
 
                     <TextView
-                        android:id="@+id/firsttask"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="0"
-                        android:text="Baking"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="17sp" />
-
+                        android:text="@string/strikethrough_lemoncake"/>
                 </LinearLayout>
 
-<!--                green bullet point and goal in horizontal layout-->
+                <!--goal-->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_marginLeft="27dp"
-                        android:layout_marginTop="13dp"
-                        android:src="@drawable/green" />
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_blank"/>
 
                     <TextView
-
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_weight="0"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="17sp"
-                        android:text="@string/lemonricottacrossed"/>
-
+                        android:text="@string/strikethrough_friedrice"/>
                 </LinearLayout>
 
-<!--                red bullet point and goal in horizontal layout-->
+                <!--goal-->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_marginLeft="27dp"
-                        android:layout_marginTop="13dp"
-                        android:src="@drawable/red" />
+                    <!--difficulty button-->
+                    <Button
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/difficulty_indicator_hard"/>
 
                     <TextView
-
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_weight="0"
-                        android:text="Tres Leches Cake"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="17sp" />
-
+                        android:text="Dulce de Leche"/>
                 </LinearLayout>
-
-<!--                drop down arrow and goal in horizontal layout-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/dropdownarrow" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="0"
-                        android:text="30 min dinner"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="17sp" />
-
-                </LinearLayout>
-
-<!--                green bullet point and goal in horizontal layout-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_marginLeft="27dp"
-                        android:layout_marginTop="7dp"
-                        android:src="@drawable/green" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
-                        android:layout_weight="0"
-                        android:text="@string/friedricecrossed"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="17sp" />
-
-                </LinearLayout>
-
-
             </LinearLayout>
 
             <TextView
@@ -245,7 +162,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 android:text="Photos"
-                android:textColor="@color/textPrimary"
+                android:layout_marginVertical="10dp"
+                android:textColor="@color/textSecondary"
                 android:textSize="25sp"
                 android:textStyle="bold" />
             <!--            use backkground shadow to signify photos will be here-->
@@ -270,7 +188,8 @@
                     <TableRow
                         android:id="@+id/firstRow"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="100dp"
@@ -281,10 +200,6 @@
                             android:src="@drawable/shrimpfryrye" />
                     </TableRow>
                 </TableLayout>
-
-                \
-
-
             </LinearLayout>
 
             <TextView
@@ -293,7 +208,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 android:text="Advice"
-                android:textColor="@color/textPrimary"
+                android:layout_marginVertical="10dp"
+                android:textColor="@color/textSecondary"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -316,10 +232,11 @@
 
                 <Button
                     android:id="@+id/post_advice_button"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginVertical="@dimen/marginY"
+                    android:paddingHorizontal="20dp"
                     android:onClick="onClick"
                     android:text="Give Advice"
                     android:background="@drawable/round_normal_button"
@@ -342,8 +259,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
                 android:layout_weight="0"
-                android:background="@color/ridasDark"
+                android:background="@color/transparent"
                 android:padding="20dp"
                 android:progress="25" />
         </LinearLayout>
