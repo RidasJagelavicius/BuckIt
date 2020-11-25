@@ -23,13 +23,7 @@ import com.example.buckit.SharedCode;
 import java.util.ArrayList;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button friendButton;
-    private Button sendFriendRequestButton;
-    private Button cookingButton;
-    private Button openAdvicePopup;
-    private Button submitAdvice;
     private ImageButton searchButton;
-    TextView messageTextView;
     private EditText search_bar;
     private String username;
     private boolean isAdded = false;
