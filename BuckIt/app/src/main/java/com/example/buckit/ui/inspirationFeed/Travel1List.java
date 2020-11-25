@@ -40,6 +40,25 @@ public class Travel1List extends AppCompatActivity {
             }
         });
         cooking = (Button) popup.findViewById(R.id.add_to_cooking);
+        cooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                assert(popup != null);
+                // Create the dialog that asks user to name their bucket
+                popup.setContentView(R.layout.popup_error);
+                Button closePopup = (Button) popup.findViewById(R.id.closeErrorPopup);
+
+                // By default, show the popup
+                popup.show();
+
+                closePopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup.dismiss();
+                    }
+                });
+            }
+        });
 
     }
 
