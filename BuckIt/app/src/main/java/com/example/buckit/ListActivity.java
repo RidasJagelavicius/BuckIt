@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Spanned;
@@ -32,6 +33,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -43,7 +45,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 import static com.example.buckit.SharedCode.dpToPx;
@@ -63,6 +68,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private Dialog collaboratorsPopup;
     private LinearLayout addCollab;
     private ArrayList<Button> buttonGoal  = new ArrayList<Button>();
+    private JSONObject achievementMaster = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +97,8 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        loadAchievementMaster();
+
 //         Get name and lists passed from bucket
         try {
             // Have bucket name at top
@@ -108,6 +116,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         newGoalButton = (ImageButton) findViewById(R.id.addGoal);
 
         newGoalButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View view) {
 //                createGoal();
                 addGoal();
@@ -240,6 +249,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         int myid = v.getId();
@@ -324,6 +334,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<LinearLayout> linearLayoutsList = new ArrayList<>();
     int numCompletedItems = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void addGoal() {
         // each new element (a newGoal) consists of:
         // 1. difficult indicator (button)
@@ -394,6 +405,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 //    private void addSubgoal(int plusId) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void addSubgoal(LinearLayout parentLayout) {
         // each new element (a newSubgoal) consists of:
         // 1. difficult indicator (button)
@@ -458,6 +470,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         updateProgressBar();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void changeDifficulty(int id) {
 //        Toast.makeText(this, "changed difficulty", Toast.LENGTH_SHORT).show();
         int idx = diffIndicIds.indexOf(id);
@@ -513,12 +526,77 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         updateProgressBar();
     }
 
+    private void loadAchievementMaster() {
+        boolean masterExists = SharedCode.fileExists(this, "achievements.json");
+        String jsonString;
+        // Read if exists
+        if (masterExists) {
+            jsonString = SharedCode.read(this, "achievements.json");
+            try {
+                achievementMaster = new JSONObject(jsonString);
+            } catch (Throwable t) {
+                Log.e("JSON", "Failed to parse JSON file");
+                return;
+            }
+        } else {
+            // Create
+            boolean fileCreated = SharedCode.create(this, "achievements.json", "{}");
+            if (!fileCreated) {
+                Log.e("JSON", "Failed to create master JSON file");
+                return;
+            } else {
+                jsonString = SharedCode.read(this, "achievements.json");
+                try {
+                    achievementMaster = new JSONObject(jsonString);
+                } catch (Throwable t) {
+                    Log.e("JSON", "Failed to parse master JSON file");
+                    t.printStackTrace();
+                    return;
+                }
+            }
+        }
+    }
+
+    private boolean contains2(JSONObject arr, String listName) {
+        Iterator<String> keys = arr.keys();
+        if (keys.hasNext()) {
+            do {
+                String name = keys.next();
+                if (name.equals(listName))
+                    return true;
+            } while (keys.hasNext());
+        }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updateProgressBar() {
         ProgressBar bar = findViewById(R.id.progressBar);
         double percentage = (double)(numCompletedItems)/crossedOutItems.size() * 100;
         bar.setProgress((int)percentage);
+
+        // Get achievement wall
+        String listName = list.getText().toString();
+        if ((int) percentage == 100 && !contains2(achievementMaster, listName)) {
+            // Add to achievement wall
+            JSONObject item = new JSONObject();
+            String today = LocalDate.now().toString();
+            try {
+                item.put("date", today);
+                JSONObject thislist = listMaster.getJSONObject(listID);
+                JSONArray photos = thislist.getJSONArray("photos");
+                item.put("photos", photos);
+                achievementMaster.put(listName, item);
+                SharedCode.create(this, "achievements.json", achievementMaster.toString());
+                Toast.makeText(ListActivity.this, "List complete, added to Achievement Wall", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void deleteAction(int id) {
         int idx = xButtonIds.indexOf(id);
         LinearLayout goal = linearLayoutsList.get(idx);
@@ -534,7 +612,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         goalsList.remove(idx);
 
         updateProgressBar();
-
     }
 
     // TODO: update json :(

@@ -30,7 +30,16 @@
             android:textSize="35sp"
             android:textStyle="bold"/>
 
-<!--        spain list wall-->
+        <LinearLayout
+            android:id="@+id/achievementContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <!--        spain list wall-->
         <RelativeLayout
             android:layout_width="320dp"
             android:layout_height="wrap_content"
