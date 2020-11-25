@@ -24,8 +24,10 @@ import java.util.ArrayList;
 public class PostActivity4 extends AppCompatActivity implements View.OnClickListener {
     private Button openAdvicePopup;
     private TextView listName;
+    private TextView friendName;
     private Dialog popup;
     private Context thisContext;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +35,14 @@ public class PostActivity4 extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_friend_list);
         popup = new Dialog(this);
         thisContext = this;
+        username = getIntent().getStringExtra("username");
         openAdvicePopup = findViewById(R.id.post_advice_button);
         openAdvicePopup.setOnClickListener(this);
         listName = findViewById(R.id.listName);
         listName.setText("COOKING");
+
+        friendName = findViewById(R.id.friendName);
+        friendName.setText(username);
     }
 
     @Override
