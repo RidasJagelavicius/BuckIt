@@ -76,30 +76,6 @@ public class InspirationFeedFragment extends Fragment implements View.OnClickLis
                     popup.dismiss();
                 }
             });
-
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-//            builder.setMessage("Unable to load lists. Please try again later.");
-//
-//            // Set Alert Title
-//            builder.setTitle("Error");
-//
-//            builder.setCancelable(true);
-//
-//            //Set Ok button to dismiss popup
-//            builder.setPositiveButton(
-//                    "Ok",
-//                    new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//
-//            // Create the Alert dialog
-//            AlertDialog alertDialog = builder.create();
-//
-//            // Show the Alert Dialog box
-//            alertDialog.show();
         }
     }
 }
