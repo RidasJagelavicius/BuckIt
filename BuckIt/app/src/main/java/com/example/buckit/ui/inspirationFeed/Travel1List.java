@@ -25,7 +25,7 @@ public class Travel1List extends AppCompatActivity {
     }
 
     public void showPopup(View v){
-        popup.setContentView(R.layout.add_list_popup);
+        popup.setContentView(R.layout.popup_add_list);
         popup.show();
         Button travel;
         Button cooking;

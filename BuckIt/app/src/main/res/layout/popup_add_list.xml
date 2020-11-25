@@ -10,7 +10,7 @@
         android:layout_marginHorizontal="75dp"
         android:layout_marginTop="50dp"
         android:orientation="vertical"
-        android:background="@color/popupBackground">
+        android:background="@color/superLightPurple">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,20 +23,23 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bucket to add: "
-                android:textSize="25sp"
-                android:textColor="@color/textPrimary">
-
+                android:text="BUCKET TO ADD TO"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/textPrimary"
+                android:layout_marginBottom="10dp">
             </TextView>
-
 
             <Button
                 android:id="@+id/add_to_travel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_normal_button"
                 android:gravity="center"
                 android:text="Travel"
-                android:textSize="@dimen/textPrimary"
                 android:textColor="@color/textPrimary"
                 />
 
@@ -46,8 +49,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Cooking"
-                android:textSize="@dimen/textPrimary"
+
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/textPrimary"
+                android:background="@drawable/round_normal_button"
+
                 />
 
 

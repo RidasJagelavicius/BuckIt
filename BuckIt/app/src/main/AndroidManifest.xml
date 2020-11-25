@@ -20,7 +20,7 @@
         <!-- login flow -->
         <activity
             android:name=".SigninActivity"
-            android:label="Sign In">
+            android:label="BuckIt">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="Register" />
+            android:label="New User" />
 
         <!-- main/bucket activities -->
         <activity
